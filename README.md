@@ -1,4 +1,4 @@
-philharmoiker-app
+philharmoniker-app
 =================
 
-App showing and teaching the user how a conductor conducts an orchestra in very simple way ...
+Webapp showing and teaching the user how a conductor conducts an orchestra in a simplified way.
