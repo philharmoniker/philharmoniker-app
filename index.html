@@ -38,9 +38,16 @@
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-    <div id="bird"></div>
-    <div id="container">
-        <h1>it works!?</h1>
+    <div id="firstpage" data-role="page">
+        <div data-role="header" data-fullscreen="true" data-position="fixed">
+            <h1>it works!?</h1>
+        </div>
+        <div id="container" data-role="content" data-fullscreen="">
+            <div id="bird"></div>
+        </div>
+        <div id="footer" data-role="footer" data-position="fixed">
+            <h4>EduPhil</h4>
+        </div>
     </div>
 
     <script src="js/vendor/jquery-2.0.0.min.js"></script>
