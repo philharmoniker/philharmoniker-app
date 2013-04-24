@@ -1,4 +1,6 @@
 CACHE MANIFEST
+# Bei Änderungen an Dateibestand, immer folgende Zeile mitändern
+# webapp updated 2013-04-24
 
 CACHE:
 
@@ -22,17 +24,22 @@ css/images/icons-36-white.png
 
 # HTML documents
 # index.html is always cached implicitly
-404.html
+app.html
 
 # Custom script and CSS
 js/plugins.js
 js/helper.js
-js/main.js
+js/app.js
+js/preload.js
 css/normalize.css
-css/main.css
+css/app.css
+css/preload.css
 
 # Custom images
 img/birds.png
+img/phone/stage.jpg
+img/tablet/stage.jpg
+img/desktop/stage.jpg
 
 NETWORK:
 
