@@ -3,18 +3,34 @@
 <!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
+    <!-- TODO: Titel -->
     <title></title>
+    <!-- TODO: Inhalt -->
     <meta name="description" content="">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- viewport: Korrekte Syntax mit "," -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, maximum-scale=1.0"> 
     <meta http-equiv="cleartype" content="on">
 
+    <!-- precomposed: "nicht-glossy"-Version für iPhone, bzw man kann den Effekt selber wählen -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
     <link rel="shortcut icon" href="img/touch/apple-touch-icon.png">
+    
+    <!-- Apple Splash-Screens werden über JavaScript geladen (helper.js) 
+         Alternative wären hier media queries, die jedoch zZt noch ALLE Bidler runterladen -->
+         
+    <!-- 320x460 for iPhone 3GS -->
+    <!-- <link rel="apple-touch-startup-image" media="(max-device-width: 480px) and not (-webkit-min-device-pixel-ratio: 2)" href="startup-iphone.png" /> -->
+    <!-- 640x920 for retina display -->
+    <!-- <link rel="apple-touch-startup-image" media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" href="startup-iphone4.png" /> -->
+    <!-- iPad Portrait 768x1004 -->
+    <!-- <link rel="apple-touch-startup-image" media="(min-device-width: 768px) and (orientation: portrait)" href="startup-iPad-portrait.png" /> -->
+    <!-- iPad Landscape 1024x748 -->
+    <!-- <link rel="apple-touch-startup-image" media="(min-device-width: 768px) and (orientation: landscape)" href="startup-iPad-landscape.png" /> -->
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="img/touch/apple-touch-icon-144x144-precomposed.png">
@@ -22,12 +38,12 @@
 
 
     <!-- For iOS web apps. Delete if not needed. https://github.com/h5bp/mobile-boilerplate/issues/94 -->
-    <!--
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- TODO: Titel -->
     <meta name="apple-mobile-web-app-title" content="">
-    -->
 
+    <!-- haben keine Links wahrscheinlich -->
     <!-- This script prevents links from opening in Mobile Safari. https://gist.github.com/1042026 -->
     <!--
     <script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
@@ -38,15 +54,12 @@
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
-    <div id="firstpage" data-role="page">
-        <div data-role="header" data-fullscreen="true" data-position="fixed">
-            <h1>it works!?</h1>
-        </div>
-        <div id="container" data-role="content" data-fullscreen="">
+    <div id="preload" data-role="page">
+    </div>        
+
+    <div id="game" data-role="page">
+        <div id="container" data-role="content" data-fullscreen="true">
             <div id="bird"></div>
-        </div>
-        <div id="footer" data-role="footer" data-position="fixed">
-            <h4>EduPhil</h4>
         </div>
     </div>
 

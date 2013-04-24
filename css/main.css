@@ -67,9 +67,10 @@ textarea {
 
 div#container
 {
-    margin: -20 auto;
-    min-width: 768px;
-    min-height: 320px;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto 0 auto;
     background-color: yellow;
 }
 
