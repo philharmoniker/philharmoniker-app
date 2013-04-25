@@ -60,7 +60,7 @@ textarea {
 {
     html
     {
-        background: #aaaaaa url("../img/desktop/stage.jpg") no-repeat top center fixed;
+        background: #aaaaaa url("../img/desktop/stage.jpg") no-repeat top center fixed !important;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -73,7 +73,7 @@ textarea {
 {
     html
     {
-        background: #aaaaaa url("../img/tablet/stage.jpg") no-repeat top center fixed;
+        background: #aaaaaa url("../img/tablet/stage.jpg") no-repeat top center fixed !important;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -86,7 +86,7 @@ textarea {
 {
     html
     {
-        background: #aaaaaa url("../img/phone/stage.jpg") no-repeat top center fixed;
+        background: #aaaaaa url("../img/phone/stage.jpg") no-repeat top center fixed !important;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -108,7 +108,7 @@ textarea {
     text-align: center;
 }
 
-#footer
+div#eduphil-preload-footer
 {
     text-align: center;
 }
