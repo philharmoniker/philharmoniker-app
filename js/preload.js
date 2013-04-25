@@ -1,6 +1,6 @@
 $(document).bind('mobileinit', function()
 {
-    // JQuery Mobile defaults etc. hier
+       // JQM starteinstellungen
 });
 
 $(document).ready(function ()
@@ -9,83 +9,97 @@ $(document).ready(function ()
     // ist application cache API verfügbar?
     if (cache != undefined)
     {
-        // TODO: anzahl der dateien in manifest datei extrahieren
-        var num_files_total = 22;
+        // TODO: anzahl der dateien aus manifest datei extrahieren
+        var num_files_total = 25;
         var num_files_cached = 0;
         var $progress_bar = document.createElement('progress');
         $progress_bar.value = num_files_cached;
         $progress_bar.max = num_files_total;
         $progress_bar.id = 'eduphil-preloadbar';
 
+        function add_app_link()
+        {
+            var $start_app_link = document.createElement('a');
+            $start_app_link.href = "app.html";
+            $start_app_link.textContent = "App Starten";
+            $start_app_link.id = "startbutton";
+
+            $('#content').append($start_app_link);
+            $('#startbutton').buttonMarkup({ theme: "a" }); // aus link einen button machen
+        }
+
         // Überprüfe auf neue Version im Netz
         cache.addEventListener('checking', function()
         {
-            $('#status').html('<h2>Überprüfe auf neue Version...</h2>');
+            $('#content').empty();
+            var html = '<h2>Überprüfe Version... (Checking)</h2>';
+            $('#content').append(html);
         });
 
         // Version ist aktuell
         cache.addEventListener('noupdate', function()
         {
-            $('#status').html('<h2>Sie verwenden die neueste Version.</h2>');
-            var $start_app_link = document.createElement('a');
-            $start_app_link.href = "app.html";
-            $start_app_link.textContent = "App starten";
-            $('#status').append($start_app_link);
+            $('#content').empty();
+            var html = '<h2>Sie verwenden die neueste Version. (noupdate)</h2>';
+            $('#content').append(html);
+            add_app_link();
         });
 
         // Download startet
         cache.addEventListener('downloading', function()
         {
-            $('#status').html('<h2>Neueste Version wird heruntergeladen...</h2>')
-            $('#status').append($progress_bar);
+            $('#content').empty();
+            var html = '<h2>Herunterladen... (downloading)</h2>';
+            $('#content').append(html);
+            $('#content').append($progress_bar);
         });
 
         // listener für progress bar, 1x fire -> +1, dann den balken updaten
         cache.addEventListener('progress', function()
         {
             num_files_cached++;
-            $('#eduphil-preloadbar').attr('value', num_files_cached);
+            $progress_bar.value = num_files_cached;
         });
 
         // update wurde heruntergeladen, installieren?
         cache.addEventListener('updateready', function()
         {
-            $.mobile.changePage("#eduphil-dialog-update", { role: "dialog" });
+            $.mobile.changePage("#eduphil-dialog-update", {transition: "slidedown"});
         });
 
         // Update abgeschlossen
         cache.addEventListener('cached', function()
         {
-            $('#status').append('Fertig!');
+            $('#content').empty();
+            var html = '<h2>Sie verwenden die neueste Version. (cached)</h2>';
+            $('#content').append(html);
+            add_app_link();
         });
 
         // Fehler!
         cache.addEventListener('error', function()
         {
-            $('#status').html('<p>Fehler!</p>');
+            $.mobile.changePage("#eduphil-dialog-error", {transition: "slidedown"}); //dialog schliessen
         });
 
-        /* callbacks für die dialoge */
-
-        $('#eduphil-dialog-button-yes').onClick = function()
+        // Callbacks für die Dialoge
+        $("#eduphil-dialog-button-yes").bind("click", function (event)
         {
-            $("#eduphil-dialog-update").dialog("close"); //dialog schliessen
+            $.mobile.changePage("#eduphil-preload", {transition: "pop"}); //dialog schliessen
             cache.update(); // neuen cache verwenden
-        };
+        });
 
-        $('#eduphil-dialog-button-no').onClick = function()
+        $('#eduphil-dialog-button-no').bind("click", function(event)
         {
-            $("#eduphil-dialog-update").dialog("close");  //dialog schliessen
-            var $start_app_link = document.createElement('a');
-            $start_app_link.href = "app.html";
-            $start_app_link.textContent = "App starten";
-            $start_app_link.id = 'startbutton';
-            $('#startbutton').attr('data-role','button');
-            $('#status').append($start_app_link);
-        };
+            $.mobile.changePage("#eduphil-preload", {transition: "pop"}); //dialog schliessen
+            $('#content').empty();
+            var html = '<li data-role="list-divider">Starte App</li>';
+            $('#content').append(html);
+            add_app_link();
+        });
     }
     else
     {
-        $('#status').html('<p>Fehler: App Installation scheint deaktiviert zu sein (Application cache error).</p>');
+        $('#content').html('<p>Fehler: App Installation scheint deaktiviert zu sein (Application cache error).</p>');
     }
 });
