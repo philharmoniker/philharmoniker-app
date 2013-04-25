@@ -59,32 +59,42 @@ textarea {
     http://css-tricks.com/snippets/css/media-queries-for-standard-devices/
 */
 
-/* Smartphones (landscape) ----------- */
+div#logo
+{
+    margin: 10px auto 10px auto;
+    padding: 0;
+}
+
+/* Smartphones (iphone 3) (landscape) ----------- */
 @media only screen
 and (min-width: 321px)
 and (max-width: 480px)
 {
-    html
+    div#logo
     {
-        background: #ffffff url("../img/phone/conductor_landscape.jpg") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
+        width: 80px;
+        height: 120px;
+        background: #ffffff url("../img/phone/conductor_portrait.png") no-repeat center center fixed ;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
     }
 }
 
-/* Smartphones (portrait) ----------- */
+/* Smartphones (iphone 3) (portrait) ----------- */
 @media only screen
 and (max-width : 320px)
 {
-    html
+    div#logo
     {
-        background: #ffffff url("../img/phone/conductor_portrait.png") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
+        width: 150px;
+        height: 200px;
+        background: #ffffff url("../img/phone/conductor_portrait.png") no-repeat center center fixed ;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
     }
 }
 
@@ -94,13 +104,15 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape)
 {
-    html
+    div#logo
     {
-        background: #ffffff url("../img/tablet/conductor_landscape.jpg") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
+        width: 512px;
+        height: 400px;
+        background: #ffffff url("../img/tablet/conductor_landscape.jpg") no-repeat center center fixed ;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
     }
 }
 
@@ -110,43 +122,15 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait)
 {
-    html
+    div#logo
     {
-        background: #aaaaaa url("../img/tablet/conductor_portrait.png") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
-    }
-}
-
-/* Phablets (portrait) ----------- */
-@media only screen
-and (min-device-width : 600px)
-and (max-device-width : 640px)
-{
-    html
-    {
-        background: #aaaaaa url("../img/tablet/conductor_portrait.png") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
-    }
-}
-
-/* Phablets (landscape) ----------- */
-@media only screen
-and (min-device-width: 960px)
-and (max-device-width: 1000px)
-{
-    html
-    {
-        background: #aaaaaa url("../img/tablet/conductor_landscape.jpg") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
+        width: 400px;
+        height: 512px;
+        background: #ffffff url("../img/tablet/conductor_portrait.png") no-repeat center center fixed ;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
     }
 }
 
@@ -154,36 +138,63 @@ and (max-device-width: 1000px)
 @media only screen
 and (min-width : 1224px)
 {
-    html
+    div#logo
     {
-        background: #ffffff url("../img/desktop/conductor_landscape.jpg") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
+        width: 980px;
+        height: 600px;
+        background: #ffffff url("../img/desktop/conductor_landscape.jpg") no-repeat center center fixed ;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
     }
 }
 
 /* Large screens ----------- */
 @media only screen
-and (min-width : 1824px) {
-    html
+and (min-width : 1824px)
+{
+    div#logo
     {
-        background: #ffffff url("../img/desktop/conductor_landscape.jpg") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
+        background: #ffffff url("../img/desktop/conductor_landscape.jpg") no-repeat center center fixed ;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
     }
 }
 
-/* iPhone 4 ----------- *//*
+/* iPhone 4 (landscape) ----------- */
 @media
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
 only screen and (min-device-pixel-ratio : 1.5)
+and (orientation: landscape)
 {
-    *//* Styles *//*
-}*/
+    div#logo
+    {
+        background: #ffffff url("../img/phone/conductor_landscape.jpg") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+}
+
+/* iPhone 4 (portrait) ----------- */
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5)
+and (orientation: portrait)
+{
+    div#logo
+    {
+        background: #ffffff url("../img/phone/conductor_portrait.png") no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+}
 
 #title
 {
@@ -204,10 +215,12 @@ div#eduphil-preload-footer
     text-align: center;
 }
 
-div#content
+h3
 {
-    text-align: center;
+    margin: 0;
 }
+
+
 
 /* ==========================================================================
    Helper classes
@@ -257,7 +270,7 @@ textarea[contenteditable] {
  * Hide from both screenreaders and browsers: h5bp.com/u
  */
 .hidden {
-    display: none !important;
+    display: none ;
     visibility: hidden;
 }
 
