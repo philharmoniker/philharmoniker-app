@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateibestand, immer folgende Zeilen mitändern (v++)
 # webapp updated 2013-04-25
-# v19c
+# v1g
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -14,8 +14,10 @@ js/vendor/jquery-2.0.0.min.js
 js/vendor/jquery.mobile-1.3.1.min.js
 js/vendor/jquery.spritely.js
 js/vendor/modernizr-2.6.2.min.js
+js/vendor/tolito-1.0.3.min.js
 
 css/jquery.mobile.structure-1.3.1.min.css
+css/tolito-1.0.3.min.css
 css/theme.css
 
 css/images/ajax-loader.gif

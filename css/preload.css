@@ -57,9 +57,9 @@ textarea {
 
 /* media queries von:
     http://css-tricks.com/snippets/css/media-queries-for-standard-devices/
-*/
+*//*
 
-/* Smartphones (landscape) ----------- */
+*//* Smartphones (iphone 3) (landscape) ----------- *//*
 @media only screen
 and (min-width: 321px)
 and (max-width: 480px)
@@ -74,7 +74,7 @@ and (max-width: 480px)
     }
 }
 
-/* Smartphones (portrait) ----------- */
+*//* Smartphones (iphone 3) (portrait) ----------- *//*
 @media only screen
 and (max-width : 320px)
 {
@@ -88,7 +88,7 @@ and (max-width : 320px)
     }
 }
 
-/* iPads (landscape) ----------- */
+*//* iPads (landscape) ----------- *//*
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px)
@@ -104,7 +104,7 @@ and (orientation : landscape)
     }
 }
 
-/* iPads (portrait) ----------- */
+*//* iPads (portrait) ----------- *//*
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px)
@@ -112,7 +112,7 @@ and (orientation : portrait)
 {
     html
     {
-        background: #aaaaaa url("../img/tablet/conductor_portrait.png") no-repeat top center fixed !important;
+        background: #ffffff url("../img/tablet/conductor_portrait.png") no-repeat top center fixed !important;
         -webkit-background-size: cover !important;
         -moz-background-size: cover !important;
         -o-background-size: cover !important;
@@ -120,37 +120,7 @@ and (orientation : portrait)
     }
 }
 
-/* Phablets (portrait) ----------- */
-@media only screen
-and (min-device-width : 600px)
-and (max-device-width : 640px)
-{
-    html
-    {
-        background: #aaaaaa url("../img/tablet/conductor_portrait.png") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
-    }
-}
-
-/* Phablets (landscape) ----------- */
-@media only screen
-and (min-device-width: 960px)
-and (max-device-width: 1000px)
-{
-    html
-    {
-        background: #aaaaaa url("../img/tablet/conductor_landscape.jpg") no-repeat top center fixed !important;
-        -webkit-background-size: cover !important;
-        -moz-background-size: cover !important;
-        -o-background-size: cover !important;
-        background-size: cover !important;
-    }
-}
-
-/* Desktops and laptops ----------- */
+*//* Desktops and laptops ----------- *//*
 @media only screen
 and (min-width : 1224px)
 {
@@ -164,7 +134,7 @@ and (min-width : 1224px)
     }
 }
 
-/* Large screens ----------- */
+*//* Large screens ----------- *//*
 @media only screen
 and (min-width : 1824px) {
     html
@@ -177,12 +147,36 @@ and (min-width : 1824px) {
     }
 }
 
-/* iPhone 4 ----------- *//*
+*//* iPhone 4 (landscape) ----------- *//*
 @media
 only screen and (-webkit-min-device-pixel-ratio : 1.5),
 only screen and (min-device-pixel-ratio : 1.5)
+and (orientation: landscape)
 {
-    *//* Styles *//*
+    html
+    {
+        background: #ffffff url("../img/phone/conductor_landscape.jpg") no-repeat top center fixed !important;
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;
+    }
+}
+
+*//* iPhone 4 (portrait) ----------- *//*
+@media
+only screen and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-device-pixel-ratio: 1.5)
+and (orientation: portrait)
+{
+    html
+    {
+        background: #ffffff url("../img/phone/conductor_portrait.png") no-repeat top center fixed !important;
+        -webkit-background-size: cover !important;
+        -moz-background-size: cover !important;
+        -o-background-size: cover !important;
+        background-size: cover !important;
+    }
 }*/
 
 #title
@@ -207,6 +201,11 @@ div#eduphil-preload-footer
 div#content
 {
     text-align: center;
+}
+
+img
+{
+    width: 50%;
 }
 
 /* ==========================================================================
