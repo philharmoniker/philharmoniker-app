@@ -10,13 +10,13 @@ Navigate to the web app url and follow the instructions on screen.
 
 ## Features
 * Be a conductor! Fun!
-* Optimized for mobile browsers on tablets
+* Optimized for iPad
 
 ## Technologies used (thank you)
 
 * [JQuery Mobile](http://jquerymobile.com/)
 * [JQuery](http://jquery.com/)
 * [Spritely](http://www.spritely.net/)
-
+* [Tolito](https://github.com/tolis-e/jQuery-Mobile-Progress-Bar-with-Percentage)
 
 See LICENSE.md for terms of use.
