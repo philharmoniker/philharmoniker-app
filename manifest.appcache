@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateibestand, immer folgende Zeilen mitändern (v++)
-# webapp updated 2013-04-25
-# v30133
+# web app updated 2013-04-27
+# v33
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -17,8 +17,8 @@ js/vendor/modernizr-2.6.2.min.js
 js/vendor/tolito-1.0.3.min.js
 
 css/jquery.mobile.structure-1.3.1.min.css
+css/jquery.mobile.theme-1.3.1.min.css
 css/tolito-1.0.3.min.css
-css/theme.css
 
 css/images/ajax-loader.gif
 css/images/icons-18-black.png
@@ -29,11 +29,15 @@ css/images/icons-36-white.png
 # HTML documents
 # index.html is always cached implicitly
 app.html
+refresh.html
+error-nocache.html
+error-preload.html
 
 # Custom script and CSS
 js/plugins.js
 js/helper.js
 js/app.js
+js/sound.js
 js/preload.js
 
 css/normalize.css
@@ -56,4 +60,3 @@ NETWORK:
 # use * for all websites
 # http://mobilexweb.com/jqmbook/sessions.json
 # http://mobilexweb.com/jqmbook/feedback.php
-*
