@@ -57,6 +57,10 @@ textarea {
 
 /* JQM overrides */
 
+.ui-controlgroup-controls
+{
+
+}
 
 /* "mobile first" Styles für kleinste Screens */
 /* TODO: tablet first? */
@@ -228,7 +232,7 @@ and (orientation : landscape)
     {
         width: 900px;
         height: 580px;
-        background: #ffffff url("../img/tablet/conductor_landscape.jpg") no-repeat center center fixed ;
+        background: #ffffff url("../img/tablet/conductor_landscape.jpg") no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -332,37 +336,3 @@ and (orientation: portrait)
         background-size: cover;
     }
 }
-
-/* Phablets (portrait) ----------- *//*
-@media only screen
-and (min-width: 400px) and (device-width : 800px)
-and (min-height: 590px) and (max-height : 1190px)
-{
-    div#logo
-    {
-        width: 300px;
-        height: 480px;
-        background: transparent url("../img/tablet/conductor_portrait.png") no-repeat center center fixed ;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-}
-
-*//* Phablets (landscape) ----------- *//*
-@media only screen
-and (min-width: 600px) and (max-width: 800px)
-and (min-height: 380px) and (max-height: 400px)
-{
-    div#logo
-    {
-        width: 600px;
-        height: 220px;
-        background: #ffffff url("../img/tablet/conductor_landscape.jpg") no-repeat center center fixed ;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-}*/

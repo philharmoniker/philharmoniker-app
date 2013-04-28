@@ -11,7 +11,7 @@ $(document).ready(function ()
     if (cache != undefined)
     {
         // TODO: anzahl der dateien aus manifest datei extrahieren
-        var num_files_total = 30; // Anzahl aller Dateien
+        var num_files_total = 35; // Anzahl aller Dateien
         var num_files_cached = 0; // Anzahl Datien die bereits geladen sind
 
         var $progress_bar = TolitoProgressBar('progressbar')
