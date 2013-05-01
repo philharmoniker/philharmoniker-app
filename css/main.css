@@ -55,17 +55,25 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-/* JQM overrides */
+/* JQM, webkit overrides */
 
-.ui-controlgroup-controls
-{
+/*
+default press state
+-webkit-tap-highlight-color: transparent;
 
-}
+kein "Bild speichern"
+-webkit-touch-callout: none;
+
+kein: Copy&Paste
+-webkit-user-select: none;
+
+kein: Bilder rumschieben
+-webkit-user-drag: none;
+                        */
 
 /* "mobile first" Styles für kleinste Screens */
 /* TODO: tablet first? */
-
-div#logo
+#logo
 {
     margin: 10px auto 10px auto;
     padding: 0;
@@ -80,6 +88,85 @@ div#logo
 {
     margin: 10px auto;
     text-align: center;
+}
+
+/* ==========================================================================
+   App styles
+   ========================================================================== */
+
+#app-content
+{
+    background: #ffffff url(../img/tablet/stage.jpg) no-repeat top center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#sprite-container
+{
+    height: 390px;
+    padding: 0;
+    position: relative;
+    margin: 0 auto;
+    background: transparent url(../img/tablet/orchestra.png) no-repeat center center;
+}
+
+.sprite
+{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    bottom: 0;
+    z-index: 1000;
+}
+
+#knight1
+{
+    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
+    left: 0px;
+}
+
+#knight2
+{
+    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
+    left: 100px;
+}
+
+#knight3
+{
+    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
+    left: 200px;
+}
+
+#knight4
+{
+    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
+    left: 300px;
+}
+
+#knight5
+{
+    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
+    left: 400px;
+}
+
+#podium
+{
+    position: absolute;
+    -webkit-transition-property: bottom;
+    -webkit-transition-timing-function: linear, ease-out;
+    -webkit-transition-duration: 1s, 1s;
+    bottom: -180px;
+}
+
+#podium:hover
+{
+    position: absolute;
+    -webkit-transition-property: bottom;
+    -webkit-transition-timing-function: linear, ease-in;
+    -webkit-transition-duration: 1s, 1s;
+    bottom: 0px;
 }
 
 
@@ -238,6 +325,17 @@ and (orientation : landscape)
         -o-background-size: cover;
         background-size: cover;
     }
+
+    #app-content
+    {
+        min-height: 740px;
+    }
+
+    #sprite-container
+    {
+        width: 600px;
+        top: 300px;
+    }
 }
 
 /* iPads (portrait) ----------- */
@@ -255,6 +353,17 @@ and (orientation : portrait)
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
+    }
+
+    #app-content
+    {
+        min-height: 990px;
+    }
+
+    #sprite-container
+    {
+        width: 600px;
+        top: 400px;
     }
 }
 
@@ -288,6 +397,17 @@ and (min-width : 1224px)
     {
         width: 50%;
         margin: 0 auto;
+    }
+
+    #app-content
+    {
+        min-height: 1000px;
+    }
+
+    #sprite-container
+    {
+        width: 600px;
+        top: 500px;
     }
 }
 

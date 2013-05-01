@@ -1,13 +1,13 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateibestand, immer folgende Zeilen mitändern (v++)
-# web app updated 2013-04-28
+# web app updated 2013-05-01
 # v333
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
 # platform will cache it by itself
 
-# ACHTUNG: in preload.js die variable "num_files_total" anpassen
+# ACHTUNG: in main.js die variable "num_files_total" anpassen
 
 # jQuery Mobile's files
 js/vendor/jquery-2.0.0.min.js
@@ -36,13 +36,11 @@ error-preload.html
 # Custom script and CSS
 js/plugins.js
 js/helper.js
-js/app.js
 js/sound.js
-js/preload.js
+js/main.js
 
 css/normalize.css
-css/app.css
-css/preload.css
+css/main.css
 
 # Custom images
 img/tablet/stage.jpg

@@ -1,6 +1,41 @@
-$(document).bind('mobileinit', function()
+$(document).on('mobileinit', function()
 {
     // inits für JQM (wird ausgeführt nachdem JQM geladen wurde)
+});
+
+$(document).on('pageload', function(event)
+{
+    // Code wird ausgeführt für die App-Seite
+
+    // Sprites beim start anzeigen: IDLE
+    $('#knight1').sprite({ fps: 6, no_of_frames: 6 });
+    $('#knight2').sprite({ fps: 6, no_of_frames: 6 });
+    $('#knight3').sprite({ fps: 6, no_of_frames: 6 });
+    $('#knight4').sprite({ fps: 6, no_of_frames: 6 });
+    $('#knight5').sprite({ fps: 6, no_of_frames: 6 });
+
+    // Callbacks
+    function tapHandler(event)
+    {
+        $('#knight3').fps(24);
+    }
+
+    function swipeHandlerStop(event)
+    {
+        $('#knight3').destroy();
+    }
+
+    function swipeHandlerStart(event)
+    {
+        $('#knight3').sprite({ fps: 6, no_of_frames: 6 });
+    }
+    // Bindings
+    $('#knight3').on('tap', tapHandler);
+    $('#knight3').on('swipeleft', swipeHandlerStop);
+    $('#knight3').on('swiperight', swipeHandlerStart);
+    $('#podium').show("slide", { direction: top }, 2000);
+
+
 });
 
 $(document).ready(function ()
@@ -11,17 +46,17 @@ $(document).ready(function ()
     if (cache != undefined)
     {
         // TODO: anzahl der dateien aus manifest datei extrahieren
-        var num_files_total = 35; // Anzahl aller Dateien
+        var num_files_total = 32; // Anzahl aller Dateien
         var num_files_cached = 0; // Anzahl Datien die bereits geladen sind
 
         var $progress_bar = TolitoProgressBar('progressbar')
-                                                            .setOuterTheme('e')
-                                                            .setInnerTheme('e')
-                                                            .isMini(true)
-                                                            .setMax(num_files_total)
-                                                            .setStartFrom(num_files_cached)
-                                                            .showCounter(true)
-                                                            .build();
+            .setOuterTheme('e')
+            .setInnerTheme('e')
+            .isMini(true)
+            .setMax(num_files_total)
+            .setStartFrom(num_files_cached)
+            .showCounter(true)
+            .build();
 
         // Überprüfe auf neue Version auf dem Server: CHECKING
         cache.addEventListener('checking', function(event)
