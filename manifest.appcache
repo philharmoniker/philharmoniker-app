@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateibestand, immer folgende Zeilen mitändern (v++)
 # web app updated 2013-05-01
-# v333
+# v33
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -44,7 +44,6 @@ css/main.css
 
 # Custom images
 img/tablet/stage.jpg
-img/tablet/orchestra.png
 img/tablet/conductor_portrait.png
 img/tablet/conductor_landscape.jpg
 img/tablet/podium.png

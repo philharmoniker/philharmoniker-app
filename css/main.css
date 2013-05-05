@@ -10,21 +10,10 @@ textarea {
     color: #222;
 }
 
-body {
+body
+{
     font-size: 1em;
     line-height: 1.4;
-}
-
-a {
-    color: #00e;
-}
-
-a:visited {
-    color: #551a8b;
-}
-
-a:hover {
-    color: #06e;
 }
 
 /*
@@ -34,49 +23,78 @@ img {
     vertical-align: middle;
 }
 
-/*
- * Remove default fieldset styles.
- */
-fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
-}
-
-/*
- * Allow only vertical resizing of textareas.
- */
-textarea {
-    resize: vertical;
-}
-
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
 
-/* JQM, webkit overrides */
+img
+{
+    /* default press state */
+    -webkit-tap-highlight-color: transparent;
 
-/*
-default press state
--webkit-tap-highlight-color: transparent;
+    /* kein "Bild speichern" */
+    -webkit-touch-callout: none;
 
-kein "Bild speichern"
--webkit-touch-callout: none;
+    /* kein: Copy&Paste */
+    -webkit-user-select: none;
 
-kein: Copy&Paste
--webkit-user-select: none;
+    /* kein: Bilder rumschieben */
+    -webkit-user-drag: none;
+}
 
-kein: Bilder rumschieben
--webkit-user-drag: none;
-                        */
+/* ******** JQM overrides ******** */
 
-/* "mobile first" Styles für kleinste Screens */
-/* TODO: tablet first? */
-#logo
+.ui-tolito-progressbar-outer-e
+{
+    background: #FCC200;
+    background-image: linear-gradient(#FCC200,#FCC200);
+    background-image: -moz-linear-gradient(#FCC200,#FCC200);
+    background-image: -ms-linear-gradient(#FCC200,#FCC200);
+    background-image: -o-linear-gradient(#FCC200,#FCC200);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#FCC200),to(#FCC200));
+    background-image: -webkit-linear-gradient(#FCC200,#FCC200);
+    border: 1px solid #F7AE00;
+    color: #111;
+    text-shadow: 0 1px 0 #fff;
+}
+
+.ui-corner-all
+{
+    -webkit-border-radius: 0em
+    border-radius: 0em
+}
+
+.ui-btn-corner-all
+{
+    -webkit-border-radius: 0em;
+    border-radius: 0em;
+}
+
+#preload-header
+{
+    background: transparent none;
+    border: none;
+}
+
+
+/* ******** preload ******** */
+
+#preload-logo
 {
     margin: 10px auto 10px auto;
     padding: 0;
+}
+
+#preload-title, #berphil-logo
+{
+    display: inline-block;
+}
+
+#preload-title
+{
+    text-align: right;
+    color: #505050;
+    text-shadow: 0 -1px 0 #000;
 }
 
 #progressbar-button
@@ -88,6 +106,7 @@ kein: Bilder rumschieben
 {
     margin: 10px auto;
     text-align: center;
+
 }
 
 /* ==========================================================================
@@ -105,68 +124,57 @@ kein: Bilder rumschieben
 
 #sprite-container
 {
-    height: 390px;
+    height: 400px;
     padding: 0;
     position: relative;
     margin: 0 auto;
-    background: transparent url(../img/tablet/orchestra.png) no-repeat center center;
+    /* TODO: debug */
+    border: solid 2px red;
 }
 
 .sprite
 {
     position: absolute;
-    width: 100px;
-    height: 100px;
+    width: 351px;
+    height: 400px;
     bottom: 0;
-    z-index: 1000;
+    /* TODO: debug */
+    border: solid 2px green;
 }
 
-#knight1
+#geigerin
 {
-    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
+    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
     left: 0px;
+    z-index: 1000;
 }
 
 #knight2
 {
-    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
-    left: 100px;
+    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    left: 200px;
+    z-index: 500;
 }
 
 #knight3
 {
-    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
-    left: 200px;
+    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    left: 400px;
+    z-index: 250;
 }
 
 #knight4
 {
-    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
-    left: 300px;
+    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    left: 600px;
+    z-index: 500;
 }
 
 #knight5
 {
-    background: transparent url(../img/sprites/knight_swinging.png) 0 0 no-repeat;
-    left: 400px;
-}
-
-#podium
-{
-    position: absolute;
-    -webkit-transition-property: bottom;
-    -webkit-transition-timing-function: linear, ease-out;
-    -webkit-transition-duration: 1s, 1s;
-    bottom: -180px;
-}
-
-#podium:hover
-{
-    position: absolute;
-    -webkit-transition-property: bottom;
-    -webkit-transition-timing-function: linear, ease-in;
-    -webkit-transition-duration: 1s, 1s;
-    bottom: 0px;
+    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    left: 800px;
+    z-index: 1000;
 }
 
 
@@ -309,22 +317,40 @@ and (max-width : 320px)
     }
 }
 
-/* iPads (landscape) ----------- */
+/* iPads (landscape) ------------ PREFERRED ------------ */
 @media only screen
 and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape)
 {
-    div#logo
+    /* ******** preload ******** */
+
+    #preload-logo
     {
-        width: 900px;
-        height: 580px;
-        background: #ffffff url("../img/tablet/conductor_landscape.jpg") no-repeat center center fixed;
+        width: 800px;
+        height: 500px;
+        background: #ffffff url("../img/tablet/conductor_landscape.jpg") no-repeat center center;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
     }
+
+    #preload-page
+    {
+        background: white url(../img/tablet/berphil_bg.jpg) no-repeat fixed center top;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
+    #berphil-logo
+    {
+
+    }
+
+    /* ******** app ******** */
 
     #app-content
     {
@@ -333,8 +359,8 @@ and (orientation : landscape)
 
     #sprite-container
     {
-        width: 600px;
-        top: 300px;
+        width: 1024px;
+        top: 200px;
     }
 }
 

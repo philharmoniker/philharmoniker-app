@@ -1,41 +1,52 @@
 $(document).on('mobileinit', function()
 {
-    // inits für JQM (wird ausgeführt nachdem JQM geladen wurde)
+    // inits für JQM
 });
 
 $(document).on('pageload', function(event)
 {
-    // Code wird ausgeführt für die App-Seite
+    // Code wird ausgeführt für alle pages, haben aber nur eine, die App-Seite
+
+    var num_frames = 12;
 
     // Sprites beim start anzeigen: IDLE
-    $('#knight1').sprite({ fps: 6, no_of_frames: 6 });
-    $('#knight2').sprite({ fps: 6, no_of_frames: 6 });
-    $('#knight3').sprite({ fps: 6, no_of_frames: 6 });
-    $('#knight4').sprite({ fps: 6, no_of_frames: 6 });
-    $('#knight5').sprite({ fps: 6, no_of_frames: 6 });
+    $('#geigerin').sprite({ fps: 12, no_of_frames: num_frames });
+    $('#knight2').sprite({ fps: 12, no_of_frames: num_frames });
+    $('#knight3').sprite({ fps: 12, no_of_frames: num_frames });
+    $('#knight4').sprite({ fps: 12, no_of_frames: num_frames });
+    $('#knight5').sprite({ fps: 12, no_of_frames: num_frames });
+
+
+    var is_destroyed = false;
 
     // Callbacks
-    function tapHandler(event)
+    function tap_handler(event)
     {
-        $('#knight3').fps(24);
+        if(is_destroyed)
+        {
+            $(event.target).sprite({ fps: 12, no_of_frames: num_frames });
+            is_destroyed = false;
+        }
+        else
+        {
+            $(event.target).destroy();
+            is_destroyed = true;
+        }
     }
 
-    function swipeHandlerStop(event)
+    function swipeleft_handler(event)
     {
-        $('#knight3').destroy();
+        $(event.target).fps(6);
     }
 
-    function swipeHandlerStart(event)
+    function swiperight_handler(event)
     {
-        $('#knight3').sprite({ fps: 6, no_of_frames: 6 });
+        $(event.target).fps(24);
     }
     // Bindings
-    $('#knight3').on('tap', tapHandler);
-    $('#knight3').on('swipeleft', swipeHandlerStop);
-    $('#knight3').on('swiperight', swipeHandlerStart);
-    $('#podium').show("slide", { direction: top }, 2000);
-
-
+    $('.sprite').on('tap', tap_handler);
+    $('.sprite').on('swipeleft', swipeleft_handler);
+    $('.sprite').on('swiperight', swiperight_handler);
 });
 
 $(document).ready(function ()

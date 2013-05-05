@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html manifest="manifest.appcache">
+<!-- TODO: zu entwicklungszeiten deaktiviert -->
+<!-- <html manifest="manifest.appcache"> -->
 <head>
     <meta charset="utf-8">
     <!-- TODO: Titel -->
@@ -46,8 +47,7 @@
     <script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
 
     <link rel="stylesheet" href="css/jquery.mobile.structure-1.3.1.min.css"> <!-- Framework -->
-    <!-- TODO: theme massiv verkleiner, evtl. ganz löschen -->
-    <link rel="stylesheet" href="css/jquery.mobile.theme-1.3.1.min.css"> <!--- Default Theme -->
+    <link rel="stylesheet" href="css/jquery.mobile.theme-1.3.1.css"> <!--- Default Theme -->
     <link rel="stylesheet" href="css/tolito-1.0.3.min.css"> <!-- Ladebalken -->
     <link rel="stylesheet" href="css/normalize.css"> <!-- Reset -->
     <link rel="stylesheet" href="css/main.css"> <!-- Style override, media queries -->
@@ -56,12 +56,13 @@
 </head>
 <body>
     <div data-role="page" id="preload-page">
-        <div data-role="header">
-            <h1>Dirigenten App</h1>
+        <div data-role="header" id="preload-header">
+            <div id="berphil-logo"><img src="img/tablet/berphil_logo.png" /></div>
+            <div id="preload-title"><h1>Dirigenten App</h1></div>
         </div>
 
-        <div data-role="content">
-            <div id="logo"></div>
+        <div data-role="content" id="preload-content">
+            <div id="preload-logo"></div>
             <div id="progressbar"></div>
             <div>
                 <a href="app.html" data-role="button" data-transition="fade" id="progressbar-button">Starte App</a>
