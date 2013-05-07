@@ -142,6 +142,15 @@ img
     border: solid 2px green;
 }
 
+.hitbox
+{
+    width: 150px;
+    z-index: 3000;
+    /* TODO: debug */
+    background-color: rgba(255,255,0,0.25);
+    border: solid 2px yellow;
+}
+
 #geigerin
 {
     background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
@@ -149,17 +158,31 @@ img
     z-index: 1000;
 }
 
+    #geigerin .hitbox
+    {
+        height: 400px;
+        margin: 0 0 0 80px;
+    }
+
 #knight2
 {
     background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
     left: 200px;
+    top: -50px;
     z-index: 500;
 }
+
+    #knight2 .hitbox
+    {
+        height: 400px;
+        margin: 0 0 0 80px;
+    }
 
 #knight3
 {
     background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
     left: 400px;
+    top: -100px;
     z-index: 250;
 }
 
@@ -167,6 +190,7 @@ img
 {
     background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
     left: 600px;
+    top: -50px;
     z-index: 500;
 }
 
@@ -370,26 +394,9 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait)
 {
-    div#logo
+    #app-page > *
     {
-        width: 400px;
-        height: 800px;
-        background: transparent url("../img/tablet/conductor_portrait.png") no-repeat center center fixed ;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-
-    #app-content
-    {
-        min-height: 990px;
-    }
-
-    #sprite-container
-    {
-        width: 600px;
-        top: 400px;
+        -webkit-transform:rotate(90deg);
     }
 }
 

@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateibestand, immer folgende Zeilen mitändern (v++)
-# web app updated 2013-05-01
-# v33
+# web app updated 2013-05-07
+# v333
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -9,12 +9,13 @@ CACHE:
 
 # ACHTUNG: in main.js die variable "num_files_total" anpassen
 
-# jQuery Mobile's files
+# Vendor content
 js/vendor/jquery-2.0.0.min.js
 js/vendor/jquery.mobile-1.3.1.min.js
 js/vendor/jquery.spritely.js
 js/vendor/modernizr-2.6.2.min.js
 js/vendor/tolito-1.0.3.min.js
+js/vendor/howler.min.js
 
 css/jquery.mobile.structure-1.3.1.min.css
 css/jquery.mobile.theme-1.3.1.min.css
@@ -46,14 +47,19 @@ css/main.css
 img/tablet/stage.jpg
 img/tablet/conductor_portrait.png
 img/tablet/conductor_landscape.jpg
-img/tablet/podium.png
+img/tablet/berphil_bg.jpg
+img/tablet/berphil_logo.png
 
 img/phone/conductor_portrait.png
 img/phone/conductor_landscape.jpg
 
 img/desktop/conductor_landscape.jpg
 
-img/sprites/knight_swinging.png
+img/sprites/geigerin.png
+
+# Misc files
+sound/violin.mp3
+sound/violin.ogg
 
 NETWORK:
 
