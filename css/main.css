@@ -44,13 +44,17 @@ img
 
 /* ******** JQM overrides ******** */
 
+h1
+{
+    color: white;
+}
+
 .ui-tolito-progressbar-outer-e
 {
     background: #FCC200;
     background-image: linear-gradient(#FCC200,#FCC200);
     background-image: -moz-linear-gradient(#FCC200,#FCC200);
     background-image: -ms-linear-gradient(#FCC200,#FCC200);
-    background-image: -o-linear-gradient(#FCC200,#FCC200);
     background-image: -webkit-gradient(linear,left top,left bottom,from(#FCC200),to(#FCC200));
     background-image: -webkit-linear-gradient(#FCC200,#FCC200);
     border: 1px solid #F7AE00;
@@ -113,37 +117,32 @@ img
    App styles
    ========================================================================== */
 
-#app-content
+#app-page
 {
-    background: #ffffff url(../img/tablet/stage.jpg) no-repeat top center fixed;
+    background: #ffffff url(../img/tablet/app_bg.jpg) no-repeat top center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
 }
 
-#sprite-container
+#app-content
 {
-    height: 400px;
-    padding: 0;
-    position: relative;
-    margin: 0 auto;
-    /* TODO: debug */
-    border: solid 2px red;
+    position: relative; /* damit's nicht über den rand hinausgeht */
+    height: 738px; /* parent: 768px, -15 padding oben unten */
 }
 
 .sprite
 {
     position: absolute;
-    width: 351px;
-    height: 400px;
-    bottom: 0;
+    width: 270px;
+    height: 445px;
     /* TODO: debug */
     border: solid 2px green;
 }
 
 .hitbox
 {
+    position: relative;
     width: 150px;
     z-index: 3000;
     /* TODO: debug */
@@ -153,54 +152,112 @@ img
 
 #geigerin
 {
-    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
     left: 0px;
-    z-index: 1000;
+    bottom: 20px;
 }
 
     #geigerin .hitbox
     {
-        height: 400px;
-        margin: 0 0 0 80px;
+        height: 445px;
+        margin: 0 0 0 15px;
     }
 
-#knight2
+#floetistin
 {
-    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
     left: 200px;
-    top: -50px;
-    z-index: 500;
+    bottom: 60px;
 }
 
-    #knight2 .hitbox
+    #floetistin .hitbox
     {
-        height: 400px;
-        margin: 0 0 0 80px;
+        height: 300px;
+        margin: 0 0 0 15px;
     }
 
-#knight3
+#harfenspieler
 {
-    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
     left: 400px;
-    top: -100px;
-    z-index: 250;
+    bottom: 80px;
 }
+
+    #harfenspieler .hitbox
+    {
+        height: 300px;
+        margin: 0 0 0 15px;
+    }
 
 #knight4
 {
-    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
     left: 600px;
-    top: -50px;
-    z-index: 500;
+    bottom: 60px;
 }
+
+    #knight4 .hitbox
+    {
+        height: 300px;
+        margin: 0 0 0 15px;
+    }
 
 #knight5
 {
-    background: transparent url(../img/sprites/geigerin.png) 0 0 no-repeat;
+    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
     left: 800px;
-    z-index: 1000;
+    bottom: 20px;
 }
 
+    #knight5 .hitbox
+    {
+        height: 445px;
+        margin: 0 0 0 15px;
+    }
+
+/*
+        Pult-Menü
+ */
+
+#podium
+{
+    position: absolute;
+    bottom: 0px;
+    left: 165px;
+    background: transparent url(../img/tablet/pult.png) fixed bottom center no-repeat;
+    padding: 0;
+    /* TODO: debug */
+    border: solid 1px red;
+}
+
+.podium-halfs
+{
+    width: 340px;
+    height: 175px;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    /* TODO: debug */
+    border: solid 2px green;
+}
+
+#mood-container
+{
+    width: 160px;
+    padding: 0;
+    /* TODO: debug */
+    border: solid 2px blue;
+}
+
+.mood-icon
+{
+
+}
+
+.dragging
+{
+    position: fixed;
+}
 
 /* ==========================================================================
    Helper classes
@@ -313,32 +370,14 @@ textarea[contenteditable] {
 @media only screen
 and (min-width: 321px) and (max-width: 480px)
 {
-    div#logo
-    {
-        width: 300px;
-        height: 120px;
-        background: #ffffff url("../img/phone/conductor_landscape.jpg") no-repeat center center fixed ;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
+
 }
 
 /* Smartphones (iphone 3) (portrait) ----------- */
 @media only screen
 and (max-width : 320px)
 {
-    div#logo
-    {
-        width: 150px;
-        height: 200px;
-        background: #ffffff url("../img/phone/conductor_portrait.png") no-repeat center center fixed ;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
+
 }
 
 /* iPads (landscape) ------------ PREFERRED ------------ */
@@ -353,7 +392,7 @@ and (orientation : landscape)
     {
         width: 800px;
         height: 500px;
-        background: #ffffff url("../img/tablet/conductor_landscape.jpg") no-repeat center center;
+        background: #ffffff url("../img/tablet/app_bg.jpg") no-repeat center center;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -369,23 +408,8 @@ and (orientation : landscape)
         background-size: cover;
     }
 
-    #berphil-logo
-    {
+   /* ******** app ******** */
 
-    }
-
-    /* ******** app ******** */
-
-    #app-content
-    {
-        min-height: 740px;
-    }
-
-    #sprite-container
-    {
-        width: 1024px;
-        top: 200px;
-    }
 }
 
 /* iPads (portrait) ----------- */
@@ -394,9 +418,11 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait)
 {
-    #app-page > *
+    #app-page, #preload-page
     {
-        -webkit-transform:rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        transform: rotate(90deg);
     }
 }
 
@@ -404,17 +430,6 @@ and (orientation : portrait)
 @media only screen
 and (min-width : 1224px)
 {
-    div#logo
-    {
-        width: 980px;
-        height: 600px;
-        background: #ffffff url("../img/desktop/conductor_landscape.jpg") no-repeat center center fixed ;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
-
     #progressbar-button
     {
         width: 50%;
@@ -448,14 +463,7 @@ and (min-width : 1224px)
 @media only screen
 and (min-width : 1824px)
 {
-    div#logo
-    {
-        background: #ffffff url("../img/desktop/conductor_landscape.jpg") no-repeat center center fixed ;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
+
 }
 
 /* iPhone 4 (landscape) ----------- */
@@ -464,14 +472,7 @@ only screen and (-webkit-min-device-pixel-ratio : 1.5),
 only screen and (min-device-pixel-ratio : 1.5)
 and (orientation: landscape)
 {
-    div#logo
-    {
-        background: #ffffff url("../img/phone/conductor_landscape.jpg") no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
+
 }
 
 /* iPhone 4 (portrait) ----------- */
@@ -480,12 +481,5 @@ only screen and (-webkit-min-device-pixel-ratio: 1.5),
 only screen and (min-device-pixel-ratio: 1.5)
 and (orientation: portrait)
 {
-    div#logo
-    {
-        background: transparent url("../img/phone/conductor_portrait.png") no-repeat center center fixed;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-    }
+
 }

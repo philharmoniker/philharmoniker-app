@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateibestand, immer folgende Zeilen mitändern (v++)
 # web app updated 2013-05-07
-# v333
+# v333s
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -37,32 +37,36 @@ error-preload.html
 # Custom script and CSS
 js/plugins.js
 js/helper.js
-js/sound.js
 js/main.js
 
 css/normalize.css
 css/main.css
 
 # Custom images
-img/tablet/stage.jpg
-img/tablet/conductor_portrait.png
-img/tablet/conductor_landscape.jpg
+img/tablet/app_bg.jpg
 img/tablet/berphil_bg.jpg
 img/tablet/berphil_logo.png
+img/tablet/pult.png
+img/tablet/mood_1.jpg
+img/tablet/mood_2.jpg
+img/tablet/mood_3.jpg
 
-img/phone/conductor_portrait.png
-img/phone/conductor_landscape.jpg
-
-img/desktop/conductor_landscape.jpg
-
-img/sprites/geigerin.png
+img/sprites/geige_spielt.png
 
 # Misc files
-sound/violin.mp3
-sound/violin.ogg
+sound/floete_langsam.mp3
+sound/floete_normal.mp3
+sound/floete_schnell.mp3
+sound/geige_langsam.mp3
+sound/geige_normal.mp3
+sound/geige_schnell.mp3
+sound/harfe_langsam.mp3
+sound/harfe_normal.mp3
+sound/harfe_schnell.mp3
 
 NETWORK:
 
 # use * for all websites
+# Dinge die NICHT gecached werden sollen
 # http://mobilexweb.com/jqmbook/sessions.json
 # http://mobilexweb.com/jqmbook/feedback.php

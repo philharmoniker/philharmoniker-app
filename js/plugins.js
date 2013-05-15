@@ -21,4 +21,33 @@
     }
 }());
 
-// Place any Zepto/helper plugins in here.
+// Place any helper plugins in here.
+MBP.startupImage();
+MBP.preventScrolling();
+MBP.preventZoom();
+
+// TODO: doubleclick plugin, nicht sonderlich gut
+(function($)
+{
+    $.fn.doubleTap = function(doubleTapCallback)
+    {
+        return this.each(function()
+        {
+            var elm = this;
+            var lastTap = 0;
+            $(elm).bind('vmousedown', function (event)
+            {
+                var now = (new Date()).valueOf();
+                var diff = (now - lastTap);
+                lastTap = now ;
+                if (diff < 250) // TODO: magic number in ms, richtigen wert finden
+                {
+                    if($.isFunction( doubleTapCallback ))
+                    {
+                        doubleTapCallback.call(elm);
+                    }
+                }
+            });
+        });
+    }
+})(jQuery);

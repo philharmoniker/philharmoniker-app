@@ -14,23 +14,36 @@ $(document).on('mobileinit', function()
 // Code wird beim laden der #app-page ausgeführt (1x)
 $(document).on('pageinit', '#app-page', function()
 {
-    var num_frames = 12;
-    var normal_speed = 12;
-    var high_speed = 24;
-    var low_speed = 6;
-
-    // id: CSS id des sprite (mit #)
-    function Musician(id, soundfile_mp3, soundfile_ogg)
+    // id: CSS id des Musiker-sprites (mit #)
+    // soundfile: hauptteil der verschiedenen sound-datei-namen. Es werden die drei Varianten daraus generiert
+    function Musician(id, soundfile)
     {
+        var num_frames = 12;
+        var normal_speed = 12;
+        var high_speed = 24;
+        var low_speed = 6;
+
         this.id = id;
-        this.soundfile_mp3 = soundfile_mp3;
-        this.soundfile_ogg = soundfile_ogg;
+        this.soundfile_normal = 'sound/' + soundfile + '_normal.mp3';
+        this.soundfile_slow = 'sound/' + soundfile + '_langsam.mp3';
+        this.soundfile_fast = 'sound/' + soundfile + '_schnell.mp3';
+
         this.is_playing = false;
         this.speed = normal_speed;
-        this.sound = new Howl(
-        {
-            urls: [this.soundfile_mp3, this.soundfile_ogg]
-        });
+        this.sound_normal = new Howl(
+            {
+                urls: [this.soundfile_normal]
+            });
+
+        this.sound_slow = new Howl(
+            {
+                urls: [this.soundfile_slow]
+            });
+
+        this.sound_fast = new Howl(
+            {
+                urls: [this.soundfile_fast]
+            });
 
         /*
             startet Animation
@@ -38,9 +51,30 @@ $(document).on('pageinit', '#app-page', function()
         */
         this.start_playing = function()
         {
-            $(id).sprite({ fps: this.speed, no_of_frames: num_frames });
-            this.sound.play();
-            this.is_playing = true;
+            if(!this.is_playing) // spielen wir schon?
+            {
+                $(id).sprite({ fps: this.speed, no_of_frames: num_frames });
+                this.sound_normal.play();
+                this.is_playing = true;
+            }
+        }
+
+        this.toggle_playing = function()
+        {
+            if(this.is_playing)
+            {
+                $(id).destroy();
+                this.sound_slow.stop();
+                this.sound_normal.stop();
+                this.sound_fast.stop();
+                this.is_playing = false;
+            }
+            else
+            {
+                $(id).sprite({ fps: this.speed, no_of_frames: num_frames });
+                this.sound_normal.play();
+                this.is_playing = true;
+            }
         }
 
         /*
@@ -50,52 +84,78 @@ $(document).on('pageinit', '#app-page', function()
         this.stop_playing = function()
         {
             $(id).destroy();
-            this.sound.stop();
+            this.sound_normal.stop();
             this.is_playing = false;
         }
 
         /*
             setzt neue abspielgeschwindigkeit (nur animation)
          */
-        this.change_speed = function(speed)
+        function change_anim_speed (speed)
         {
             this.speed = speed;
             $(id).fps(this.speed);
         }
+
+        this.slower = function()
+        {
+            change_anim_speed(low_speed);
+            var position = this.sound_normal.pos();
+            this.sound_normal.stop();
+
+            this.sound_slow.play();
+            this.sound_slow.pos(position);
+        }
+
+        this.faster = function()
+        {
+            change_anim_speed(high_speed);
+
+            var position = this.sound_normal.pos();
+            this.sound_normal.stop();
+
+            this.sound_fast.play();
+            this.sound_fast.pos(position);
+        }
+
+
     }
 
-    var geigerin = new Musician('#geigerin', 'sound/violin.mp3','sound/violin.ogg');
+    // Unsere Musiker-Objekte
+    var geigerin = new Musician('#geigerin', 'geige');
+    var floetistin = new Musician('#floetistin', 'floete');
+    var harfenspieler = new Musician('#harfenspieler', 'harfe');
 
-    // Callbacks
+    /*
+            Callbacks
+     */
+
+    // Musiker
     function tap_handler(event)
     {
         event.stopPropagation(); // event bubbling stoppen
 
-        var musician = {};
+        var musician;
         switch ( $(this).parent()[0].id )
         {
             case 'geigerin': musician = geigerin; break;
+            case 'floetistin': musician = floetistin; break;
+            case 'harfenspieler': musician = harfenspieler; break;
             default: break;
         }
 
-        if(musician.is_playing)
-        {
-            musician.stop_playing();
-        }
-        else
-        {
-            musician.start_playing();
-        }
+        musician.toggle_playing();
     }
 
     function swipeleft_handler(event)
     {
         event.stopPropagation(); // event bubbling stoppen
-        // TODO: grosse switches hier gut?!?
 
         switch($(this).parent()[0].id)
         {
-            case 'geigerin': geigerin.change_speed(low_speed); break;
+            case 'geigerin': geigerin.slower(); break;
+            case 'floetistin': floetistin.slower(); break;
+            case 'harfenspieler': harfenspieler.slower(); break;
             default: break;
         }
     }
@@ -106,19 +166,87 @@ $(document).on('pageinit', '#app-page', function()
 
         switch ($(this).parent()[0].id)
         {
-            case 'geigerin': geigerin.change_speed(high_speed); break;
+            case 'geigerin': geigerin.faster(); break;
+            case 'floetistin': floetistin.faster(); break;
+            case 'harfenspieler': harfenspieler.faster(); break;
             default: break;
         }
     }
 
-    // Bindings
+    // Mood Icons
+    function icon_drag_handler(event)
+    {
+        // set position absolute
+        $(this).addClass('dragging');
+        var x = event.originalEvent.changedTouches[0].pageX;
+        var y = event.originalEvent.changedTouches[0].pageY;
+        var offset_x = x - $(this).offset().left;
+        var offset_y = y - $(this).offset().top;
+
+        // Handler für den Bewegungsteil des Drags
+        function drag_move_handler(event)
+        {
+            event.preventDefault();
+            var x = event.originalEvent.changedTouches[0].pageX;
+            var y = event.originalEvent.changedTouches[0].pageY;
+            $(this).css('left', x - offset_x);
+            $(this).css('top', y - offset_y);
+        }
+        $(this).on('touchmove', drag_move_handler);
+
+        // Touchend Handler removes touchmove Handler
+        function drag_end_Handler(event)
+        {
+            $(this).removeAttr('style');
+            $(this).removeClass('dragging');
+
+            var x = event.originalEvent.changedTouches[0].pageX;
+            var y = event.originalEvent.changedTouches[0].pageY;
+            var element = document.elementFromPoint(x, y);
+
+            switch(element)
+            {
+                case $('#geigerin .hitbox').get(0):
+                    geigerin.slower(); break;
+                case $('#floetistin .hitbox').get(0):
+                    floetistin.faster(); break;
+                case $('#harfenspieler .hitbox').get(0):
+                    harfenspieler.slower(); break;
+                default: break;
+            }
+
+            /*if (element == $('#geigerin .hitbox').get(0))
+            {
+                geigerin.start_playing();
+            }*/
+
+            // TODO: weitere musiker
+
+            $(this).off('touchmove'); // Move Handler entfernen
+        }
+        $(this).on('touchend', drag_end_Handler);
+    }
+
+    /*
+            Bindings
+     */
+
+    // Musiker
     $('.hitbox').on('tap', tap_handler);
     $('.hitbox').on('swipeleft', swipeleft_handler);
     $('.hitbox').on('swiperight', swiperight_handler);
+
+    // Mood Icons
+    $('.mood-icon').on('touchstart', icon_drag_handler);
+
+    // Podium
+    $("#podium-right").doubleTap(function()
+    {
+        alert('double tap')
+    });
 });
 
-
-// Nur für die erste Seite relevant!
+// Code hier wird nur beim laden der ersten Page ausgeführt!
 $(document).ready(function ()
 {
     // ist application cache API verfügbar?
@@ -127,7 +255,7 @@ $(document).ready(function ()
         var cache = window.applicationCache;
 
         // TODO: anzahl der dateien aus manifest datei extrahieren
-        var num_files_total = 35; // Anzahl aller Dateien
+        var num_files_total = 41; // Anzahl aller Dateien
         var num_files_cached = 0; // Anzahl Datien die bereits geladen sind
 
         var $progress_bar = TolitoProgressBar('progressbar')
@@ -192,6 +320,7 @@ $(document).ready(function ()
     }
     else
     {
+        // gar nix geht
         $.mobile.changePage("error-nocache.html", { transition: "slidedown" });
     }
 });
