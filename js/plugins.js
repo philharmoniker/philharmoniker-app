@@ -26,7 +26,7 @@ MBP.startupImage();
 MBP.preventScrolling();
 MBP.preventZoom();
 
-// TODO: doubleclick plugin, nicht sonderlich gut
+// TODO: doubletap plugin, nicht sonderlich gut,mal sehen obs hält
 (function($)
 {
     $.fn.doubleTap = function(doubleTapCallback)

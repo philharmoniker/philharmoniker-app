@@ -6,7 +6,8 @@ html,
 button,
 input,
 select,
-textarea {
+textarea
+{
     color: #222;
 }
 
@@ -19,20 +20,26 @@ body
 /*
  * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
  */
-img {
+img
+{
     vertical-align: middle;
 }
 
 /* ==========================================================================
-   Author's custom styles
+   Eigene Styles
    ========================================================================== */
 
-img
+/*
+ * Standart-Funktionen auf iOS-Geräten unterbinden
+ */
+img,
+div,
+a
 {
     /* default press state */
     -webkit-tap-highlight-color: transparent;
 
-    /* kein "Bild speichern" */
+    /* kein: "Bild speichern" */
     -webkit-touch-callout: none;
 
     /* kein: Copy&Paste */
@@ -42,26 +49,29 @@ img
     -webkit-user-drag: none;
 }
 
-/* ******** JQM overrides ******** */
+/* JQM overrides
+   ========================================================================== */
 
 h1
 {
-    color: white;
+    color: #fff;
 }
 
+/* Progress-Balken */
 .ui-tolito-progressbar-outer-e
 {
-    background: #FCC200;
-    background-image: linear-gradient(#FCC200,#FCC200);
-    background-image: -moz-linear-gradient(#FCC200,#FCC200);
-    background-image: -ms-linear-gradient(#FCC200,#FCC200);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#FCC200),to(#FCC200));
-    background-image: -webkit-linear-gradient(#FCC200,#FCC200);
-    border: 1px solid #F7AE00;
+    background: #fcc200;
+    background-image: linear-gradient(#fcc200, #fcc200);
+    background-image: -moz-linear-gradient(#fcc200, #fcc200);
+    background-image: -ms-linear-gradient(#fcc200, #fcc200);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#fcc200),to(#fcc200));
+    background-image: -webkit-linear-gradient(#fcc200, #fcc200);
+    border: 1px solid #f7ae00;
     color: #111;
     text-shadow: 0 1px 0 #fff;
 }
 
+/* Ecken eckig */
 .ui-corner-all
 {
     -webkit-border-radius: 0em
@@ -74,14 +84,15 @@ h1
     border-radius: 0em;
 }
 
+/* Titel, Logo (überschrieben mit eigener id) */
 #preload-header
 {
     background: transparent none;
     border: none;
 }
 
-
-/* ******** preload ******** */
+/* Preload
+   ========================================================================== */
 
 #preload-logo
 {
@@ -110,16 +121,17 @@ h1
 {
     margin: 10px auto;
     text-align: center;
-
 }
+
 
 /* ==========================================================================
    App styles
    ========================================================================== */
 
+/* Hintergrund */
 #app-page
 {
-    background: #ffffff url(../img/tablet/app_bg.jpg) no-repeat top center fixed;
+    background: #fff url(../img/tablet/app_bg.jpg) no-repeat top center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -137,7 +149,7 @@ h1
     width: 270px;
     height: 445px;
     /* TODO: debug */
-    border: solid 2px green;
+    border: solid 2px #008000;
 }
 
 .hitbox
@@ -147,7 +159,7 @@ h1
     z-index: 3000;
     /* TODO: debug */
     background-color: rgba(255,255,0,0.25);
-    border: solid 2px yellow;
+    border: solid 2px #ff0;
 }
 
 #geigerin
@@ -215,9 +227,9 @@ h1
         margin: 0 0 0 15px;
     }
 
-/*
-        Pult-Menü
- */
+
+/* Pult-Menü
+   ========================================================================== */
 
 #podium
 {
@@ -254,10 +266,15 @@ h1
 
 }
 
-.dragging
+/* ==========================================================================
+   JavaScript Classes (prefix with "js-")
+   ========================================================================== */
+
+.js-dragging
 {
     position: fixed;
 }
+
 
 /* ==========================================================================
    Helper classes
@@ -289,8 +306,7 @@ textarea[contenteditable] {
  * Image replacement
  */
 .ir {
-    background-color: transparent;
-    background-repeat: no-repeat;
+    background: transparent no-repeat;
     border: 0;
     direction: ltr;
     display: block;
@@ -361,12 +377,13 @@ textarea[contenteditable] {
 }
 
 
-/* Standard Media Queries von:
-    http://css-tricks.com/snippets/css/media-queries-for-standard-devices/
+/* ==========================================================================
+   Media Queries von:
+   http://css-tricks.com/snippets/css/media-queries-for-standard-devices/
    (immer am Schluss)
-*/
+   ========================================================================== */
 
-/* Smartphones (iphone 3) (landscape) ----------- */
+/* Smartphones (iphone 3) (landscape)  */
 @media only screen
 and (min-width: 321px) and (max-width: 480px)
 {
@@ -386,13 +403,14 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : landscape)
 {
-    /* ******** preload ******** */
+    /* preload
+       ========================================================================== */
 
     #preload-logo
     {
         width: 800px;
         height: 500px;
-        background: #ffffff url("../img/tablet/app_bg.jpg") no-repeat center center;
+        background: #FFFFFF url("../img/tablet/app_bg.jpg") no-repeat center center;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -408,8 +426,8 @@ and (orientation : landscape)
         background-size: cover;
     }
 
-   /* ******** app ******** */
-
+   /* App
+      ========================================================================== */
 }
 
 /* iPads (portrait) ----------- */
@@ -418,7 +436,11 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait)
 {
-    #app-page, #preload-page
+    /*
+        TODO: Versuch eines landscape-locks. wenns so nicht geht dann in javascript
+     */
+    #app-page,
+    #preload-page
     {
         -webkit-transform: rotate(90deg);
         -moz-transform: rotate(90deg);
@@ -430,6 +452,9 @@ and (orientation : portrait)
 @media only screen
 and (min-width : 1224px)
 {
+    /* preload
+       ========================================================================== */
+
     #progressbar-button
     {
         width: 50%;
@@ -447,6 +472,9 @@ and (min-width : 1224px)
         margin: 0 auto;
     }
 
+    /* App
+      ========================================================================== */
+
     #app-content
     {
         min-height: 1000px;
@@ -457,13 +485,6 @@ and (min-width : 1224px)
         width: 600px;
         top: 500px;
     }
-}
-
-/* Large screens ----------- */
-@media only screen
-and (min-width : 1824px)
-{
-
 }
 
 /* iPhone 4 (landscape) ----------- */

@@ -1,152 +1,149 @@
-$(document).on('mobileinit', function()
+/**
+ * Die Musician Klasse repräsentiert einen Musiker im App.
+ * @param id CSS id des Musiker-DIVs (mit '#')
+ * @param soundfile hauptteil der verschiedenen sound-datei-namen. Es werden die drei Varianten daraus generiert
+ * @constructor
+ */
+function Musician( id, soundfile )
 {
-    // inits für JQM
-});
+    'use strict';
 
-/*
- pagebeforeload, pageload and pageloadfailed are fired when an external page is loaded
- pagebeforechange, pagechange and pagechangefailed are page change events. These events are fired when a user is navigating between pages in the applications.
- pagebeforeshow, pagebeforehide, pageshow and pagehide are page transition events. These events are fired before, during and after a transition and are named.
- pagebeforecreate, pagecreate and pageinit are for page initialization.
- pageremove can be fired and then handled when a page is removed from the DOM
-*/
+    var self = this, // this referenz für closures
+        num_frames = 12,
+        normal_speed = 12,
+        high_speed = 24,
+        low_speed = 6;
 
-// Code wird beim laden der #app-page ausgeführt (1x)
-$(document).on('pageinit', '#app-page', function()
-{
-    // id: CSS id des Musiker-sprites (mit #)
-    // soundfile: hauptteil der verschiedenen sound-datei-namen. Es werden die drei Varianten daraus generiert
-    function Musician(id, soundfile)
+    this.id = id;
+    this.soundfile_normal = 'sound/' + soundfile + '_normal.mp3';
+    this.soundfile_slow = 'sound/' + soundfile + '_langsam.mp3';
+    this.soundfile_fast = 'sound/' + soundfile + '_schnell.mp3';
+
+    this.is_playing = false;
+    this.speed = normal_speed;
+
+    this.sound_normal = new Howl(
+        {
+            urls: [this.soundfile_normal]
+        });
+
+    this.sound_slow = new Howl(
+        {
+            urls: [this.soundfile_slow]
+        });
+
+    this.sound_fast = new Howl(
+        {
+            urls: [this.soundfile_fast]
+        });
+
+    this.start_playing = function()
     {
-        var num_frames = 12;
-        var normal_speed = 12;
-        var high_speed = 24;
-        var low_speed = 6;
-
-        this.id = id;
-        this.soundfile_normal = 'sound/' + soundfile + '_normal.mp3';
-        this.soundfile_slow = 'sound/' + soundfile + '_langsam.mp3';
-        this.soundfile_fast = 'sound/' + soundfile + '_schnell.mp3';
-
-        this.is_playing = false;
-        this.speed = normal_speed;
-        this.sound_normal = new Howl(
-            {
-                urls: [this.soundfile_normal]
-            });
-
-        this.sound_slow = new Howl(
-            {
-                urls: [this.soundfile_slow]
-            });
-
-        this.sound_fast = new Howl(
-            {
-                urls: [this.soundfile_fast]
-            });
-
-        /*
-            startet Animation
-            startet sound
-        */
-        this.start_playing = function()
+        if(!this.is_playing) // spielen wir schon?
         {
-            if(!this.is_playing) // spielen wir schon?
-            {
-                $(id).sprite({ fps: this.speed, no_of_frames: num_frames });
-                this.sound_normal.play();
-                this.is_playing = true;
-            }
+            $(id).sprite({ fps: this.speed, no_of_frames: num_frames });
+            this.sound_normal.play();
+            this.is_playing = true;
         }
+    };
 
-        this.toggle_playing = function()
-        {
-            if(this.is_playing)
-            {
-                $(id).destroy();
-                this.sound_slow.stop();
-                this.sound_normal.stop();
-                this.sound_fast.stop();
-                this.is_playing = false;
-            }
-            else
-            {
-                $(id).sprite({ fps: this.speed, no_of_frames: num_frames });
-                this.sound_normal.play();
-                this.is_playing = true;
-            }
-        }
-
-        /*
-            stoppt animation
-            stoppt sound
-        */
-        this.stop_playing = function()
+    this.toggle_playing = function()
+    {
+        if(this.is_playing)
         {
             $(id).destroy();
+            this.sound_slow.stop();
             this.sound_normal.stop();
+            this.sound_fast.stop();
             this.is_playing = false;
         }
-
-        /*
-            setzt neue abspielgeschwindigkeit (nur animation)
-         */
-        function change_anim_speed (speed)
+        else
         {
-            this.speed = speed;
-            $(id).fps(this.speed);
+            $(id).sprite({ fps: this.speed, no_of_frames: num_frames });
+            this.sound_normal.play();
+            this.is_playing = true;
         }
+    };
 
-        this.slower = function()
-        {
-            change_anim_speed(low_speed);
-            var position = this.sound_normal.pos();
-            this.sound_normal.stop();
+    this.stop_playing = function()
+    {
+        $(id).destroy();
+        this.sound_normal.stop();
+        this.is_playing = false;
+    };
 
-            this.sound_slow.play();
-            this.sound_slow.pos(position);
-        }
-
-        this.faster = function()
-        {
-            change_anim_speed(high_speed);
-
-            var position = this.sound_normal.pos();
-            this.sound_normal.stop();
-
-            this.sound_fast.play();
-            this.sound_fast.pos(position);
-        }
-
-
+    function change_anim_speed(speed)
+    {
+        self.speed = speed;
+        $(id).fps(self.speed);
     }
 
-    // Unsere Musiker-Objekte
-    var geigerin = new Musician('#geigerin', 'geige');
-    var floetistin = new Musician('#floetistin', 'floete');
-    var harfenspieler = new Musician('#harfenspieler', 'harfe');
+    this.slower = function()
+    {
+        change_anim_speed(low_speed);
+        var position = this.sound_normal.pos();
+        this.sound_normal.stop();
 
-    /*
-            Callbacks
+        this.sound_slow.play();
+        this.sound_slow.pos(position);
+    };
+
+    this.faster = function()
+    {
+        change_anim_speed(high_speed);
+
+        var position = this.sound_normal.pos();
+        this.sound_normal.stop();
+
+        this.sound_fast.play();
+        this.sound_fast.pos(position);
+    };
+}
+
+/**
+ * Code wird beim laden der #app-page ausgeführt (einmalig)
+ */
+$(document).on('pageinit', '#app-page', function()
+{
+    'use strict';
+
+    // Musiker-Objekte
+    var geigerin = new Musician('#geigerin', 'geige'),
+        floetistin = new Musician('#floetistin', 'floete'),
+        harfenspieler = new Musician('#harfenspieler', 'harfe');
+
+    /**
+     * Musiker Tap-Eventhandler
+     * @param event
      */
-
-    // Musiker
     function tap_handler(event)
     {
         event.stopPropagation(); // event bubbling stoppen
 
         var musician;
-        switch ( $(this).parent()[0].id )
+        switch ( $(this).parent()[0].id ) // id des angeklickten divs
         {
-            case 'geigerin': musician = geigerin; break;
-            case 'floetistin': musician = floetistin; break;
-            case 'harfenspieler': musician = harfenspieler; break;
-            default: break;
+            case 'geigerin':
+                musician = geigerin;
+                break;
+            case 'floetistin':
+                musician = floetistin;
+                break;
+            case 'harfenspieler':
+                musician = harfenspieler;
+                break;
+            default:
+                break;
         }
 
         musician.toggle_playing();
     }
 
+    /**
+     * Musiker Wisch-Handler
+     * TODO: Musiker muss nicht mehr gewischt werden
+     * @param event
+     */
     function swipeleft_handler(event)
     {
         event.stopPropagation(); // event bubbling stoppen
@@ -160,11 +157,16 @@ $(document).on('pageinit', '#app-page', function()
         }
     }
 
+    /**
+     * Musiker Wisch-Event
+     * TODO: kein wischen mehr
+     * @param event
+     */
     function swiperight_handler(event)
     {
         event.stopPropagation(); // event bubbling stoppen
 
-        switch ($(this).parent()[0].id)
+        switch ( $(this).parent()[0].id )
         {
             case 'geigerin': geigerin.faster(); break;
             case 'floetistin': floetistin.faster(); break;
@@ -173,11 +175,14 @@ $(document).on('pageinit', '#app-page', function()
         }
     }
 
-    // Mood Icons
+    /**
+     * Drag Handler für die Stimmungs-Icons
+     * @param event
+     */
     function icon_drag_handler(event)
     {
         // set position absolute
-        $(this).addClass('dragging');
+        $(this).addClass('js-dragging');
         var x = event.originalEvent.changedTouches[0].pageX;
         var y = event.originalEvent.changedTouches[0].pageY;
         var offset_x = x - $(this).offset().left;
@@ -194,11 +199,14 @@ $(document).on('pageinit', '#app-page', function()
         }
         $(this).on('touchmove', drag_move_handler);
 
-        // Touchend Handler removes touchmove Handler
+        /**
+         * Drop-Handler für die Stimmungs-Icons
+         * @param event
+         */
         function drag_end_Handler(event)
         {
             $(this).removeAttr('style');
-            $(this).removeClass('dragging');
+            $(this).removeClass('js-dragging');
 
             var x = event.originalEvent.changedTouches[0].pageX;
             var y = event.originalEvent.changedTouches[0].pageY;
@@ -207,57 +215,56 @@ $(document).on('pageinit', '#app-page', function()
             switch(element)
             {
                 case $('#geigerin .hitbox').get(0):
-                    geigerin.slower(); break;
+                    geigerin.slower();
+                    break;
                 case $('#floetistin .hitbox').get(0):
-                    floetistin.faster(); break;
+                    floetistin.faster();
+                    break;
                 case $('#harfenspieler .hitbox').get(0):
-                    harfenspieler.slower(); break;
-                default: break;
+                    harfenspieler.slower();
+                    break;
+                default:
+                    break;
             }
 
-            /*if (element == $('#geigerin .hitbox').get(0))
-            {
-                geigerin.start_playing();
-            }*/
-
-            // TODO: weitere musiker
+           // TODO: weitere musiker
 
             $(this).off('touchmove'); // Move Handler entfernen
         }
-        $(this).on('touchend', drag_end_Handler);
+        $(this).on('touchend', drag_end_Handler); // Drop-Handler anhängen
     }
 
-    /*
-            Bindings
-     */
+    // Musiker an Events hängen
+    $('.hitbox').on('tap', tap_handler).on('swipeleft', swipeleft_handler).on('swiperight', swiperight_handler);
 
-    // Musiker
-    $('.hitbox').on('tap', tap_handler);
-    $('.hitbox').on('swipeleft', swipeleft_handler);
-    $('.hitbox').on('swiperight', swiperight_handler);
-
-    // Mood Icons
+    // Mood Icons an Events hängen
     $('.mood-icon').on('touchstart', icon_drag_handler);
 
-    // Podium
+    // Podium Doppel-Tap für Spielstart
     $("#podium-right").doubleTap(function()
     {
-        alert('double tap')
+        alert('double tap');
+        /*
+            TODO: Spiel start!
+         */
     });
 });
 
-// Code hier wird nur beim laden der ersten Page ausgeführt!
+// Code hier wird nur beim laden der ersten Page (preload) ausgeführt!
 $(document).ready(function ()
 {
-    // ist application cache API verfügbar?
-    if (window.applicationCache != undefined)
+    "use strict";
+
+    // Ist application cache API verfügbar?
+    if (window.applicationCache !== undefined)
     {
         var cache = window.applicationCache;
 
         // TODO: anzahl der dateien aus manifest datei extrahieren
-        var num_files_total = 41; // Anzahl aller Dateien
-        var num_files_cached = 0; // Anzahl Datien die bereits geladen sind
+        var num_files_total = 41, // Anzahl aller Dateien
+            num_files_cached = 0; // Anzahl Datein die bereits geladen wurden
 
+        // Progress-Balken
         var $progress_bar = TolitoProgressBar('progressbar')
             .setOuterTheme('e')
             .setInnerTheme('e')
