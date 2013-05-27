@@ -37,9 +37,9 @@ function Musician( id, soundfile )
             urls: [this.soundfile_fast]
         });
 
-    this.start_playing = function()
+    this.start_playing = function ()
     {
-        if(!this.is_playing) // spielen wir schon?
+        if ( ! this.is_playing ) // spielen wir schon?
         {
             $(id).sprite({ fps: this.speed, no_of_frames: num_frames });
             this.sound_normal.play();
@@ -47,9 +47,9 @@ function Musician( id, soundfile )
         }
     };
 
-    this.toggle_playing = function()
+    this.toggle_playing = function ()
     {
-        if(this.is_playing)
+        if ( this.is_playing )
         {
             $(id).destroy();
             this.sound_slow.stop();
@@ -65,20 +65,20 @@ function Musician( id, soundfile )
         }
     };
 
-    this.stop_playing = function()
+    this.stop_playing = function ()
     {
         $(id).destroy();
         this.sound_normal.stop();
         this.is_playing = false;
     };
 
-    function change_anim_speed(speed)
+    function change_anim_speed( speed )
     {
         self.speed = speed;
         $(id).fps(self.speed);
     }
 
-    this.slower = function()
+    this.slower = function ()
     {
         change_anim_speed(low_speed);
         var position = this.sound_normal.pos();
@@ -88,7 +88,7 @@ function Musician( id, soundfile )
         this.sound_slow.pos(position);
     };
 
-    this.faster = function()
+    this.faster = function ()
     {
         change_anim_speed(high_speed);
 
@@ -100,10 +100,39 @@ function Musician( id, soundfile )
     };
 }
 
+function generate_gesture( gesture )
+{
+    // generiere irgendwie Gestendaten
+    // schreibe sie in das Gestenobjekt
+    gesture.works = true;
+}
+
+/**
+ * Verarbeitet eine erhaltene Geste und bestimmt, was im Spiel als nächste s geschieht
+ * @param gesture Irgendein tolles Gestenobjekt
+ */
+function process_gesture( gesture )
+{
+    // TODO: gestenobjekt erhalten und dann tolle Sachen damit machen
+    var gesture_type = 0;
+    switch ( gesture_type )
+    {
+        case 0:
+            // Geste 0 erkannt! mach was!
+            break;
+        case 1:
+            break;
+        default:
+            break;
+    }
+    //TODO: debug
+    alert('Geste!');
+}
+
 /**
  * Code wird beim laden der #app-page ausgeführt (einmalig)
  */
-$(document).on('pageinit', '#app-page', function()
+$(document).on('pageinit', '#app-page', function ()
 {
     'use strict';
 
@@ -116,12 +145,12 @@ $(document).on('pageinit', '#app-page', function()
      * Musiker Tap-Eventhandler
      * @param event
      */
-    function tap_handler(event)
+    function tap_handler( event )
     {
         event.stopPropagation(); // event bubbling stoppen
 
         var musician;
-        switch ( $(this).parent()[0].id ) // id des angeklickten divs
+        switch ($(this).parent()[0].id) // id des angeklickten divs
         {
             case 'geigerin':
                 musician = geigerin;
@@ -140,46 +169,10 @@ $(document).on('pageinit', '#app-page', function()
     }
 
     /**
-     * Musiker Wisch-Handler
-     * TODO: Musiker muss nicht mehr gewischt werden
-     * @param event
-     */
-    function swipeleft_handler(event)
-    {
-        event.stopPropagation(); // event bubbling stoppen
-
-        switch($(this).parent()[0].id)
-        {
-            case 'geigerin': geigerin.slower(); break;
-            case 'floetistin': floetistin.slower(); break;
-            case 'harfenspieler': harfenspieler.slower(); break;
-            default: break;
-        }
-    }
-
-    /**
-     * Musiker Wisch-Event
-     * TODO: kein wischen mehr
-     * @param event
-     */
-    function swiperight_handler(event)
-    {
-        event.stopPropagation(); // event bubbling stoppen
-
-        switch ( $(this).parent()[0].id )
-        {
-            case 'geigerin': geigerin.faster(); break;
-            case 'floetistin': floetistin.faster(); break;
-            case 'harfenspieler': harfenspieler.faster(); break;
-            default: break;
-        }
-    }
-
-    /**
      * Drag Handler für die Stimmungs-Icons
      * @param event
      */
-    function icon_drag_handler(event)
+    function icon_drag_handler( event )
     {
         // set position absolute
         $(this).addClass('js-dragging');
@@ -189,7 +182,7 @@ $(document).on('pageinit', '#app-page', function()
         var offset_y = y - $(this).offset().top;
 
         // Handler für den Bewegungsteil des Drags
-        function drag_move_handler(event)
+        function drag_move_handler( event )
         {
             event.preventDefault();
             var x = event.originalEvent.changedTouches[0].pageX;
@@ -197,13 +190,14 @@ $(document).on('pageinit', '#app-page', function()
             $(this).css('left', x - offset_x);
             $(this).css('top', y - offset_y);
         }
+
         $(this).on('touchmove', drag_move_handler);
 
         /**
          * Drop-Handler für die Stimmungs-Icons
          * @param event
          */
-        function drag_end_Handler(event)
+        function drag_end_Handler( event )
         {
             $(this).removeAttr('style');
             $(this).removeClass('js-dragging');
@@ -212,7 +206,7 @@ $(document).on('pageinit', '#app-page', function()
             var y = event.originalEvent.changedTouches[0].pageY;
             var element = document.elementFromPoint(x, y);
 
-            switch(element)
+            switch (element)
             {
                 case $('#geigerin .hitbox').get(0):
                     geigerin.slower();
@@ -227,41 +221,70 @@ $(document).on('pageinit', '#app-page', function()
                     break;
             }
 
-           // TODO: weitere musiker
+            // TODO: weitere musiker
 
             $(this).off('touchmove'); // Move Handler entfernen
         }
+
         $(this).on('touchend', drag_end_Handler); // Drop-Handler anhängen
     }
 
     // Musiker an Events hängen
-    $('.hitbox').on('tap', tap_handler).on('swipeleft', swipeleft_handler).on('swiperight', swiperight_handler);
+    $('.hitbox').on('tap', tap_handler);
 
     // Mood Icons an Events hängen
     $('.mood-icon').on('touchstart', icon_drag_handler);
 
     // Podium Doppel-Tap für Spielstart
-    $("#podium-right").doubleTap(function()
+    $('#podium-right').doubleTap(function ()
     {
         alert('double tap');
         /*
-            TODO: Spiel start!
+         TODO: Spiel start!
          */
+    });
+
+    // Aktiviere den Gesten Canvas
+    $('#knight5').on('tap',function( event )
+    {
+        // Toggle den canvas
+        if ( $('#gestures').hasClass('hidden') )
+        {
+            $('#gestures').removeClass('hidden');
+        }
+        else
+        {
+            $('#gestures').addClass('hidden');
+        }
+    });
+
+    var gesture = {};
+    gesture.works = false;
+
+    // Touch events auf dem Gesten Canvas
+    $('#gestures').on('touchend',function( event )
+    {
+        // touch ende -> canvas wieder verstecken und geste auswerten
+        $('#gestures').addClass('hidden');
+
+        // Geste auswerten...
+        generate_gesture(gesture);
+        process_gesture(gesture);
     });
 });
 
 // Code hier wird nur beim laden der ersten Page (preload) ausgeführt!
 $(document).ready(function ()
 {
-    "use strict";
+    'use strict';
 
     // Ist application cache API verfügbar?
-    if (window.applicationCache !== undefined)
+    if ( window.applicationCache !== undefined )
     {
         var cache = window.applicationCache;
 
         // TODO: anzahl der dateien aus manifest datei extrahieren
-        var num_files_total = 41, // Anzahl aller Dateien
+        var num_files_total = 38, // Anzahl aller Dateien
             num_files_cached = 0; // Anzahl Datein die bereits geladen wurden
 
         // Progress-Balken
@@ -274,60 +297,56 @@ $(document).ready(function ()
             .showCounter(true)
             .build();
 
-        // Überprüfe auf neue Version auf dem Server: CHECKING
-        cache.addEventListener('checking', function(event)
+        // Überprüfe auf neue Version auf dem Server:               CHECKING
+        cache.addEventListener('checking', function ( event )
         {
-            $('#progressbar-button').parent().find('.ui-btn-inner .ui-btn-text').attr('href', "#");
-            $('#progressbar-button').parent().find('.ui-btn-inner .ui-btn-text').text('Überprüfe...');
+            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#').text('Überprüfe...');
         });
 
-        // Version ist aktuell: NOUPDATE
-        cache.addEventListener('noupdate', function(event)
+        // Version ist aktuell:                                     NOUPDATE
+        cache.addEventListener('noupdate', function ( event )
         {
             $progress_bar.setValue(num_files_total);
-            $('#progressbar-button').parent().find('.ui-btn-inner .ui-btn-text').attr('href', "app.html");
-            $('#progressbar-button').parent().find('.ui-btn-inner .ui-btn-text').text('Starte App');
+            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
         });
 
-        // App das erste mal gecached: CACHED
-        cache.addEventListener('cached', function(event)
+        // App das erste mal gecached:                              CACHED
+        cache.addEventListener('cached', function ( event )
         {
             $progress_bar.setValue(num_files_total);
-            $('#progressbar-button').parent().find('.ui-btn-inner .ui-btn-text').attr('href', "app.html");
-            $('#progressbar-button').parent().find('.ui-btn-inner .ui-btn-text').text('Starte App');
+            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
         });
 
-        // Download startet: DOWNLOADING
-        cache.addEventListener('downloading', function(event)
+        // Download startet:                                        DOWNLOADING
+        cache.addEventListener('downloading', function ( event )
         {
-            $('#progressbar-button').parent().find('.ui-btn-inner .ui-btn-text').attr('href', "#");
-            $('#progressbar-button').parent().find('.ui-btn-inner .ui-btn-text').text('Lade App...');
+            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#').text('Lade App...');
         });
 
         // listener für progress bar, 1x fire -> +1, dann den balken updaten: PROGRESS
-        cache.addEventListener('progress', function(event)
+        cache.addEventListener('progress', function ( event )
         {
-            num_files_cached++;
+            num_files_cached ++;
             $progress_bar.setValue(num_files_cached);
         });
 
         // update wurde heruntergeladen, verwenden?: UPDATEREADY
         // TODO: Evtl. nur ein silent update durchführen, ohne popup. Führt aber dazu, dass das App "immer komisch neu lädt"
-        cache.addEventListener('updateready', function(event)
+        cache.addEventListener('updateready', function ( event )
         {
             cache.swapCache(); // neuen cache benutzen
-            $.mobile.changePage("refresh.html", { transition: "slidedown" }); // Seite neu laden
+            $.mobile.changePage('update.html', { transition: 'slidedown' });
         });
 
         // Fehler: ERROR
-        cache.addEventListener('error', function(event)
+        cache.addEventListener('error', function ( event )
         {
-            $.mobile.changePage("error-preload.html", { transition: "slidedown" });
+            $.mobile.changePage('error-dl.html', { transition: 'slidedown' });
         });
     }
     else
     {
         // gar nix geht
-        $.mobile.changePage("error-nocache.html", { transition: "slidedown" });
+        $.mobile.changePage('error-cache.html', { transition: 'slidedown' });
     }
 });

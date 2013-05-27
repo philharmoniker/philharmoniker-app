@@ -1,9 +1,19 @@
 <!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8">
+    <title>Dirigenten App</title>
+    <!-- TODO: debug. später löschen -->
+    <link rel="stylesheet" href="css/vendor/jquery.mobile.structure-1.3.1.min.css"><!-- Framework -->
+    <link rel="stylesheet" href="css/vendor/jquery.mobile.theme-1.3.1.min.css"><!--- Default Theme -->
+    <link rel="stylesheet" href="css/vendor/normalize.css"><!-- CSS Reset -->
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/helper.js"></script>
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
 </head>
 <body>
-    <div id="app-page" data-role="page">
+    <!-- App -->
+    <div data-role="page" id="app-page">
         <div id="app-content" data-role="content">
             <div id="geigerin" class="sprite">
                 <div class="hitbox"></div>
@@ -18,9 +28,9 @@
                 <div class="hitbox"></div>
             </div>
             <div id="knight5" class="sprite">
-                <div class="hitbox"></div>
+                <div class="hitbox"><p>klick ins grüne für canvas!</p></div>
             </div>
-
+            <!-- Podium/Menü -->
             <div id="podium">
                 <div id="podium-left" class="podium-halfs">
                     <div id="mood-container">
@@ -33,8 +43,17 @@
                     <p>tap here</p>
                 </div>
             </div>
+            <!-- Gesten-Canvas -->
+            <canvas id="gestures" class="hidden" width="1000" height="700"></canvas><!-- TODO: magic number vorerst: ACHTUNG: in JS setzen NICHT CSS! -->
         </div>
-
     </div>
+
+    <!-- TODO: debug. später löschen -->
+    <script src="js/vendor/jquery-2.0.0.min.js"></script>
+    <script src="js/vendor/jquery.mobile-1.3.1.min.js"></script>
+    <script src="js/vendor/jquery.spritely.js"></script>
+    <script src="js/vendor/howler.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

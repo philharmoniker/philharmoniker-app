@@ -1,5 +1,5 @@
-(function(document) {
-
+(function(document)
+{
     window.MBP = window.MBP || {};
 
     /**
