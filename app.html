@@ -15,20 +15,22 @@
     <!-- App -->
     <div data-role="page" id="app-page">
         <div id="app-content" data-role="content">
-            <div id="geigerin" class="sprite">
-                <div class="hitbox"></div>
-            </div>
-            <div id="floetistin" class="sprite">
-                <div class="hitbox"></div>
-            </div>
-            <div id="harfenspieler" class="sprite">
-                <div class="hitbox"></div>
-            </div>
-            <div id="knight4" class="sprite">
-                <div class="hitbox"></div>
-            </div>
-            <div id="knight5" class="sprite">
-                <div class="hitbox"><p>klick ins grüne für canvas!</p></div>
+            <div id="sprite-container">
+                <div id="geigerin" class="sprite">
+                    <div class="hitbox"></div>
+                </div>
+                <div id="floetistin" class="sprite">
+                    <div class="hitbox"></div>
+                </div>
+                <div id="harfenspieler" class="sprite">
+                    <div class="hitbox"></div>
+                </div>
+                <div id="knight4" class="sprite">
+                    <div class="hitbox"></div>
+                </div>
+                <div id="knight5" class="sprite">
+                    <div class="hitbox"><p>klick ins grüne für canvas!</p></div>
+                </div>
             </div>
             <!-- Podium/Menü -->
             <div id="podium">
@@ -42,9 +44,10 @@
                 <div id="podium-right" class="podium-halfs">
                     <p>tap here</p>
                 </div>
+
             </div>
             <!-- Gesten-Canvas -->
-            <canvas id="gestures" class="hidden" width="1000" height="700"></canvas><!-- TODO: magic number vorerst: ACHTUNG: in JS setzen NICHT CSS! -->
+            <canvas id="gestures" class="hidden" width="1000" height="750"></canvas> <!-- TODO: magic number vorerst: ACHTUNG: in JS setzen NICHT CSS! -->
         </div>
     </div>
 

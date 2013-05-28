@@ -503,7 +503,7 @@ google.bookmarkbubble.Bubble.prototype.build_ = function() {
   bubbleInner.style.WebkitBorderRadius = '8px';
   bubbleInner.style.WebkitBoxShadow = '0 0 8px rgba(0, 0, 0, 0.7)';
   bubbleInner.style.WebkitBackgroundSize = '100% 8px';
-  bubbleInner.style.backgroundColor = '#b0c8ec';
+  bubbleInner.style.backgroundColor = '#fcc200';
   bubbleInner.style.background = '#cddcf3 -webkit-gradient(linear, ' +
       'left bottom, left top, ' + isIpad ?
           'from(#cddcf3), to(#b3caed)) no-repeat top' :
@@ -513,8 +513,8 @@ google.bookmarkbubble.Bubble.prototype.build_ = function() {
 
   // The "Add to Home Screen" text is intended to be the exact same size text
   // that is displayed in the menu of Mobile Safari on iPhone.
-  bubbleInner.innerHTML = 'Install this web app on your phone: tap ' +
-      '<b style="font-size:15px">+</b> and then <b>\'Add to Home Screen\'</b>';
+  bubbleInner.innerHTML = 'Installieren Sie dieses Web App auf ihrem Gerät: Tappen Sie ' +
+      '<b style="font-size:15px">+</b> und dann <b>\'Zum Home Screen hinzufügen\'</b>';
 
   var icon = document.createElement('div');
   icon.style['float'] = 'left';

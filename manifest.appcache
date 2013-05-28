@@ -1,7 +1,7 @@
 CACHE MANIFEST
-# Bei Änderungen an Dateibestand, immer folgende Zeilen mitändern (v++)
-# web app updated 2013-05-07
-# v3333
+# Bei Änderungen an Dateien, immer folgende Zeilen mitändern (v++)
+# web app updated 2013-05-28
+# v333
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -16,6 +16,7 @@ js/vendor/jquery.spritely.js
 js/vendor/modernizr-2.6.2.min.js
 js/vendor/tolito-1.0.3.min.js
 js/vendor/howler.min.js
+js/vendor/bookmark_bubble.js
 
 css/vendor/jquery.mobile.structure-1.3.1.min.css
 css/vendor/jquery.mobile.theme-1.3.1.min.css
@@ -27,6 +28,13 @@ img/jqm/icons-18-black.png
 img/jqm/icons-18-white.png
 img/jqm/icons-36-black.png
 img/jqm/icons-36-white.png
+
+img/touch/apple-touch-icon.png
+img/touch/apple-touch-icon-57x57-precomposed.png
+img/touch/apple-touch-icon-72x72-precomposed.png
+img/touch/apple-touch-icon-114x114-precomposed.png
+img/touch/apple-touch-icon-144x144-precomposed.png
+img/touch/apple-touch-icon-precomposed.png
 
 # HTML documents
 # index.html is always cached implicitly
@@ -53,7 +61,7 @@ img/tablet/mood_3.jpg
 
 img/sprites/geige_spielt.png
 
-# Misc files
+# Sound
 sound/floete_langsam.mp3
 sound/floete_normal.mp3
 sound/floete_schnell.mp3
