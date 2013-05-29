@@ -144,7 +144,6 @@ h1
    App styles
    ========================================================================== */
 
-/* Hintergrund */
 #app-page
 {
     background: #fff url(../img/tablet/app_bg.jpg) no-repeat top center fixed;
@@ -158,6 +157,9 @@ h1
 {
     height: 738px; /* TODO: magic number: parent: 768px, -15 padding oben unten */
 }
+
+/* Musiker
+   ========================================================================== */
 
 #sprite-container
 {
@@ -252,6 +254,23 @@ h1
         margin: 0 0 0 15px;
     }
 
+/* Intro
+   ========================================================================== */
+
+#silhouette
+{
+    position: absolute;
+    width: 99%;
+    height: 768px;
+    padding: 0;
+    bottom: 0px;
+    left: 0px;
+    z-index: 10;
+    background: transparent url(../img/tablet/silhouette.png) bottom center no-repeat fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
 
 /* Pult-Menü
    ========================================================================== */
@@ -317,6 +336,12 @@ h1
 /* Blur-Effekt */
 .js-blur
 {
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+}
+
+.js-ani-play-blur
+{
     -webkit-animation-name: js-ani-blur;
     -webkit-animation-duration: 1s;
     -webkit-animation-iteration-count: 1;
@@ -325,7 +350,7 @@ h1
     -webkit-animation-fill-mode: forwards;
 }
 
-.js-blur-rev
+.js-ani-play-blur-rev
 {
     -webkit-animation-name: js-ani-blur-rev;
     -webkit-animation-duration: 1s;
@@ -346,7 +371,6 @@ h1
         from { -webkit-filter: blur(2px); }
         to   { -webkit-filter: blur(0px); }
     }
-
 
 /* ==========================================================================
    Helper classes
