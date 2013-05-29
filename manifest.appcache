@@ -1,6 +1,6 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateien, immer folgende Zeilen mitändern (v++)
-# web app updated 2013-05-28
+# web app updated 2013-05-29
 # v333
 
 CACHE:
@@ -58,6 +58,7 @@ img/tablet/pult.png
 img/tablet/mood_1.jpg
 img/tablet/mood_2.jpg
 img/tablet/mood_3.jpg
+img/tablet/silhouette.png
 
 img/sprites/geige_spielt.png
 
@@ -71,6 +72,7 @@ sound/geige_schnell.mp3
 sound/harfe_langsam.mp3
 sound/harfe_normal.mp3
 sound/harfe_schnell.mp3
+sound/tuning.mp3
 
 NETWORK:
 
