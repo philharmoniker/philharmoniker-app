@@ -1,6 +1,6 @@
 /.idea/*
 *.iml
-/img/assets/*
+/assets/*
 
 #Netbeans specific
 nbproject/

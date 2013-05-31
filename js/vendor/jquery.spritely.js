@@ -564,4 +564,4 @@
 // Stop IE6 re-loading background images continuously
 try {
   document.execCommand("BackgroundImageCache", false, true);
-} catch(err) {} 
+} catch(err) {}

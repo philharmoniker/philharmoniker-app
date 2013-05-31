@@ -1,4 +1,6 @@
-// Avoid `console` errors in browsers that lack a console.
+/**
+ * Avoid `console` errors in browsers that lack a console.
+ */
 (function() {
     var method;
     var noop = function () {};
@@ -26,9 +28,13 @@ MBP.startupImage();
 MBP.preventScrolling();
 MBP.preventZoom();
 
-// TODO: doubletap plugin, nicht sonderlich gut,mal sehen obs hält
+/**
+ * TODO: doubletap plugin, nicht sonderlich gut,mal sehen obs hält
+  */
 (function($)
 {
+    'use strict';
+
     $.fn.doubleTap = function(doubleTapCallback)
     {
         return this.each(function()

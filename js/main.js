@@ -1,12 +1,41 @@
-/** @fileoverview Haupt JavaScript Datei des Apps. */
+/*==============================================================================
+ Author:         Georgios Panayiotou
+ Created:        2013-04-10
+ URL:            https://github.com/gpanayiotou
+ URL:            https://github.com/philharmoniker/philharmoniker-app
+ Institution:    HAW Hamburg
+ Faculty:        Design, Medien und Information
+ Department:     Medientechnik
+ Project:        Berliner Philharmoniker Projekt, Dirigenten App
+
+ Copyright (C) 2013  Georgios Panayiotou
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ =============================================================================*/
+
+/**
+ * @author Georgios Panayiotou
+ * @fileoverview Haupt-JavaScript Datei des Apps
+ */
 
 /* namespace */
 var EDUPHIL = {};
 
 /**
  * Die Musician Klasse repräsentiert einen Musiker im App.
- * @param element_id CSS id des Musiker-DIVs (mit '#')
- * @param soundfile hauptteil der verschiedenen sound-datei-namen. Es werden die drei Varianten daraus generiert
+ * @param {string} element_id CSS id des Musiker-DIVs (mit '#')
+ * @param {string} soundfile hauptteil der verschiedenen sound-datei-namen. Es werden die drei Varianten daraus generiert
  * @constructor
  */
 EDUPHIL.Musician = function( element_id, soundfile )
@@ -51,6 +80,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
 
     /**
      * Starte Sound und Animation
+     * @private
      */
     function start_playing()
     {
@@ -61,6 +91,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
 
     /**
      * Breche Abspielen ab und setze alles auf 0
+     * @private
      */
     function stop_playing()
     {
@@ -73,6 +104,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
 
     /**
      * Pausiert Abspielen
+     * @private
      */
     function pause_playing()
     {
@@ -95,6 +127,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
     /**
      * Setzt die Animationsgeschwindigkeit.
      * @param new_speed Die neuen FPS der Animation. Verwende normal_speed, low_speed oder high_speed
+     * @private
      */
     function change_anim_speed( new_speed )
     {
