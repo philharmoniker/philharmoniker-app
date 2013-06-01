@@ -7,19 +7,19 @@
  Faculty:        Design, Medien und Information
  Department:     Medientechnik
  Project:        Berliner Philharmoniker Projekt, Dirigenten App
-
+ 
  Copyright (C) 2013  Georgios Panayiotou
-
+ 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
-
+ 
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
-
+ 
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  =============================================================================*/
@@ -32,47 +32,59 @@
 /* namespace */
 var EDUPHIL = {};
 
+//verhindert scrollen
+//document.ontouchmove = function(e) {
+//    e.preventDefault();
+//};
+
+var QUANTITY = 1,
+        canvas,
+        context,
+        particle,
+        mouseX = 0,
+        mouseY = 0;
+
 /**
  * Die Musician Klasse repräsentiert einen Musiker im App.
  * @param {string} element_id CSS id des Musiker-DIVs (mit '#')
  * @param {string} soundfile hauptteil der verschiedenen sound-datei-namen. Es werden die drei Varianten daraus generiert
  * @constructor
  */
-EDUPHIL.Musician = function( element_id, soundfile )
+EDUPHIL.Musician = function(element_id, soundfile)
 {
     'use strict';
 
     var num_frames = 24,
-        normal_speed = 12,
-        high_speed = 24,
-        low_speed = 6,
-        is_playing = false,
-        DEFAULT_VOLUME = 0.2,
-        soundfile_normal = 'sound/' + soundfile + '_normal.mp3',
-        soundfile_slow = 'sound/' + soundfile + '_langsam.mp3',
-        soundfile_fast = 'sound/' + soundfile + '_schnell.mp3',
-        sound_normal = new Howl(
-        {
-            urls: [soundfile_normal],
-            loop: true,
-            buffer: true,
-            volume: DEFAULT_VOLUME
-        }),
-        sound_slow = new Howl(
-        {
-            urls: [soundfile_slow],
-            loop: true,
-            buffer: true,
-            volume: DEFAULT_VOLUME
-        }),
-        sound_fast = new Howl(
-        {
-            urls: [soundfile_fast],
-            loop: true,
-            buffer: true,
-            volume: DEFAULT_VOLUME
-        }),
-        graphics = $(element_id);
+            normal_speed = 12,
+            high_speed = 24,
+            low_speed = 6,
+            is_playing = false,
+            DEFAULT_VOLUME = 0.2,
+            soundfile_normal = 'sound/' + soundfile + '_normal.mp3',
+            soundfile_slow = 'sound/' + soundfile + '_langsam.mp3',
+            soundfile_fast = 'sound/' + soundfile + '_schnell.mp3',
+            sound_normal = new Howl(
+            {
+                urls: [soundfile_normal],
+                loop: true,
+                buffer: true,
+                volume: DEFAULT_VOLUME
+            }),
+    sound_slow = new Howl(
+            {
+                urls: [soundfile_slow],
+                loop: true,
+                buffer: true,
+                volume: DEFAULT_VOLUME
+            }),
+    sound_fast = new Howl(
+            {
+                urls: [soundfile_fast],
+                loop: true,
+                buffer: true,
+                volume: DEFAULT_VOLUME
+            }),
+    graphics = $(element_id);
 
     // public
     this.id = element_id;
@@ -84,7 +96,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
      */
     function start_playing()
     {
-        graphics.sprite({ fps: normal_speed, no_of_frames: num_frames });
+        graphics.sprite({fps: normal_speed, no_of_frames: num_frames});
         sound_normal.play();
         is_playing = true;
     }
@@ -120,8 +132,12 @@ EDUPHIL.Musician = function( element_id, soundfile )
      */
     this.toggle_playing = function()
     {
-        if ( is_playing ) { stop_playing(); }
-        else { start_playing(); }
+        if (is_playing) {
+            stop_playing();
+        }
+        else {
+            start_playing();
+        }
     };
 
     /**
@@ -129,7 +145,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
      * @param new_speed Die neuen FPS der Animation. Verwende normal_speed, low_speed oder high_speed
      * @private
      */
-    function change_anim_speed( new_speed )
+    function change_anim_speed(new_speed)
     {
         graphics.fps(new_speed);
     }
@@ -137,7 +153,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
     /**
      * Wechsle zu langsamer Tonspur und Animation
      */
-    this.play_slower = function ()
+    this.play_slower = function()
     {
         change_anim_speed(low_speed);
 
@@ -154,7 +170,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
     /**
      * Wechsle zu schneller Tonspur und Animation
      */
-    this.play_faster = function ()
+    this.play_faster = function()
     {
         change_anim_speed(high_speed);
 
@@ -206,7 +222,7 @@ EDUPHIL.remind_to_bookmark = function()
     window.setTimeout(function()
     {
         var bubble = new google.bookmarkbubble.Bubble(),
-            parameter = 'bmb=1';
+                parameter = 'bmb=1';
 
         // Hash-Problem workaround von hier: https://code.google.com/p/mobile-bookmark-bubble/issues/detail?id=7
         bubble.hasHashParameter = function()
@@ -272,7 +288,9 @@ EDUPHIL.app_intro = function()
      */
     window.setTimeout(function()
     {
-        $('#silhouette').fadeOut(2000, function() { $('#silhouette').remove(); });
+        $('#silhouette').fadeOut(2000, function() {
+            $('#silhouette').remove();
+        });
     }, 5000);
 
     window.setTimeout(function()
@@ -286,7 +304,7 @@ EDUPHIL.app_intro = function()
  * Tap-Handler für Musiker-Objekte (Einsatz)
  * @param event
  */
-EDUPHIL.musician_tap_handler = function( event )
+EDUPHIL.musician_tap_handler = function(event)
 {
     'use strict';
 
@@ -312,14 +330,14 @@ EDUPHIL.musician_tap_handler = function( event )
  * Drag-Handler für die Stimmungs-Icons
  * @param event
  */
-EDUPHIL.icon_drag_handler = function( event )
+EDUPHIL.icon_drag_handler = function(event)
 {
     'use strict';
 
     var x = event.originalEvent.changedTouches[0].pageX,
-        y = event.originalEvent.changedTouches[0].pageY,
-        offset_x = x - $(this).offset().left,
-        offset_y = y - $(this).offset().top;
+            y = event.originalEvent.changedTouches[0].pageY,
+            offset_x = x - $(this).offset().left,
+            offset_y = y - $(this).offset().top;
 
     $(this).detach();
     $(this).appendTo($('body'));
@@ -328,7 +346,7 @@ EDUPHIL.icon_drag_handler = function( event )
     $(this).css('top', y - offset_y);
 
     // Handler für den Bewegungsteil des Drags
-    function drag_move_handler( event )
+    function drag_move_handler(event)
     {
         event.preventDefault();
         var x = event.originalEvent.changedTouches[0].pageX;
@@ -343,7 +361,7 @@ EDUPHIL.icon_drag_handler = function( event )
      * Drop-Handler für die Stimmungs-Icons
      * @param event
      */
-    function drag_end_Handler( event )
+    function drag_end_Handler(event)
     {
         $(this).removeAttr('style');
         $(this).detach();
@@ -397,10 +415,10 @@ EDUPHIL.init_gestures = function()
  * Beginn einer neuen Geste
  * @param event
  */
-EDUPHIL.gesture_started = function( event )
+EDUPHIL.gesture_started = function(event)
 {
     'use strict';
-
+console.log(1);
     //erstellt ein neues Gesten-Objekt
     EDUPHIL.current_gesture = {};
     // setzt die Startwerte
@@ -408,22 +426,29 @@ EDUPHIL.gesture_started = function( event )
     EDUPHIL.current_gesture.start_y = event.originalEvent.changedTouches[0].pageY;
     EDUPHIL.current_gesture.name = '';
     EDUPHIL.current_gesture.succeeded = false;
+
+    if (event.originalEvent.touches.length === 1) {
+        event.originalEvent.preventDefault();
+        mouseX = event.originalEvent.touches[0].pageX;
+        mouseY = event.originalEvent.touches[0].pageY;
+        console.log(1);
+    }
 };
 
 /**
  * Fängt informationen über die Geste beim Bewegen des Fingers ein
  * @param event
  */
-EDUPHIL.capture_gesture = function( event )
+EDUPHIL.capture_gesture = function(event)
 {
     'use strict';
     event.preventDefault();
 
     var MAX_TOLERANCE = 20,
-        REQUIRED_DISTANCE = 50,
-        x = event.originalEvent.changedTouches[0].pageX,
-        y = event.originalEvent.changedTouches[0].pageY,
-        delta_x, delta_y;
+            REQUIRED_DISTANCE = 50,
+            x = event.originalEvent.changedTouches[0].pageX,
+            y = event.originalEvent.changedTouches[0].pageY,
+            delta_x, delta_y;
 
     delta_x = Math.abs(x - EDUPHIL.current_gesture.start_x);
     delta_y = Math.abs(y - EDUPHIL.current_gesture.start_y);
@@ -441,13 +466,19 @@ EDUPHIL.capture_gesture = function( event )
             EDUPHIL.current_gesture.succeeded = true;
         }
     }
+
+    if (event.originalEvent.touches.length === 1) {
+        event.originalEvent.preventDefault();
+        mouseX = event.originalEvent.touches[0].pageX;
+        mouseY = event.originalEvent.touches[0].pageY;
+    }
 };
 
 /**
  * Wird am Ende einer Geste ausgeführt, startet die Gesten-auswertung
  * @param event
  */
-EDUPHIL.gesture_finished = function( event )
+EDUPHIL.gesture_finished = function(event)
 {
     'use strict';
 
@@ -476,6 +507,53 @@ EDUPHIL.gesture_finished = function( event )
     $('#gestures').off('touchend', EDUPHIL.gesture_finished);
 };
 
+EDUPHIL.createParticle = function()
+{
+    particles = [];
+    for (var i = 0; i < QUANTITY; i++) {
+        var particle = {
+            size: 40,
+            position: {x: mouseX, y: mouseY},
+            offset: {x: 0, y: 0},
+            shift: {x: mouseX, y: mouseY},
+            speed: .75,
+            targetSize: 40,
+            fillColor: '#' + (0xfb0).toString(16)
+        };
+        particles.push(particle);
+    }
+};
+
+EDUPHIL.loop = function()
+{
+    context.fillStyle = 'rgba(0,0,0,0.05)';
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
+    for (i = 0, len = particles.length; i < len; i++) {
+        var particle = particles[i];
+
+        var lp = {x: particle.position.x, y: particle.position.y};
+
+        // Follow mouse with some lag
+        particle.shift.x += (mouseX - particle.shift.x);
+        particle.shift.y += (mouseY - particle.shift.y);
+
+        // Apply position
+        particle.position.x = particle.shift.x + Math.cos(i + particle.offset.x);
+        particle.position.y = particle.shift.y + Math.sin(i + particle.offset.y);
+
+        context.beginPath();
+        context.fillStyle = particle.fillColor;
+        context.strokeStyle = particle.fillColor;
+        context.lineWidth = particle.size;
+        context.moveTo(lp.x, lp.y);
+        context.lineTo(particle.position.x, particle.position.y);
+        context.stroke();
+        context.arc(particle.position.x, particle.position.y, particle.size / 2, 0, Math.PI * 2, true);
+        context.fill();
+    }
+};
+
 /**
  * Init Funktion für eine Spielrunde, setzt Listener und Variablen
  */
@@ -494,6 +572,16 @@ EDUPHIL.init_game = function()
 
     // Aktiviere den Gesten Canvas
     $('#knight5').on('tap', EDUPHIL.init_gestures);
+
+    canvas = document.getElementById('world');
+    context = canvas.getContext('2d');
+
+    document.addEventListener('touchstart', documentTouchStartHandler, false);
+    document.addEventListener('touchmove', documentTouchMoveHandler, false);
+
+    createParticle();
+    setInterval(loop, 1000 / 60);
+
 };
 
 /**
@@ -501,7 +589,7 @@ EDUPHIL.init_game = function()
  * Muss über document geladen werden, da die referenzierten HTML Elemente
  * in einer anderen Datei stehen.
  */
-$(document).on('pageinit', '#app-page', function ( event )
+$(document).on('pageinit', '#app-page', function(event)
 {
     'use strict';
 
@@ -517,16 +605,16 @@ $(document).on('pageinit', '#app-page', function ( event )
     EDUPHIL.orchestra.push(EDUPHIL.harfenspieler);
 
     EDUPHIL.tuning_sound = new Howl(
-    {
-        urls: ['sound/tuning.mp3'],
-        autoplay: false,
-        buffer: true,
-        loop: true,
-        volume: 0.1
-    });
+            {
+                urls: ['sound/tuning.mp3'],
+                autoplay: false,
+                buffer: true,
+                loop: true,
+                volume: 0.1
+            });
 
     // Podium Doppel-Tap für Spielstart
-    $('#podium-right').doubleTap(function ()
+    $('#podium-right').doubleTap(function()
     {
         EDUPHIL.init_game();
     });
@@ -548,37 +636,37 @@ $(document).on('pageshow', '#app-page', function()
 /**
  * Code hier wird nur beim laden der ersten Page (preload) ausgeführt!
  * */
-$(document).ready(function ()
+$(document).ready(function()
 {
     'use strict';
 
     // TODO: anzahl der dateien aus manifest datei extrahieren
     var num_files_total = 50, // Anzahl aller Dateien
-        num_files_cached = 0; // Anzahl Datein die bereits geladen wurden
+            num_files_cached = 0; // Anzahl Datein die bereits geladen wurden
 
     // Progress-Balken
     var $progress_bar = TolitoProgressBar('progressbar')
-        .setOuterTheme('e')
-        .setInnerTheme('e')
-        .isMini(true)
-        .setMax(num_files_total)
-        .setStartFrom(num_files_cached)
-        .showCounter(true)
-        .build();
+            .setOuterTheme('e')
+            .setInnerTheme('e')
+            .isMini(true)
+            .setMax(num_files_total)
+            .setStartFrom(num_files_cached)
+            .showCounter(true)
+            .build();
 
     // Ist application cache API verfügbar?
-    if ( window.applicationCache !== undefined )
+    if (window.applicationCache !== undefined)
     {
         var cache = window.applicationCache;
 
         // Überprüfe auf neue Version auf dem Server:               CHECKING
-        cache.addEventListener('checking', function ( event )
+        cache.addEventListener('checking', function(event)
         {
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#').text('Überprüfe...');
         });
 
         // Version ist aktuell:                                     NOUPDATE
-        cache.addEventListener('noupdate', function ( event )
+        cache.addEventListener('noupdate', function(event)
         {
             $progress_bar.setValue(num_files_total);
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
@@ -586,7 +674,7 @@ $(document).ready(function ()
         });
 
         // App das erste mal gecached:                              CACHED
-        cache.addEventListener('cached', function ( event )
+        cache.addEventListener('cached', function(event)
         {
             $progress_bar.setValue(num_files_total);
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
@@ -594,30 +682,30 @@ $(document).ready(function ()
         });
 
         // Download startet:                                        DOWNLOADING
-        cache.addEventListener('downloading', function ( event )
+        cache.addEventListener('downloading', function(event)
         {
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#').text('Lade App...');
         });
 
         // listener für progress bar, 1x fire -> +1, dann den balken updaten: PROGRESS
-        cache.addEventListener('progress', function ( event )
+        cache.addEventListener('progress', function(event)
         {
-            num_files_cached ++;
+            num_files_cached++;
             $progress_bar.setValue(num_files_cached);
         });
 
         // update wurde heruntergeladen, verwenden?: UPDATEREADY
         // TODO: Evtl. nur ein silent update durchführen, ohne popup. Führt aber dazu, dass das App "immer komisch neu lädt"
-        cache.addEventListener('updateready', function ( event )
+        cache.addEventListener('updateready', function(event)
         {
             cache.swapCache(); // neuen cache benutzen
-            $.mobile.changePage('update.html', { transition: 'slidedown' });
+            $.mobile.changePage('update.html', {transition: 'slidedown'});
         });
 
         // Fehler: ERROR
-        cache.addEventListener('error', function ( event )
+        cache.addEventListener('error', function(event)
         {
-            $.mobile.changePage('error-dl.html', { transition: 'slidedown' });
+            $.mobile.changePage('error-dl.html', {transition: 'slidedown'});
             $progress_bar.setValue(num_files_total);
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
             EDUPHIL.remind_to_bookmark();
@@ -626,7 +714,7 @@ $(document).ready(function ()
     else
     {
         // gar nix geht
-        $.mobile.changePage('error-cache.html', { transition: 'slidedown' });
+        $.mobile.changePage('error-cache.html', {transition: 'slidedown'});
         $progress_bar.setValue(num_files_total);
         $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
         EDUPHIL.remind_to_bookmark();
