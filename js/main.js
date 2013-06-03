@@ -7,19 +7,19 @@
  Faculty:        Design, Medien und Information
  Department:     Medientechnik
  Project:        Berliner Philharmoniker Projekt, Dirigenten App
- 
+
  Copyright (C) 2013  Georgios Panayiotou
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  =============================================================================*/
@@ -32,17 +32,24 @@
 /* namespace */
 var EDUPHIL = {};
 
+EDUPHIL.info_texts = [];
+EDUPHIL.info_texts.MOOD_ONE = 'Unter Stimmung versteht man die theoretische und praktische Festlegung der Tonhöhen (Frequenzen) von Schallquellen, insbesondere von Musikinstrumenten. In der Praxis genügt hierzu oft (etwa bei einigen Blasinstrumenten) die Festlegung der absoluten Tonhöhe durch Abgleich mit einer Normfrequenz (Kammerton a1 = 440 Hz oder einer anderen für den Einzelfall vereinbarten Frequenz). Vor allem bei Saiten- und Tasteninstrumenten ist zusätzlich eine relative Festlegung der den Saiten oder Tasten zugeordneten Frequenzen erforderlich. Während Streichinstrumente auch nach der Einstimmung ihrer Saiten jeden Ton (evtl. durch Lagenspiel) rein intonieren können, müssen bei Tasteninstrumenten die zwölf Halbtöne pro Oktave fest eingestimmt werden.';
+EDUPHIL.info_texts.GEIGERIN = 'Einige Geiger waren auch bekannte Komponisten. Dazu zählen im Frühbarock in Italien Arcangelo Corelli und in Deutschland Heinrich Ignaz Franz Biber, im Hochbarock Antonio Vivaldi, Giuseppe Tartini oder Pietro Locatelli.    Dem galanten Stil kann man Johann Stamitz, Carl Stamitz, Gaetano Pugnani, Christian Cannabich und Pietro Nardini zuordnen. Den Übergang von der Klassik zur Frühromantik ebneten Giovanni Battista Viotti, Louis Spohr und Rodolphe Kreutzer. Im frühen 19. Jahrhundert entwickelte Niccolò Paganini eine brillante Spieltechnik, er erregte zu seiner Zeit Aufsehen durch sein Doppelflageolett und seine gewagten Pizzicati.';
+EDUPHIL.game_is_running = false;
+EDUPHIL.num_files_total = 50; // Anzahl aller Dateien des Apps
+EDUPHIL.sound_buffer = false;
+
 //verhindert scrollen
 //document.ontouchmove = function(e) {
 //    e.preventDefault();
 //};
 
 var QUANTITY = 1,
-        canvas,
-        context,
-        particle,
-        mouseX = 0,
-        mouseY = 0;
+    canvas,
+    context,
+    particles,
+    mouseX = 0,
+    mouseY = 0;
 
 /**
  * Die Musician Klasse repräsentiert einen Musiker im App.
@@ -50,45 +57,46 @@ var QUANTITY = 1,
  * @param {string} soundfile hauptteil der verschiedenen sound-datei-namen. Es werden die drei Varianten daraus generiert
  * @constructor
  */
-EDUPHIL.Musician = function(element_id, soundfile)
+EDUPHIL.Musician = function( element_id, soundfile )
 {
     'use strict';
 
     var num_frames = 24,
-            normal_speed = 12,
-            high_speed = 24,
-            low_speed = 6,
-            is_playing = false,
-            DEFAULT_VOLUME = 0.2,
-            soundfile_normal = 'sound/' + soundfile + '_normal.mp3',
-            soundfile_slow = 'sound/' + soundfile + '_langsam.mp3',
-            soundfile_fast = 'sound/' + soundfile + '_schnell.mp3',
-            sound_normal = new Howl(
-            {
-                urls: [soundfile_normal],
-                loop: true,
-                buffer: true,
-                volume: DEFAULT_VOLUME
-            }),
-    sound_slow = new Howl(
-            {
-                urls: [soundfile_slow],
-                loop: true,
-                buffer: true,
-                volume: DEFAULT_VOLUME
-            }),
-    sound_fast = new Howl(
-            {
-                urls: [soundfile_fast],
-                loop: true,
-                buffer: true,
-                volume: DEFAULT_VOLUME
-            }),
-    graphics = $(element_id);
+        normal_speed = 12,
+        high_speed = 24,
+        low_speed = 6,
+        is_playing = false,
+        fast_is_playing = false,
+        slow_is_playing = false,
+        DEFAULT_VOLUME = 0.2,
+        soundfile_normal = 'sound/' + soundfile + '_normal.mp3',
+        soundfile_slow = 'sound/' + soundfile + '_langsam.mp3',
+        soundfile_fast = 'sound/' + soundfile + '_schnell.mp3',
+        sound_normal = new Howl(
+        {
+            urls: [soundfile_normal],
+            loop: true,
+            buffer: EDUPHIL.sound_buffer,
+            volume: DEFAULT_VOLUME
+        }),
+        sound_slow = new Howl(
+        {
+            urls: [soundfile_slow],
+            loop: true,
+            buffer: EDUPHIL.sound_buffer,
+            volume: DEFAULT_VOLUME
+        }),
+        sound_fast = new Howl(
+        {
+            urls: [soundfile_fast],
+            loop: true,
+            buffer: EDUPHIL.sound_buffer,
+            volume: DEFAULT_VOLUME
+        }),
+        graphics = element_id;
 
     // public
     this.id = element_id;
-
 
     /**
      * Starte Sound und Animation
@@ -96,7 +104,7 @@ EDUPHIL.Musician = function(element_id, soundfile)
      */
     function start_playing()
     {
-        graphics.sprite({fps: normal_speed, no_of_frames: num_frames});
+        $(graphics).sprite({ fps: normal_speed, no_of_frames: num_frames });
         sound_normal.play();
         is_playing = true;
     }
@@ -107,7 +115,7 @@ EDUPHIL.Musician = function(element_id, soundfile)
      */
     function stop_playing()
     {
-        graphics.destroy();
+        $(graphics).destroy();
         sound_slow.stop();
         sound_normal.stop();
         sound_fast.stop();
@@ -120,7 +128,7 @@ EDUPHIL.Musician = function(element_id, soundfile)
      */
     function pause_playing()
     {
-        graphics.destroy();
+        $(graphics).destroy();
         sound_slow.pause();
         sound_normal.pause();
         sound_fast.pause();
@@ -132,12 +140,8 @@ EDUPHIL.Musician = function(element_id, soundfile)
      */
     this.toggle_playing = function()
     {
-        if (is_playing) {
-            stop_playing();
-        }
-        else {
-            start_playing();
-        }
+        if ( is_playing ) { stop_playing(); }
+        else { start_playing(); }
     };
 
     /**
@@ -145,15 +149,15 @@ EDUPHIL.Musician = function(element_id, soundfile)
      * @param new_speed Die neuen FPS der Animation. Verwende normal_speed, low_speed oder high_speed
      * @private
      */
-    function change_anim_speed(new_speed)
+    function change_anim_speed( new_speed )
     {
-        graphics.fps(new_speed);
+        $(graphics).fps(new_speed);
     }
 
     /**
      * Wechsle zu langsamer Tonspur und Animation
      */
-    this.play_slower = function()
+    this.play_slower = function ()
     {
         change_anim_speed(low_speed);
 
@@ -170,7 +174,7 @@ EDUPHIL.Musician = function(element_id, soundfile)
     /**
      * Wechsle zu schneller Tonspur und Animation
      */
-    this.play_faster = function()
+    this.play_faster = function ()
     {
         change_anim_speed(high_speed);
 
@@ -187,7 +191,7 @@ EDUPHIL.Musician = function(element_id, soundfile)
 /**
  * Alle Musiker beginnen zu spielen
  */
-EDUPHIL.all_start_playing = function()
+EDUPHIL.all_toggle_playing = function()
 {
     'use strict';
 
@@ -222,7 +226,7 @@ EDUPHIL.remind_to_bookmark = function()
     window.setTimeout(function()
     {
         var bubble = new google.bookmarkbubble.Bubble(),
-                parameter = 'bmb=1';
+            parameter = 'bmb=1';
 
         // Hash-Problem workaround von hier: https://code.google.com/p/mobile-bookmark-bubble/issues/detail?id=7
         bubble.hasHashParameter = function()
@@ -236,7 +240,7 @@ EDUPHIL.remind_to_bookmark = function()
             //if (!this.hasHashParameter()) { window.location.hash += parameter; } // Konflikt mit JQM hash
             if (!this.hasHashParameter())
             {
-                if (window.location.search.indexOf('?') == -1)
+                if (window.location.search.indexOf('?') === -1)
                 {
                     window.history.replaceState('Object', 'Title', window.location + '?' + parameter);
                 }
@@ -288,15 +292,12 @@ EDUPHIL.app_intro = function()
      */
     window.setTimeout(function()
     {
-        $('#silhouette').fadeOut(2000, function() {
-            $('#silhouette').remove();
-        });
+        $('#silhouette').fadeOut(2000, function() { $('#silhouette').remove(); });
     }, 5000);
 
     window.setTimeout(function()
     {
-        $('#app-page').removeClass('js-blur');
-        $('#app-page').addClass('js-ani-play-blur-rev');
+        $('#app-page').removeClass('js-blur').addClass('js-ani-play-blur-rev');
     }, 6000);
 };
 
@@ -304,7 +305,7 @@ EDUPHIL.app_intro = function()
  * Tap-Handler für Musiker-Objekte (Einsatz)
  * @param event
  */
-EDUPHIL.musician_tap_handler = function(event)
+EDUPHIL.musician_tap_handler = function( event )
 {
     'use strict';
 
@@ -327,17 +328,61 @@ EDUPHIL.musician_tap_handler = function(event)
 };
 
 /**
+ * Taphold-Handler für Musiker
+ * @param event
+ */
+EDUPHIL.musician_taphold_handler = function( event )
+{
+    'use strict';
+
+    // info text anpassen
+    switch ( $(this).attr('id') )
+    {
+        case 'geigerin':
+            $('#info-title').text('Geigerin gewählt');
+            $('#info-text').text(EDUPHIL.info_texts.GEIGERIN);
+            break;
+        default:
+            break;
+    }
+
+    $('#info-panel').panel('open');
+};
+
+/**
+ * Taphold-Handler für Musiker
+ * @param event
+ */
+EDUPHIL.mood_taphold_handler = function( event )
+{
+    'use strict';
+
+    // info text anpassen
+    switch ( $(this).attr('id') )
+    {
+        case 'mood-one':
+            $('#info-title').text('Stimmung Eins gewählt');
+            $('#info-text').text(EDUPHIL.info_texts.MOOD_ONE);
+            break;
+        default:
+            break;
+    }
+
+    $('#info-panel').panel('open');
+};
+
+/**
  * Drag-Handler für die Stimmungs-Icons
  * @param event
  */
-EDUPHIL.icon_drag_handler = function(event)
+EDUPHIL.icon_drag_handler = function( event )
 {
     'use strict';
 
     var x = event.originalEvent.changedTouches[0].pageX,
-            y = event.originalEvent.changedTouches[0].pageY,
-            offset_x = x - $(this).offset().left,
-            offset_y = y - $(this).offset().top;
+        y = event.originalEvent.changedTouches[0].pageY,
+        offset_x = x - $(this).offset().left,
+        offset_y = y - $(this).offset().top;
 
     $(this).detach();
     $(this).appendTo($('body'));
@@ -346,7 +391,7 @@ EDUPHIL.icon_drag_handler = function(event)
     $(this).css('top', y - offset_y);
 
     // Handler für den Bewegungsteil des Drags
-    function drag_move_handler(event)
+    function drag_move_handler( event )
     {
         event.preventDefault();
         var x = event.originalEvent.changedTouches[0].pageX;
@@ -361,7 +406,7 @@ EDUPHIL.icon_drag_handler = function(event)
      * Drop-Handler für die Stimmungs-Icons
      * @param event
      */
-    function drag_end_Handler(event)
+    function drag_end_Handler( event )
     {
         $(this).removeAttr('style');
         $(this).detach();
@@ -373,13 +418,13 @@ EDUPHIL.icon_drag_handler = function(event)
 
         switch (element)
         {
-            case $('#geigerin .hitbox').get(0):
+            case $('#geigerin').children('.hitbox').get(0):
                 EDUPHIL.geigerin.play_faster();
                 break;
-            case $('#floetistin .hitbox').get(0):
+            case $('#floetistin').children('.hitbox').get(0):
                 EDUPHIL.floetistin.play_faster();
                 break;
-            case $('#harfenspieler .hitbox').get(0):
+            case $('#harfenspieler').find('.hitbox').get(0):
                 EDUPHIL.harfenspieler.play_faster();
                 break;
             default:
@@ -403,22 +448,22 @@ EDUPHIL.init_gestures = function()
     $('#gestures').removeClass('hidden'); // canvas anzeigen
     $('#app-page').removeClass('js-ani-play-blur-rev').addClass('js-ani-play-blur'); // Hintergrund weichzeichnen
 
-    // Touch beginnt
-    $('#gestures').on('touchstart', EDUPHIL.gesture_started);
-    // Touch moves einfangen
-    $('#gestures').on('touchmove', EDUPHIL.capture_gesture);
-    // Touch endet (ohne Ergebnis wenn als Event gezündet)
-    $('#gestures').on('touchend', EDUPHIL.gesture_finished);
+    // Touch events
+    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+    // Touch events
+    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+    // Touch events
+    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
 };
 
 /**
  * Beginn einer neuen Geste
  * @param event
  */
-EDUPHIL.gesture_started = function(event)
+EDUPHIL.gesture_started = function( event )
 {
     'use strict';
-console.log(1);
+
     //erstellt ein neues Gesten-Objekt
     EDUPHIL.current_gesture = {};
     // setzt die Startwerte
@@ -427,28 +472,28 @@ console.log(1);
     EDUPHIL.current_gesture.name = '';
     EDUPHIL.current_gesture.succeeded = false;
 
-    if (event.originalEvent.touches.length === 1) {
-        event.originalEvent.preventDefault();
-        mouseX = event.originalEvent.touches[0].pageX;
-        mouseY = event.originalEvent.touches[0].pageY;
-        console.log(1);
-    }
+//    if (event.originalEvent.touches.length === 1) {
+//        event.originalEvent.preventDefault();
+//        mouseX = event.originalEvent.touches[0].pageX;
+//        mouseY = event.originalEvent.touches[0].pageY;
+//        console.log(1);
+//    }
 };
 
 /**
  * Fängt informationen über die Geste beim Bewegen des Fingers ein
  * @param event
  */
-EDUPHIL.capture_gesture = function(event)
+EDUPHIL.capture_gesture = function( event )
 {
     'use strict';
     event.preventDefault();
 
     var MAX_TOLERANCE = 20,
-            REQUIRED_DISTANCE = 50,
-            x = event.originalEvent.changedTouches[0].pageX,
-            y = event.originalEvent.changedTouches[0].pageY,
-            delta_x, delta_y;
+        REQUIRED_DISTANCE = 50,
+        x = event.originalEvent.changedTouches[0].pageX,
+        y = event.originalEvent.changedTouches[0].pageY,
+        delta_x, delta_y;
 
     delta_x = Math.abs(x - EDUPHIL.current_gesture.start_x);
     delta_y = Math.abs(y - EDUPHIL.current_gesture.start_y);
@@ -478,7 +523,7 @@ EDUPHIL.capture_gesture = function(event)
  * Wird am Ende einer Geste ausgeführt, startet die Gesten-auswertung
  * @param event
  */
-EDUPHIL.gesture_finished = function(event)
+EDUPHIL.gesture_finished = function( event )
 {
     'use strict';
 
@@ -490,7 +535,7 @@ EDUPHIL.gesture_finished = function(event)
                 EDUPHIL.all_play_slower();
                 break;
             case 'start_playing':
-                EDUPHIL.all_start_playing();
+                EDUPHIL.all_toggle_playing();
                 break;
             default:
                 break;
@@ -502,14 +547,15 @@ EDUPHIL.gesture_finished = function(event)
     $('#app-page').removeClass('js-ani-play-blur').addClass('js-ani-play-blur-rev');
 
     // Alles abhängen
-    $('#gestures').off('touchstart', EDUPHIL.gesture_started);
-    $('#gestures').off('touchmove', EDUPHIL.capture_gesture);
-    $('#gestures').off('touchend', EDUPHIL.gesture_finished);
+    $('#gestures').off('touchstart').off('touchmove').off('touchend');
 };
 
 EDUPHIL.createParticle = function()
 {
+    'use strict';
+
     particles = [];
+
     for (var i = 0; i < QUANTITY; i++) {
         var particle = {
             size: 40,
@@ -526,10 +572,12 @@ EDUPHIL.createParticle = function()
 
 EDUPHIL.loop = function()
 {
+    'use strict';
+
     context.fillStyle = 'rgba(0,0,0,0.05)';
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
 
-    for (i = 0, len = particles.length; i < len; i++) {
+    for (var i = 0, len = particles.length; i < len; i++) {
         var particle = particles[i];
 
         var lp = {x: particle.position.x, y: particle.position.y};
@@ -561,27 +609,50 @@ EDUPHIL.init_game = function()
 {
     'use strict';
 
+    EDUPHIL.game_is_running = true;
+
     // Intro-loop sound aus!
     EDUPHIL.tuning_sound.fadeOut(0, 2000);
 
-    // Musiker Events anhängen
-    $('.hitbox').on('tap', EDUPHIL.musician_tap_handler);
+    // Musiker Steuerung anhängen, Info abhängen
+    $('.hitbox').on('tap', EDUPHIL.musician_tap_handler).off('taphold');
 
     // Mood Icons Events anhängen
-    $('.mood-icon').on('touchstart', EDUPHIL.icon_drag_handler);
+    $('.mood-icon').on('touchstart', EDUPHIL.icon_drag_handler).off('taphold');
 
     // Aktiviere den Gesten Canvas
     $('#knight5').on('tap', EDUPHIL.init_gestures);
 
-    canvas = document.getElementById('world');
-    context = canvas.getContext('2d');
+    //canvas = document.getElementById('world');
+    //context = canvas.getContext('2d');
 
-    document.addEventListener('touchstart', documentTouchStartHandler, false);
-    document.addEventListener('touchmove', documentTouchMoveHandler, false);
+    //document.addEventListener('touchstart', documentTouchStartHandler, false);
+    //document.addEventListener('touchmove', documentTouchMoveHandler, false);
 
-    createParticle();
-    setInterval(loop, 1000 / 60);
+    //EDUPHIL.createParticle();
+    //setInterval(EDUPHIL.loop, 1000 / 60);
+};
 
+/**
+ * Stop Funktion für eine Spielrunde, entfernt Listener und resettet
+ */
+EDUPHIL.stop_game = function()
+{
+    'use strict';
+
+    EDUPHIL.game_is_running = false;
+
+    // Intro-loop sound aus!
+    EDUPHIL.tuning_sound.fadeIn(0, 2000);
+
+    // Musiker Steuerung anhängen, Info abhängen
+    $('.hitbox').off('tap').on('taphold');
+
+    // Mood Icons Events anhängen
+    $('.mood-icon').off('touchstart');
+
+    // Aktiviere den Gesten Canvas
+    $('#knight5').off('tap');
 };
 
 /**
@@ -589,7 +660,7 @@ EDUPHIL.init_game = function()
  * Muss über document geladen werden, da die referenzierten HTML Elemente
  * in einer anderen Datei stehen.
  */
-$(document).on('pageinit', '#app-page', function(event)
+$(document).on('pageinit', '#app-page', function ( event )
 {
     'use strict';
 
@@ -605,19 +676,30 @@ $(document).on('pageinit', '#app-page', function(event)
     EDUPHIL.orchestra.push(EDUPHIL.harfenspieler);
 
     EDUPHIL.tuning_sound = new Howl(
-            {
-                urls: ['sound/tuning.mp3'],
-                autoplay: false,
-                buffer: true,
-                loop: true,
-                volume: 0.1
-            });
+    {
+        urls: ['sound/tuning.mp3'],
+        autoplay: false,
+        buffer: EDUPHIL.sound_buffer,
+        loop: true,
+        volume: 0.1
+    });
 
     // Podium Doppel-Tap für Spielstart
     $('#podium-right').doubleTap(function()
     {
-        EDUPHIL.init_game();
+        if (EDUPHIL.game_is_running)
+        {
+            EDUPHIL.stop_game();
+        } else
+        {
+            EDUPHIL.init_game();
+        }
     });
+
+    // Infosystem an Musiker anhängen
+    $('#geigerin').on('taphold', EDUPHIL.musician_taphold_handler);
+    // Infosystem an Stimmung anhängen
+    $('#mood-one').on('taphold', EDUPHIL.mood_taphold_handler);
 });
 
 /**
@@ -640,22 +722,26 @@ $(document).ready(function()
 {
     'use strict';
 
-    // TODO: anzahl der dateien aus manifest datei extrahieren
-    var num_files_total = 50, // Anzahl aller Dateien
-            num_files_cached = 0; // Anzahl Datein die bereits geladen wurden
+    // Fix für iOS "no AJAX in app-mode"
+    if (window.navigator.standalone)
+    {
+        jQuery.ajaxSetup( {isLocal: true} );
+    }
+
+    var num_files_cached = 0; // Anzahl Datein die bereits geladen wurden
 
     // Progress-Balken
     var $progress_bar = TolitoProgressBar('progressbar')
-            .setOuterTheme('e')
-            .setInnerTheme('e')
-            .isMini(true)
-            .setMax(num_files_total)
-            .setStartFrom(num_files_cached)
-            .showCounter(true)
-            .build();
+        .setOuterTheme('e')
+        .setInnerTheme('e')
+        .isMini(true)
+        .setMax(EDUPHIL.num_files_total)
+        .setStartFrom(num_files_cached)
+        .showCounter(true)
+        .build();
 
     // Ist application cache API verfügbar?
-    if (window.applicationCache !== undefined)
+    if ( window.applicationCache !== undefined )
     {
         var cache = window.applicationCache;
 
@@ -666,29 +752,27 @@ $(document).ready(function()
         });
 
         // Version ist aktuell:                                     NOUPDATE
-        cache.addEventListener('noupdate', function(event)
+        cache.addEventListener('noupdate', function ( event )
         {
-            $progress_bar.setValue(num_files_total);
+            $progress_bar.setValue(EDUPHIL.num_files_total);
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
-            EDUPHIL.remind_to_bookmark();
         });
 
         // App das erste mal gecached:                              CACHED
-        cache.addEventListener('cached', function(event)
+        cache.addEventListener('cached', function ( event )
         {
-            $progress_bar.setValue(num_files_total);
+            $progress_bar.setValue(EDUPHIL.num_files_total);
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
-            EDUPHIL.remind_to_bookmark();
         });
 
         // Download startet:                                        DOWNLOADING
-        cache.addEventListener('downloading', function(event)
+        cache.addEventListener('downloading', function ( event )
         {
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#').text('Lade App...');
         });
 
         // listener für progress bar, 1x fire -> +1, dann den balken updaten: PROGRESS
-        cache.addEventListener('progress', function(event)
+        cache.addEventListener('progress', function ( event )
         {
             num_files_cached++;
             $progress_bar.setValue(num_files_cached);
@@ -699,14 +783,14 @@ $(document).ready(function()
         cache.addEventListener('updateready', function(event)
         {
             cache.swapCache(); // neuen cache benutzen
-            $.mobile.changePage('update.html', {transition: 'slidedown'});
+            $.mobile.changePage('update.html', { transition: 'slidedown' });
         });
 
         // Fehler: ERROR
         cache.addEventListener('error', function(event)
         {
-            $.mobile.changePage('error-dl.html', {transition: 'slidedown'});
-            $progress_bar.setValue(num_files_total);
+            $.mobile.changePage('error-dl.html', { transition: 'slidedown' });
+            $progress_bar.setValue(EDUPHIL.num_files_total);
             $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
             EDUPHIL.remind_to_bookmark();
         });
@@ -714,8 +798,8 @@ $(document).ready(function()
     else
     {
         // gar nix geht
-        $.mobile.changePage('error-cache.html', {transition: 'slidedown'});
-        $progress_bar.setValue(num_files_total);
+        $.mobile.changePage('error-cache.html', { transition: 'slidedown' });
+        $progress_bar.setValue(EDUPHIL.num_files_total);
         $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
         EDUPHIL.remind_to_bookmark();
     }

@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateien, immer folgende Zeilen mitändern (v++)
-# web app updated 2013-05-29
-# v3333
+# web app updated 2013-06-03
+# v33dd
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -9,18 +9,19 @@ CACHE:
 
 # ACHTUNG: in main.js die variable "num_files_total" anpassen
 
-# Vendor content
-js/vendor/jquery-2.0.0.min.js
-js/vendor/jquery.mobile-1.3.1.min.js
-js/vendor/jquery.spritely.min.js
-js/vendor/tolito-1.0.3.min.js
-js/vendor/howler.min.js
-js/vendor/bookmark_bubble.min.js
+# libs
+js/libs/jquery-1.10.1.min.js
+js/libs/jquery.mobile-1.3.1.min.js
+js/libs/jquery.spritely.min.js
+js/libs/tolito-1.0.3.min.js
+js/libs/howler.min.js
+js/libs/add2home.js
 
-css/vendor/jquery.mobile.structure-1.3.1.min.css
-css/vendor/jquery.mobile.theme-1.3.1.min.css
-css/vendor/tolito-1.0.3.min.css
-css/vendor/normalize.min.css
+css/libs/jquery.mobile.structure-1.3.1.min.css
+css/libs/jquery.mobile.theme-1.3.1.min.css
+css/libs/tolito-1.0.3.min.css
+css/libs/normalize.min.css
+css/libs/add2home.min.css
 
 img/jqm/ajax-loader.gif
 img/jqm/icons-18-black.png
@@ -45,9 +46,9 @@ app.html
 # Custom script and CSS
 js/plugins.min.js
 js/helper.min.js
-js/main.min.js
+js/main.js
 
-css/main.min.css
+css/main.css
 
 # Custom images
 img/tablet/app_bg.jpg
@@ -60,6 +61,7 @@ img/tablet/mood_3.jpg
 img/tablet/silhouette.png
 
 img/sprites/geige_spielt.png
+img/sprites/floete_spielt.png
 
 # Sound
 sound/floete_langsam.mp3

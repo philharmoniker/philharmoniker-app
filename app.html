@@ -6,17 +6,17 @@
 </head>
 <body>
     <!-- App -->
-    <div data-role="page" id="app-page" class="js-blur">
+    <div data-role="page" id="app-page" class="js-blur" data-theme="c">
         <div id="silhouette"></div>
-        <div id="app-content" data-role="content">
+        <div data-role="content" id="app-content">
             <div id="sprite-container">
                 <div id="geigerin" class="sprite">
                     <div class="hitbox"></div>
                 </div>
-                <div id="floetistin" class="sprite">
+                <div id="harfenspieler" class="sprite">
                     <div class="hitbox"></div>
                 </div>
-                <div id="harfenspieler" class="sprite">
+                <div id="floetistin" class="sprite">
                     <div class="hitbox"></div>
                 </div>
                 <div id="knight4" class="sprite">
@@ -30,18 +30,22 @@
             <div id="podium">
                 <div id="podium-left" class="podium-halfs">
                     <div id="mood-container">
-                        <img class="mood-icon" src="img/tablet/mood_1.jpg" width="50" height="50" />
-                        <img class="mood-icon" src="img/tablet/mood_2.jpg" width="50" height="50" />
-                        <img class="mood-icon" src="img/tablet/mood_3.jpg" width="50" height="50" />
+                        <img class="mood-icon" id="mood-one" src="img/tablet/mood_1.jpg" width="50" height="50" />
+                        <img class="mood-icon" id="mood-two" src="img/tablet/mood_2.jpg" width="50" height="50" />
+                        <img class="mood-icon" id="mood-three" src="img/tablet/mood_3.jpg" width="50" height="50" />
                     </div>
                 </div>
                 <div id="podium-right" class="podium-halfs">
                     <p>double tap here</p>
                 </div>
-
             </div>
             <!-- Gesten-Canvas -->
             <canvas id="gestures" class="hidden" width="1000" height="750"></canvas> <!-- TODO: magic numbers vorerst: ACHTUNG: in JS setzen NICHT CSS! -->
+        </div>
+        <div data-role="panel" id="info-panel" data-theme="a" data-display="overlay" data-position="right" data-swipe-close="true" data-dismissible="true">
+            <h3 id="info-title">Titel</h3>
+            <p id="info-text">Tolle Info zu Dingen</p>
+            <a href="#app-page" data-role="button" data-rel="close">Info Schliessen</a>
         </div>
     </div>
 </body>

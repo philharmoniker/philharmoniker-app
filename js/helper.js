@@ -6,7 +6,6 @@
      * Fix for iPhone viewport scale bug
      * http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
      */
-
     MBP.viewportmeta = document.querySelector && document.querySelector('meta[name="viewport"]');
     MBP.ua = navigator.userAgent;
 

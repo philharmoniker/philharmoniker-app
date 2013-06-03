@@ -33,8 +33,6 @@ MBP.preventZoom();
   */
 (function($)
 {
-    'use strict';
-
     $.fn.doubleTap = function(doubleTapCallback)
     {
         return this.each(function()
@@ -55,5 +53,5 @@ MBP.preventZoom();
                 }
             });
         });
-    }
+    };
 })(jQuery);

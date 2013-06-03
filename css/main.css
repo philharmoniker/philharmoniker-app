@@ -196,6 +196,12 @@ h1
     -webkit-transform: translateZ(0); /* Hardware Beschleunigung für Animationen aktivieren */
 }
 
+    /* Hintergrundbild fix bei Verwendung von Panels */
+    .ui-body-c
+    {
+        background-image: url(../img/tablet/app_bg.jpg);
+    }
+
 #app-content
 {
     height: 738px; /* TODO: magic number: parent: 768px, -15 padding oben unten */
@@ -211,29 +217,30 @@ h1
     height: 100%;
 }
 
-.sprite
-{
-    position: absolute;
-    width: 270px;
-    height: 445px;
-    z-index: 1;
-    /* TODO: debug */
-    border: solid 2px #008000;
-}
+    .sprite
+    {
+        position: absolute;
+        /* TODO: debug */
+        border: solid 2px #008000;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
 
-.hitbox
-{
-    position: relative;
-    width: 150px;
-    z-index: 2;
-    /* TODO: debug */
-    background-color: rgba(255,255,0,0.25);
-    border: solid 2px #ff0;
-}
+    .hitbox
+    {
+        position: relative;
+        width: 150px;
+        z-index: 2;
+        /* TODO: debug */
+        background-color: rgba(255,255,0,0.25);
+        border: solid 2px #ff0;
+    }
 
 #geigerin
 {
     background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
+    width: 270px;
+    height: 445px;
     left: 0px;
     bottom: 0px;
 }
@@ -244,24 +251,14 @@ h1
         margin: 0 0 0 15px;
     }
 
-#floetistin
-{
-    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
-    left: 200px;
-    bottom: 40px;
-}
-
-    #floetistin .hitbox
-    {
-        height: 300px;
-        margin: 0 0 0 15px;
-    }
-
 #harfenspieler
 {
     background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
-    left: 400px;
-    bottom: 60px;
+    width: 270px;
+    height: 445px;
+    left: 200px;
+    bottom: 40px;
+    z-index: 1;
 }
 
     #harfenspieler .hitbox
@@ -270,9 +267,27 @@ h1
         margin: 0 0 0 15px;
     }
 
+#floetistin
+{
+    background: transparent url(../img/sprites/floete_spielt.png) 0 0 no-repeat;
+    width: 310px;
+    height: 447px;
+    left: 300px;
+    bottom: 60px;
+}
+
+    #floetistin .hitbox
+    {
+        height: 330px;
+        width: 175px;
+        margin: 0 0 0 130px;
+    }
+
 #knight4
 {
     background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
+    width: 270px;
+    height: 445px;
     left: 600px;
     bottom: 40px;
 }
@@ -286,6 +301,8 @@ h1
 #knight5
 {
     background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
+    width: 270px;
+    height: 445px;
     left: 800px;
     bottom: 0px;
 }
@@ -319,9 +336,9 @@ h1
 #podium
 {
     position: absolute;
-    overflow: hidden;
     bottom: 0px;
     left: 165px;
+    height: 175px;
     background: transparent url(../img/tablet/pult.png) fixed bottom center no-repeat;
     z-index: 3;
     /* TODO: debug */
@@ -333,6 +350,7 @@ h1
     width: 340px;
     height: 175px;
     margin: 0;
+    vertical-align: top;
     display: inline-block;
     /* TODO: debug */
     border: solid 2px green;
@@ -340,7 +358,7 @@ h1
 
 #mood-container
 {
-    width: 160px;
+    text-align: right;
     /* TODO: debug */
     border: solid 2px blue;
 }
