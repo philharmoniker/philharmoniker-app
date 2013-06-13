@@ -30,20 +30,20 @@
  */
 
 /* namespace */
-var EDUPHIL = {};
+var EDUPHIL = {
+    QUANTITY: 1,
+    canvas:null,
+    context:null,
+    particles:null,
+    mouseX:0,
+    mouseY:0
+};
 
 EDUPHIL.info_texts = [];
 EDUPHIL.info_texts.MOOD_ONE = 'Unter Stimmung versteht man die theoretische und praktische Festlegung der Tonhöhen (Frequenzen) von Schallquellen, insbesondere von Musikinstrumenten. In der Praxis genügt hierzu oft (etwa bei einigen Blasinstrumenten) die Festlegung der absoluten Tonhöhe durch Abgleich mit einer Normfrequenz (Kammerton a1 = 440 Hz oder einer anderen für den Einzelfall vereinbarten Frequenz). Vor allem bei Saiten- und Tasteninstrumenten ist zusätzlich eine relative Festlegung der den Saiten oder Tasten zugeordneten Frequenzen erforderlich. Während Streichinstrumente auch nach der Einstimmung ihrer Saiten jeden Ton (evtl. durch Lagenspiel) rein intonieren können, müssen bei Tasteninstrumenten die zwölf Halbtöne pro Oktave fest eingestimmt werden.';
 EDUPHIL.info_texts.GEIGERIN = 'Einige Geiger waren auch bekannte Komponisten. Dazu zählen im Frühbarock in Italien Arcangelo Corelli und in Deutschland Heinrich Ignaz Franz Biber, im Hochbarock Antonio Vivaldi, Giuseppe Tartini oder Pietro Locatelli.    Dem galanten Stil kann man Johann Stamitz, Carl Stamitz, Gaetano Pugnani, Christian Cannabich und Pietro Nardini zuordnen. Den Übergang von der Klassik zur Frühromantik ebneten Giovanni Battista Viotti, Louis Spohr und Rodolphe Kreutzer. Im frühen 19. Jahrhundert entwickelte Niccolò Paganini eine brillante Spieltechnik, er erregte zu seiner Zeit Aufsehen durch sein Doppelflageolett und seine gewagten Pizzicati.';
 EDUPHIL.game_is_running = false;
 EDUPHIL.sound_buffer = false;
-
-var QUANTITY = 1,
-    canvas,
-    context,
-    particles,
-    mouseX = 0,
-    mouseY = 0;
 
 /**
  * Die Musician Klasse repräsentiert einen Musiker im App.
@@ -420,6 +420,7 @@ EDUPHIL.gesture_started = function( event )
  */
 EDUPHIL.capture_gesture = function( event )
 {
+    console.log("-->>captureing gesture");
     'use strict';
     event.preventDefault();
 
@@ -517,8 +518,8 @@ EDUPHIL.loop = function()
         var lp = {x: particle.position.x, y: particle.position.y};
 
         // Follow mouse with some lag
-        particle.shift.x += (mouseX - particle.shift.x);
-        particle.shift.y += (mouseY - particle.shift.y);
+        particle.shift.x += (EDUPHIL.mouseX - particle.shift.x);
+        particle.shift.y += (EDUPHIL.mouseY - particle.shift.y);
 
         // Apply position
         particle.position.x = particle.shift.x + Math.cos(i + particle.offset.x);
@@ -628,6 +629,7 @@ $(document).on('pageshow', '#app-page', function()
         });
 
     // Podium Doppel-Tap für Spielstart
+    $("#podium-right").append('<p>test</p>');
     $('#podium-right').doubleTap(function()
     {
         if (EDUPHIL.game_is_running)
