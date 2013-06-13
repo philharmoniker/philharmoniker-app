@@ -30,7 +30,14 @@
  */
 
 /* namespace */
-var EDUPHIL = {};
+var EDUPHIL = {
+    QUANTITY: 1,
+    canvas:null,
+    context:null,
+    particles:null,
+    mouseX : 0,
+    mouseY : 0
+};
 
 EDUPHIL.info_texts = [];
 EDUPHIL.info_texts.MOOD_ONE = 'Unter Stimmung versteht man die theoretische und praktische Festlegung der Tonhöhen (Frequenzen) von Schallquellen, insbesondere von Musikinstrumenten. In der Praxis genügt hierzu oft (etwa bei einigen Blasinstrumenten) die Festlegung der absoluten Tonhöhe durch Abgleich mit einer Normfrequenz (Kammerton a1 = 440 Hz oder einer anderen für den Einzelfall vereinbarten Frequenz). Vor allem bei Saiten- und Tasteninstrumenten ist zusätzlich eine relative Festlegung der den Saiten oder Tasten zugeordneten Frequenzen erforderlich. Während Streichinstrumente auch nach der Einstimmung ihrer Saiten jeden Ton (evtl. durch Lagenspiel) rein intonieren können, müssen bei Tasteninstrumenten die zwölf Halbtöne pro Oktave fest eingestimmt werden.';
@@ -44,12 +51,12 @@ EDUPHIL.sound_buffer = false;
 //    e.preventDefault();
 //};
 
-var QUANTITY = 1,
-    canvas,
-    context,
-    particles,
-    mouseX = 0,
-    mouseY = 0;
+//var QUANTITY = 1,
+//    canvas,
+//    context,
+//    particles,
+//    mouseX = 0,
+//    mouseY = 0;
 
 /**
  * Die Musician Klasse repräsentiert einen Musiker im App.
@@ -446,6 +453,7 @@ EDUPHIL.init_gestures = function()
     'use strict';
 
     $('#gestures').removeClass('hidden'); // canvas anzeigen
+    console.log("#gestures removed hidden!");
     $('#app-page').removeClass('js-ani-play-blur-rev').addClass('js-ani-play-blur'); // Hintergrund weichzeichnen
 
     // Touch events
@@ -608,7 +616,7 @@ EDUPHIL.loop = function()
 EDUPHIL.init_game = function()
 {
     'use strict';
-
+    console.log(1);
     EDUPHIL.game_is_running = true;
 
     // Intro-loop sound aus!
@@ -687,6 +695,7 @@ $(document).on('pageinit', '#app-page', function ( event )
     // Podium Doppel-Tap für Spielstart
     $('#podium-right').doubleTap(function()
     {
+        console.log("Podum: Double Tap");
         if (EDUPHIL.game_is_running)
         {
             EDUPHIL.stop_game();
@@ -721,7 +730,7 @@ $(document).on('pageshow', '#app-page', function()
 $(document).ready(function()
 {
     'use strict';
-
+    alert(1);
     // Fix für iOS "no AJAX in app-mode"
     if (window.navigator.standalone)
     {
