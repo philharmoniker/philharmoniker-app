@@ -377,10 +377,11 @@ EDUPHIL.icon_drag_handler = function( event )
 EDUPHIL.init_gestures = function()
 {
     'use strict';
-
+    console.log(1);
     $('#gestures').removeClass('hidden'); // canvas anzeigen
     $('#app-page').removeClass('js-ani-play-blur-rev').addClass('js-ani-play-blur'); // Hintergrund weichzeichnen
-
+    
+    // ist mir immer noch nicht klar warum hier 3x #gesture eventlistener gechained bekommt.
     // Touch events
     $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
     // Touch events
@@ -606,6 +607,7 @@ $(document).on('pageshow', '#app-page', function()
     'use strict';
 
     // Musiker-Objekte
+    // so etwas sollte in eine init funktion !
     EDUPHIL.geigerin = new EDUPHIL.Musician('#geigerin', 'geige');
     EDUPHIL.floetistin = new EDUPHIL.Musician('#floetistin', 'floete');
     EDUPHIL.harfenspieler = new EDUPHIL.Musician('#harfenspieler', 'harfe');
