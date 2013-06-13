@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateien, immer folgende Zeilen mitändern (v++)
 # web app updated 2013-06-03
-# v33dd
+# v33ddd
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -47,8 +47,10 @@ app.html
 js/plugins.min.js
 js/helper.min.js
 js/main.js
+js/app.js
 
 css/main.css
+css/app.css
 
 # Custom images
 img/tablet/app_bg.jpg
@@ -76,8 +78,9 @@ sound/harfe_schnell.mp3
 sound/tuning.mp3
 
 NETWORK:
-
 # use * for all websites
 # Dinge die NICHT gecached werden sollen
 # http://mobilexweb.com/jqmbook/sessions.json
 # http://mobilexweb.com/jqmbook/feedback.php
+# AJAX-Bugfix
+# http://panayiotou.de/eduphil/app.html
