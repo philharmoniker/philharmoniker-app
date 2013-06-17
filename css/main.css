@@ -36,7 +36,8 @@ input,
 select,
 textarea
 {
-    color: #505050;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
 }
 
 body
@@ -130,6 +131,43 @@ body *
     border: none;
 }
 
+h1
+{
+    font-size: 1.2em;
+}
+
+body
+{
+    text-shadow: none;
+}
+
+.ui-content
+{
+    padding-top: 0;
+}
+
+.ui-body-c, .ui-overlay-c
+{
+    color: #ffffff;
+    text-shadow: none;
+}
+
+.ui-body-c, .ui-overlay-c
+{
+    color: #7a7a7a;
+    text-shadow: none;
+}
+
+.ui-bar-a
+{
+    font-family: Arial, sans-serif;
+}
+
+h2
+{
+    color: #505050;
+}
+
 /* Header
    ========================================================================== */
 
@@ -146,19 +184,10 @@ body *
 {
     position: absolute;
     top: 0;
-    left: -158px;
+    left: -118px;
     height: 115px;
     width: 316px;
     background: transparent url(../img/tablet/berphil_logo.png) top left no-repeat;
-}
-
-#title
-{
-    text-align: right;
-    color: #ffffff;
-    height: 115px;
-    text-shadow: 0 -1px 0 #000;
-    vertical-align: middle;
 }
 
 #nav-bar
@@ -173,40 +202,63 @@ ul
 {
     list-style: none;
     display: inline;
+    width: 960px;
 }
 
 li
 {
-    text-transform: uppercase;
     display: inline;
-    font-size: 12px;
     list-style: none;
-    padding: 9px 12px 9px 12px;
     box-sizing: content-box;
     vertical-align: middle;
+}
+
+li.with-padding
+{
+    text-transform: uppercase;
+    display: inline;
+    font-size: 14px;
+    list-style: none;
+    padding: 9px 11px 9px 11px;
+    box-sizing: content-box;
+    vertical-align: baseline;
+}
+
+li#active
+{
+    background: transparent url("../img/nav_bg.png") repeat-x 0 0;
+    color: #505050;
 }
 
 /* Content
    ========================================================================== */
 
+#breadcrumbs
+{
+    width: 960px;
+    margin: 0 auto 20px auto;
+    font-size: 10px;
+    color: #ffffff;
+}
+
 #preload-page
 {
-    background: #ffffff url(../img/tablet/berphil_bg.jpg) fixed top left no-repeat;
+    background: #ffffff url(../img/tablet/bg.jpg) fixed top left no-repeat;
     -moz-background-size: cover;
     -webkit-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
 
-#content-container
+.content-container
 {
     background: #ffffff;
     -webkit-box-shadow: 0 0 10px #aaa;
     -moz-box-shadow: 0 0 10px #aaa;
     box-shadow: 0 0 10px #aaa;
     width: 960px;
-    height: 200px;
-    margin: 0px auto 10px auto;
+    padding: 10px;
+    margin: 0px auto 20px auto;
 }
 
 /* UI-Elemente
@@ -349,12 +401,12 @@ and (min-width : 1224px)
 
     #progressbar-btn
     {
-        width: 50%;
+        width: 30%;
     }
 
     #progressbar
     {
-        width: 50%;
+        width: 30%;
         margin: 0 auto;
     }
 

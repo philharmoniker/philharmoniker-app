@@ -1,6 +1,6 @@
 /*==============================================================================
  Author:         Georgios Panayiotou
- Created:        2013-04-10
+ Created:        2013-06-10
  URL:            https://github.com/gpanayiotou
  URL:            https://github.com/philharmoniker/philharmoniker-app
  Institution:    HAW Hamburg
@@ -36,7 +36,7 @@ input,
 select,
 textarea
 {
-    color: #222222;
+    color: #ffffff;
 }
 
 body
@@ -64,16 +64,9 @@ img,
 div,
 a
 {
-    /* default press state */
     -webkit-tap-highlight-color: transparent;
-
-    /* kein: "Bild speichern" */
     -webkit-touch-callout: none;
-
-    /* kein: Copy&Paste */
     -webkit-user-select: none;
-
-    /* kein: Bilder rumschieben */
     -webkit-user-drag: none;
 }
 
@@ -101,7 +94,7 @@ body *
 
 #app-page
 {
-    background: #fff url(../img/tablet/app_bg.jpg) no-repeat top center fixed;
+    background: #fff url(../img/tablet/bg.jpg) no-repeat top center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -111,7 +104,7 @@ body *
 /* Hintergrundbild fix bei Verwendung von Panels */
 .ui-body-c
 {
-    background-image: url(../img/tablet/app_bg.jpg);
+    background-image: url(../img/tablet/bg.jpg);
 }
 
 #app-content
@@ -125,17 +118,12 @@ body *
 #sprite-container
 {
     position: relative;
-    margin: 0 auto 0 auto;
-    height: 100%;
+    height: 95%;
 }
 
 .sprite
 {
     position: absolute;
-    /* TODO: debug */
-    border: solid 2px #008000;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
 }
 
 .hitbox
@@ -143,9 +131,6 @@ body *
     position: relative;
     width: 150px;
     z-index: 2;
-    /* TODO: debug */
-    background-color: rgba(255,255,0,0.25);
-    border: solid 2px #ff0;
 }
 
 #geigerin
@@ -160,7 +145,7 @@ body *
 #geigerin .hitbox
 {
     height: 445px;
-    margin: 0 0 0 15px;
+    margin: 0 0 0 25px;
 }
 
 #harfenspieler
@@ -176,7 +161,7 @@ body *
 #harfenspieler .hitbox
 {
     height: 300px;
-    margin: 0 0 0 15px;
+    margin: 0 0 0 25px;
 }
 
 #floetistin
@@ -192,22 +177,23 @@ body *
 {
     height: 330px;
     width: 175px;
-    margin: 0 0 0 130px;
+    margin: 0 0 0 120px;
 }
 
-#knight4
+#cellist
 {
-    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
-    width: 270px;
+    background: transparent url(../img/sprites/cello_spielt.png) 0 0 no-repeat;
+    width: 301px;
     height: 445px;
-    left: 600px;
+    left: 540px;
     bottom: 40px;
 }
 
-#knight4 .hitbox
+#cellist .hitbox
 {
-    height: 300px;
-    margin: 0 0 0 15px;
+    height: 350px;
+    width: 170px;
+    margin: 0 0 0 100px;
 }
 
 #knight5
@@ -231,15 +217,35 @@ body *
 #silhouette
 {
     position: absolute;
-    width: 99%;
+    width: 600px;
     height: 768px;
-    bottom: 0px;
-    left: 0px;
+    bottom: -10px;
+    left: 200px;
     z-index: 10;
-    background: transparent url(../img/tablet/silhouette.png) bottom center no-repeat fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
+    background: transparent url(../img/tablet/silhouette.png) top left no-repeat fixed;
+    -webkit-transition: -webkit-transform 3s ease;
+    -moz-transition: -moz-transform 3s ease;
+    transition: transform 3s ease;
+}
+
+/* Nutzer-Meldungen
+   ========================================================================== */
+
+#message-box
+{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.5);
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-shadow: none;
+}
+
+#message-box > h3
+{
+    color: #fcc200;
 }
 
 /* Pult-Menü
@@ -251,33 +257,102 @@ body *
     bottom: 0px;
     left: 165px;
     height: 175px;
+    width: 694px;
     background: transparent url(../img/tablet/pult.png) fixed bottom center no-repeat;
     z-index: 3;
-    /* TODO: debug */
-    border: solid 1px red;
 }
 
 .podium-halfs
 {
     width: 340px;
     height: 175px;
-    margin: 0;
-    vertical-align: top;
+    vertical-align: bottom;
     display: inline-block;
-    /* TODO: debug */
-    border: solid 2px green;
 }
 
 #mood-container
 {
+    padding: 20px 10px 10px 120px;
     text-align: right;
-    /* TODO: debug */
-    border: solid 2px blue;
 }
 
 .mood-icon
 {
+    vertical-align: top;
 }
+
+#instructions
+{
+    padding: 20px 120px 10px 20px;
+    font-family: Arial, sans-serif;
+
+}
+
+#instructions > p
+{
+    -webkit-transform: skew(10deg, 0deg);
+    -moz-transform: skew(10deg, 0deg);
+    transform: skew(10deg, 0deg);
+}
+
+.sprite > a
+{
+    display: block;
+}
+
+/* Pult in groß */
+
+#full-podium-popup
+{
+    left: 0 !important;
+    width: 100%;
+}
+#full-podium
+{
+    width: 100%;
+    border: none;
+    background: transparent url(../img/tablet/large_pult.jpg) no-repeat top center fixed;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+    margin: -1px 0;
+}
+#full-podium .ui-btn
+{
+    margin: 2em 15px;
+}
+
+#full-podium-content
+{
+    width: 810px;
+    height: 610px;
+    position: absolute;
+    bottom: 40px;
+    left: 112px;
+}
+
+.full-podium-halfs
+{
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+}
+
+#full-podium-left
+{
+    padding: 0 50px 0 0;
+}
+
+#full-podium-right
+{
+    padding: 0 0 0 50px;
+}
+
+/* marker */
+
+
+
+
 
 /* Gesten Canvas
    ========================================================================== */
@@ -293,7 +368,6 @@ body *
     top: 10px;
     left: 10px;
     /* TODO: debug */
-    border: solid 1px orange;
     background-color: rgba(50, 50, 100, .5);
 }
 
@@ -328,6 +402,14 @@ body *
     -webkit-animation-fill-mode: forwards;
 }
 
+/* Silhouette wächst raus */
+.js-ani-pullout
+{
+    transform: scale(1.25, 1.25) translate(100px, 50px);
+    -ms-transform: scale(1.25, 1.25) translate(100px, 50px);
+    -webkit-transform: scale(1.25, 1.25) translate(100px, 50px);
+}
+
 @-webkit-keyframes js-ani-blur
 {
     from { -webkit-filter: blur(0px); }
@@ -338,6 +420,18 @@ body *
 {
     from { -webkit-filter: blur(2px); }
     to   { -webkit-filter: blur(0px); }
+}
+
+/* ==========================================================================
+   Verschiedenes
+   ========================================================================== */
+
+#orientation-message
+{
+    width: 90%;
+    height: 90%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
 }
 
 /* ==========================================================================
@@ -445,16 +539,7 @@ and (min-device-width : 768px)
 and (max-device-width : 1024px)
 and (orientation : portrait)
 {
-    /*
-        TODO: Versuch eines landscape-locks. wenns so nicht geht dann in javascript
-     */
-    #app-page,
-    #preload-page
-    {
-        -webkit-transform: rotate(90deg);
-        -moz-transform: rotate(90deg);
-        transform: rotate(90deg);
-    }
+
 }
 
 /* Desktops and laptops ----------- */

@@ -1,6 +1,6 @@
 /*==============================================================================
  Author:         Georgios Panayiotou
- Created:        2013-04-10
+ Created:        2013-06-10
  URL:            https://github.com/gpanayiotou
  URL:            https://github.com/philharmoniker/philharmoniker-app
  Institution:    HAW Hamburg
@@ -33,10 +33,9 @@
 var EDUPHIL = {};
 
 EDUPHIL.info_texts = [];
-EDUPHIL.info_texts.MOOD_ONE = 'Unter Stimmung versteht man die theoretische und praktische Festlegung der Tonhöhen (Frequenzen) von Schallquellen, insbesondere von Musikinstrumenten. In der Praxis genügt hierzu oft (etwa bei einigen Blasinstrumenten) die Festlegung der absoluten Tonhöhe durch Abgleich mit einer Normfrequenz (Kammerton a1 = 440 Hz oder einer anderen für den Einzelfall vereinbarten Frequenz). Vor allem bei Saiten- und Tasteninstrumenten ist zusätzlich eine relative Festlegung der den Saiten oder Tasten zugeordneten Frequenzen erforderlich. Während Streichinstrumente auch nach der Einstimmung ihrer Saiten jeden Ton (evtl. durch Lagenspiel) rein intonieren können, müssen bei Tasteninstrumenten die zwölf Halbtöne pro Oktave fest eingestimmt werden.';
-EDUPHIL.info_texts.GEIGERIN = 'Einige Geiger waren auch bekannte Komponisten. Dazu zählen im Frühbarock in Italien Arcangelo Corelli und in Deutschland Heinrich Ignaz Franz Biber, im Hochbarock Antonio Vivaldi, Giuseppe Tartini oder Pietro Locatelli.    Dem galanten Stil kann man Johann Stamitz, Carl Stamitz, Gaetano Pugnani, Christian Cannabich und Pietro Nardini zuordnen. Den Übergang von der Klassik zur Frühromantik ebneten Giovanni Battista Viotti, Louis Spohr und Rodolphe Kreutzer. Im frühen 19. Jahrhundert entwickelte Niccolò Paganini eine brillante Spieltechnik, er erregte zu seiner Zeit Aufsehen durch sein Doppelflageolett und seine gewagten Pizzicati.';
 EDUPHIL.game_is_running = false;
 EDUPHIL.sound_buffer = false;
+EDUPHIL.window_width = 1024;
 
 var QUANTITY = 1,
     canvas,
@@ -189,11 +188,10 @@ EDUPHIL.all_toggle_playing = function()
 {
     'use strict';
 
-    // Iterate over orchestra
-    for (var i = 0; i < EDUPHIL.orchestra.length; i++)
-    {
-        EDUPHIL.orchestra[i].toggle_playing();
-    }
+    EDUPHIL.floetistin.toggle_playing();
+    EDUPHIL.cellist.toggle_playing();
+    EDUPHIL.harfenspieler.toggle_playing();
+    EDUPHIL.geigerin.toggle_playing();
 };
 
 /**
@@ -203,17 +201,17 @@ EDUPHIL.all_play_slower = function()
 {
     'use strict';
 
-    // Iterate over orchestra
-    for (var i = 0; i < EDUPHIL.orchestra.length; i++)
-    {
-        EDUPHIL.orchestra[i].play_slower();
-    }
+    EDUPHIL.geigerin.play_slower();
+    EDUPHIL.harfenspieler.play_slower();
+    EDUPHIL.floetistin.play_slower();
+    EDUPHIL.cellist.play_slower();
+
 };
 
 /**
  * Intro-Animation des Apps (Silhouette)
  */
-EDUPHIL.app_intro = function()
+EDUPHIL.play_intro = function()
 {
     'use strict';
 
@@ -221,17 +219,59 @@ EDUPHIL.app_intro = function()
 
     /* nach kurzer Zeit:
      * Silhouette ausblenden
+     * skalieren
      * Hintergrund einblenden
      */
     window.setTimeout(function()
     {
-        $('#silhouette').fadeOut(2000, function() { $('#silhouette').remove(); });
-    }, 5000);
+        $('#silhouette').addClass('js-ani-pullout').fadeOut(2000, function() { $('#silhouette').remove(); });
+    }, 4000);
 
     window.setTimeout(function()
     {
         $('#app-page').removeClass('js-blur').addClass('js-ani-play-blur-rev');
-    }, 6000);
+        EDUPHIL.show_marker( $('#geigerin') );
+    }, 5000);
+};
+
+/**
+ * Tap-Handler für Nachrichten-Box
+ * @param event
+ */
+EDUPHIL.messagebox_tap_handler = function( event )
+{
+    'use strict';
+    event.stopPropagation(); // event bubbling stoppen
+
+    $('#message-box').hide();
+};
+
+/**
+ * Setzt die markierungsgrafik an der Position (x,y)
+ * @param x x Koordiante des Markers
+ * @param y y Koordinate des Markers
+ */
+EDUPHIL.show_marker = function( element )
+{
+    'use strict';
+
+    var position = element.position();
+    var marker = $('<div id="marker"></div>');
+    var image = $('<img src="img/marker.png" />');
+    image.appendTo(marker);
+
+    marker.css('position', 'absolute');
+    marker.css('left', '30px');
+    marker.css('top', '0px');
+
+    marker.appendTo('#geigerin');
+};
+
+EDUPHIL.remove_marker = function()
+{
+    'use strict';
+
+    $('#marker').remove();
 };
 
 /**
@@ -255,6 +295,9 @@ EDUPHIL.musician_tap_handler = function( event )
         case 'harfenspieler':
             EDUPHIL.harfenspieler.toggle_playing();
             break;
+        case 'cellist':
+            EDUPHIL.cellist.toggle_playing();
+            break;
         default:
             break;
     }
@@ -269,17 +312,14 @@ EDUPHIL.musician_taphold_handler = function( event )
     'use strict';
 
     // info text anpassen
-    switch ( $(this).attr('id') )
+    switch ( $(this).parent().attr('id') )
     {
         case 'geigerin':
-            $('#info-title').text('Geigerin gewählt');
-            $('#info-text').text(EDUPHIL.info_texts.GEIGERIN);
+            $('#full-podium').popup('open', {transition: 'fade', positionTo: 'window'});
             break;
         default:
             break;
     }
-
-    $('#info-panel').panel('open');
 };
 
 /**
@@ -294,14 +334,10 @@ EDUPHIL.mood_taphold_handler = function( event )
     switch ( $(this).attr('id') )
     {
         case 'mood-one':
-            $('#info-title').text('Stimmung Eins gewählt');
-            $('#info-text').text(EDUPHIL.info_texts.MOOD_ONE);
             break;
         default:
             break;
     }
-
-    $('#info-panel').panel('open');
 };
 
 /**
@@ -360,6 +396,9 @@ EDUPHIL.icon_drag_handler = function( event )
             case $('#harfenspieler').find('.hitbox').get(0):
                 EDUPHIL.harfenspieler.play_faster();
                 break;
+            case $('#cellist').find('.hitbox').get(0):
+                EDUPHIL.cellist.play_faster();
+                break;
             default:
                 break;
         }
@@ -379,7 +418,8 @@ EDUPHIL.init_gestures = function()
     'use strict';
 
     $('#gestures').removeClass('hidden'); // canvas anzeigen
-    $('#app-page').removeClass('js-ani-play-blur-rev').addClass('js-ani-play-blur'); // Hintergrund weichzeichnen
+    /* alex mag kein blur ~~ */
+    //$('#app-page').removeClass('js-ani-play-blur-rev').addClass('js-ani-play-blur'); // Hintergrund weichzeichnen
 
     // Touch events
     $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
@@ -477,7 +517,8 @@ EDUPHIL.gesture_finished = function( event )
 
     // touch ende -> canvas wieder verstecken
     $('#gestures').addClass('hidden');
-    $('#app-page').removeClass('js-ani-play-blur').addClass('js-ani-play-blur-rev');
+    /* alex mag kein blur ~~ */
+    //$('#app-page').removeClass('js-ani-play-blur').addClass('js-ani-play-blur-rev');
 
     // Alles abhängen
     $('#gestures').off('touchstart').off('touchmove').off('touchend');
@@ -495,7 +536,7 @@ EDUPHIL.createParticle = function()
             position: {x: mouseX, y: mouseY},
             offset: {x: 0, y: 0},
             shift: {x: mouseX, y: mouseY},
-            speed: .75,
+            speed: 0.75,
             targetSize: 40,
             fillColor: '#' + (0xfb0).toString(16)
         };
@@ -548,13 +589,16 @@ EDUPHIL.init_game = function()
     EDUPHIL.tuning_sound.fadeOut(0, 2000);
 
     // Musiker Steuerung anhängen, Info abhängen
-    $('.hitbox').on('tap', EDUPHIL.musician_tap_handler).off('taphold');
+    $('.hitbox').off('taphold').on('tap', EDUPHIL.musician_tap_handler);
 
     // Mood Icons Events anhängen
-    $('.mood-icon').on('touchstart', EDUPHIL.icon_drag_handler).off('taphold');
+    $('.mood-icon').on('touchstart', EDUPHIL.icon_drag_handler);
 
     // Aktiviere den Gesten Canvas
     $('#knight5').on('tap', EDUPHIL.init_gestures);
+
+    // Markierungen entfernen
+    $('#marker').remove();
 
     //canvas = document.getElementById('world');
     //context = canvas.getContext('2d');
@@ -579,7 +623,7 @@ EDUPHIL.stop_game = function()
     EDUPHIL.tuning_sound.fadeIn(0, 2000);
 
     // Musiker Steuerung anhängen, Info abhängen
-    $('.hitbox').off('tap').on('taphold');
+    $('.hitbox').off('tap').on('taphold', EDUPHIL.musician_taphold_handler);
 
     // Mood Icons Events anhängen
     $('.mood-icon').off('touchstart');
@@ -605,16 +649,40 @@ $(document).on('pageshow', '#app-page', function()
 {
     'use strict';
 
+    /**
+     * Im Portrait Format Fehler anzeigen
+     *
+     * 0 = Portrait orientation. This is the default value
+     * -90 = Landscape orientation with the screen turned clockwise
+     * 90 = Landscape orientation with the screen turned counterclockwise
+     * 180 = Portrait orientation with the screen turned upside down
+     */
+//    $(document).on('orientationchange', function()
+//    {
+//        switch(window.orientation)
+//        {
+//            case 0:
+//                $('orientation-message').removeClass('hidden');
+//                break;
+//            case 180:
+//                $('orientation-message').removeClass('hidden');
+//                break;
+//            case -90:
+//                $('orientation-message').addClass('hidden');
+//                break;
+//            case 90:
+//                $('orientation-message').addClass('hidden');
+//                break;
+//            default:
+//                break;
+//        }
+//    });
+
     // Musiker-Objekte
     EDUPHIL.geigerin = new EDUPHIL.Musician('#geigerin', 'geige');
-    EDUPHIL.floetistin = new EDUPHIL.Musician('#floetistin', 'floete');
     EDUPHIL.harfenspieler = new EDUPHIL.Musician('#harfenspieler', 'harfe');
-
-    // alle in ein Array packen zum iterieren
-    EDUPHIL.orchestra = [];
-    EDUPHIL.orchestra.push(EDUPHIL.geigerin);
-    EDUPHIL.orchestra.push(EDUPHIL.floetistin);
-    EDUPHIL.orchestra.push(EDUPHIL.harfenspieler);
+    EDUPHIL.floetistin = new EDUPHIL.Musician('#floetistin', 'floete');
+    EDUPHIL.cellist = new EDUPHIL.Musician('#cellist', 'harfe');
 
     EDUPHIL.tuning_sound = new Howl(
         {
@@ -638,10 +706,28 @@ $(document).on('pageshow', '#app-page', function()
     });
 
     // Infosystem an Musiker anhängen
-    $('#geigerin').on('taphold', EDUPHIL.musician_taphold_handler);
+    $('.hitbox').on('taphold', EDUPHIL.musician_taphold_handler);
     // Infosystem an Stimmung anhängen
-    $('#mood-one').on('taphold', EDUPHIL.mood_taphold_handler);
+    //$('#mood-one').on('taphold', EDUPHIL.mood_taphold_handler);
+
+    //nachrichten-box handler anhängen
+    $('#message-box').on('tap', EDUPHIL.messagebox_tap_handler);
+
+    /**
+     *  Pult-Menü Größe anpassen (geht nicht in CSS wg. position: absolute)
+     */
+    $('#full-podium').on({
+        popupbeforeposition: function() {
+            var h = $(window).height();
+            $('#full-podium').css('height', h );
+        }
+    });
+
+    $(window).on('resize', function()
+    {
+        EDUPHIL.window_width = $(window).width();
+    });
 
     // Intro abspielen
-    EDUPHIL.app_intro();
+    EDUPHIL.play_intro();
 });

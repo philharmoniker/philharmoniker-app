@@ -1,5 +1,5 @@
 /*==============================================================================
- Author:         Georgios Panayiotou
+ Author:         Georgios Panayiotou, Daniel Tinney
  Created:        2013-04-10
  URL:            https://github.com/gpanayiotou
  URL:            https://github.com/philharmoniker/philharmoniker-app
@@ -36,7 +36,7 @@ var EDUPHIL = {};
  * Anzahl aller Dateien im Appcache
  * @type {number}
  */
-EDUPHIL.num_files_total = 54;
+EDUPHIL.num_files_total = 57;
 
 /**
  * Preloader Code
@@ -45,14 +45,18 @@ $(document).ready(function()
 {
     'use strict';
 
-    // Fix für iOS "no AJAX in app-mode"
-    // TODO: funzzt nicht :(
+    // Fix für iOS "no AJAX in app-mode"-bug
+    // funzzt nicht :(
 //    if (window.navigator.standalone)
 //    {
 //        jQuery.ajaxSetup( {isLocal: true} );
 //    }
 
-    var num_files_cached = 0; // Anzahl Datein die bereits geladen wurden
+    /**
+     * Anzahl Datein die bereits geladen wurden
+     * @type {number}
+     */
+    var num_files_cached = 0;
 
     // Progress-Balken
     var $progress_bar = TolitoProgressBar('progressbar')
@@ -113,18 +117,20 @@ $(document).ready(function()
         // Fehler: ERROR
         cache.addEventListener('error', function(event)
         {
-            $.mobile.changePage('error-dl.html', { transition: 'slidedown' });
-            $progress_bar.setValue(EDUPHIL.num_files_total);
-            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
-            EDUPHIL.remind_to_bookmark();
+//            $.mobile.changePage('error-dl.html', { transition: 'slidedown' });
+//            $progress_bar.setValue(EDUPHIL.num_files_total);
+//            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
+//            EDUPHIL.remind_to_bookmark();
+            console.log('appcache fehler (datei gelöscht?)');
         });
     }
     else
     {
-        // gar nix geht
-        $.mobile.changePage('error-cache.html', { transition: 'slidedown' });
-        $progress_bar.setValue(EDUPHIL.num_files_total);
-        $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
-        EDUPHIL.remind_to_bookmark();
+//        // Kein Appcache möglich
+//        $.mobile.changePage('error-cache.html', { transition: 'slidedown' });
+//        $progress_bar.setValue(EDUPHIL.num_files_total);
+//        $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
+//        EDUPHIL.remind_to_bookmark();
+        console.log('appcache geht nich');
     }
 });

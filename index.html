@@ -2,13 +2,8 @@
 <html manifest="manifest.appcache">
 <head>
     <meta charset="utf-8">
-    <!-- TODO: Titel -->
-    <title>Dirigenten Web App</title>
-    <!-- TODO: Inhalt -->
+    <title>DirigentenApp</title>
     <meta name="description" content="Ein Web App bei dem der Nutzer in die Rolle eines Dirigenten schlüpft.">
-    <!-- TODO:  die beiden folgenden tags scheinen für windows mobile zu sein, evtl überflüssig -->
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
     <!--    viewport: Korrekte Syntax mit ","
             Kein Zoom -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
@@ -24,7 +19,6 @@
 
     <!-- Apple Splash-Screens werden über JavaScript geladen (helper.js)
          Alternative wären hier media queries, die jedoch zZt noch ALLE Bilder runterladen -->
-    <!-- TODO: Dateinamen müssten hier noch angepasst werden, falls JS nicht funzzt -->
     <!-- 320x460 for iPhone 3GS -->
     <!-- <link rel="apple-touch-startup-image" media="(max-device-width: 480px) and not (-webkit-min-device-pixel-ratio: 2)" href="img/startup/startup-iphone.png" /> -->
     <!-- 640x920 for retina display -->
@@ -37,8 +31,7 @@
     <!-- "Chromeless"-Web app, als Icon installieren, keine Browserbalken -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <!-- TODO: Titel -->
-    <meta name="apple-mobile-web-app-title" content="">
+    <meta name="apple-mobile-web-app-title" content="DirigentenApp">
 
     <!-- This script prevents links from opening in Mobile Safari. https://gist.github.com/1042026 -->
     <script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
@@ -59,23 +52,26 @@
         <div data-role="header" id="preload-header">
             <div id="header-container">
                 <div id="logo"><img src="img/tablet/berphil_logo.png" /></div>
-                <div id="title"><h1>Dirigenten App</h1></div>
             </div>
             <div id="nav-bar">
                 <ul>
-                    <li>bu</li>
-                    <li>Konzerte & Karten</li>
-                    <li>Berliner Philharmoniker</li>
-                    <li>News & Medien</li>
-                    <li>Education</li>
-                    <li>Partner & Förderer</li>
-                    <li>Shop</li>
+                    <li><img src="img/home_icon.png" /></li>
+                    <li class="with-padding">Konzerte & Karten</li>
+                    <li class="with-padding">Berliner Philharmoniker</li>
+                    <li class="with-padding">News & Medien</li>
+                    <li class="with-padding" id="active">Education</li>
+                    <li class="with-padding">Partner & Förderer</li>
+                    <li class="with-padding">Shop</li>
                 </ul>
             </div>
         </div>
         <div data-role="content" id="preload-content">
-            <div id="welcome">TODO</div>
-            <div id="content-container">
+            <div id="breadcrumbs"><p>&nbsp;</p></div>
+            <div class="content-container">
+                <img src="img/message.jpg" />
+            </div>
+            <div class="content-container">
+                <h2>Status</h2>
                 <div id="progressbar"></div>
                 <div>
                     <a href="app.html" data-role="button" data-transition="fade" id="progressbar-btn" data-ajax="false">Starte App</a>

@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateien, immer folgende Zeilen mitändern (v++)
-# web app updated 2013-06-03
-# v33ddd
+# web app updated 2013-06-17
+# v43d
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -53,17 +53,23 @@ css/main.css
 css/app.css
 
 # Custom images
-img/tablet/app_bg.jpg
-img/tablet/berphil_bg.jpg
+img/tablet/bg.jpg
 img/tablet/berphil_logo.png
 img/tablet/pult.png
-img/tablet/mood_1.jpg
-img/tablet/mood_2.jpg
-img/tablet/mood_3.jpg
 img/tablet/silhouette.png
+img/tablet/large_pult.jpg
 
 img/sprites/geige_spielt.png
 img/sprites/floete_spielt.png
+img/sprites/cello_spielt.png
+
+img/home_icon.png
+img/nav_bg.png
+img/message.jpg
+img/mood_1.png
+img/mood_2.png
+img/maja.jpg
+img/marker.png
 
 # Sound
 sound/floete_langsam.mp3
@@ -82,5 +88,3 @@ NETWORK:
 # Dinge die NICHT gecached werden sollen
 # http://mobilexweb.com/jqmbook/sessions.json
 # http://mobilexweb.com/jqmbook/feedback.php
-# AJAX-Bugfix
-# http://panayiotou.de/eduphil/app.html
