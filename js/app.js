@@ -36,13 +36,12 @@ EDUPHIL.info_texts = [];
 EDUPHIL.game_is_running = false;
 EDUPHIL.sound_buffer = false;
 EDUPHIL.window_width = 1024;
-
-var QUANTITY = 1,
-    canvas,
-    context,
-    particles,
-    mouseX = 0,
-    mouseY = 0;
+EDUPHIL.QUANTITY = 1;
+EDUPHIL.canvas;
+EDUPHIL.context;
+EDUPHIL.particles;
+EDUPHIL.mouseX = 0;
+EDUPHIL.mouseY = 0;
 
 /**
  * Die Musician Klasse repräsentiert einen Musiker im App.
@@ -254,8 +253,7 @@ EDUPHIL.messagebox_tap_handler = function( event )
 EDUPHIL.show_marker = function( element )
 {
     'use strict';
-
-    var position = element.position();
+    console.log("show marker");
     var marker = $('<div id="marker"></div>');
     var image = $('<img src="img/marker.png" />');
     image.appendTo(marker);
@@ -264,7 +262,7 @@ EDUPHIL.show_marker = function( element )
     marker.css('left', '30px');
     marker.css('top', '0px');
 
-    marker.appendTo('#geigerin');
+    marker.appendTo(element);
 };
 
 EDUPHIL.remove_marker = function()
@@ -418,9 +416,8 @@ EDUPHIL.init_gestures = function()
     'use strict';
 
     $('#gestures').removeClass('hidden'); // canvas anzeigen
-    /* alex mag kein blur ~~ */
-    //$('#app-page').removeClass('js-ani-play-blur-rev').addClass('js-ani-play-blur'); // Hintergrund weichzeichnen
-
+    console.log("canvas -> gestures shown !")
+    
     // Touch events
     $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
     // Touch events
@@ -445,12 +442,13 @@ EDUPHIL.gesture_started = function( event )
     EDUPHIL.current_gesture.name = '';
     EDUPHIL.current_gesture.succeeded = false;
 
-//    if (event.originalEvent.touches.length === 1) {
-//        event.originalEvent.preventDefault();
-//        mouseX = event.originalEvent.touches[0].pageX;
-//        mouseY = event.originalEvent.touches[0].pageY;
-//        console.log(1);
-//    }
+    if (event.originalEvent.touches.length === 1) {
+        event.originalEvent.preventDefault();
+        EDUPHIL.mouseX = event.originalEvent.touches[0].pageX;
+        EDUPHIL.mouseY = event.originalEvent.touches[0].pageY;
+        console.log("_mouseX:",EDUPHIL.mouseX);
+        console.log("_mouseY:",EDUPHIL.mouseY);
+    }
 };
 
 /**
@@ -487,8 +485,8 @@ EDUPHIL.capture_gesture = function( event )
 
     if (event.originalEvent.touches.length === 1) {
         event.originalEvent.preventDefault();
-        mouseX = event.originalEvent.touches[0].pageX;
-        mouseY = event.originalEvent.touches[0].pageY;
+        EDUPHIL.mouseX = event.originalEvent.touches[0].pageX;
+        EDUPHIL.mouseY = event.originalEvent.touches[0].pageY;
     }
 };
 
@@ -517,8 +515,7 @@ EDUPHIL.gesture_finished = function( event )
 
     // touch ende -> canvas wieder verstecken
     $('#gestures').addClass('hidden');
-    /* alex mag kein blur ~~ */
-    //$('#app-page').removeClass('js-ani-play-blur').addClass('js-ani-play-blur-rev');
+
 
     // Alles abhängen
     $('#gestures').off('touchstart').off('touchmove').off('touchend');
@@ -637,7 +634,7 @@ EDUPHIL.stop_game = function()
  * */
 $(document).ready(function()
 {
-    'use strict';
+    'use strict'; 
 });
 
 /**
