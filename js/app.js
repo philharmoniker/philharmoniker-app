@@ -43,15 +43,18 @@ EDUPHIL.current_gesture = {
     start_x:0,
     start_y:0,
     color:'rgb(255,215,0)'
-}; 
-//EDUPHIL.current_gesture.color = 'rgb(255,215,0)';
+};
+
+EDUPHIL.ongoingTouches = {};
+
+
 // Trail Faider Code
-EDUPHIL.QUANTITY = 1;
-EDUPHIL.canvas;
-EDUPHIL.context;
-EDUPHIL.particles;
-EDUPHIL.mouseX = 0;
-EDUPHIL.mouseY = 0;
+//EDUPHIL.QUANTITY = 1;
+//EDUPHIL.canvas;
+//EDUPHIL.context;
+//EDUPHIL.particles;
+//EDUPHIL.mouseX = 0;
+//EDUPHIL.mouseY = 0;
 
 /**
  * Die Musician Klasse repräsentiert einen Musiker im App.
@@ -425,7 +428,12 @@ EDUPHIL.init_gestures = function()
 
     $('#gestures').removeClass('hidden'); // canvas anzeigen
     console.log("canvas -> gestures shown !");
+    console.log("doc",document);
     
+    EDUPHIL.canvas = document.getElementById('gestures');
+    console.log("canvas",EDUPHIL.canvas);
+    EDUPHIL.ctx = EDUPHIL.canvas.getContext('2d');
+    console.log("ctx",EDUPHIL.ctx);
     // Touch events
 //    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
     // Touch events
@@ -447,12 +455,23 @@ EDUPHIL.gesture_started = function(event){
     event.preventDefault();
     console.log("-> gestures_started");
     
+    
     // setzt die Startwerte
     EDUPHIL.current_gesture.start_x = event.originalEvent.changedTouches[0].pageX;
     EDUPHIL.current_gesture.start_y = event.originalEvent.changedTouches[0].pageY;
     EDUPHIL.current_gesture.name = '';
     EDUPHIL.current_gesture.succeeded = false;
     console.log("current_gesture",EDUPHIL.current_gesture);
+    
+    var touches = event.originalEvent.changedTouches;
+    for (var i = 0; i < touches.length; i++) {
+        var touch = touches[i];
+        var x = touch.pageX;
+        var y = touch.pageY;
+        EDUPHIL.ongoingTouches[touch.identifier] = {x: x, y: y};
+        EDUPHIL.ctx.fillStyle = EDUPHIL.current_gesture.color;
+        EDUPHIL.ctx.fillRect(x, y, 10, 10);
+    }
      
     /* 
      * Trail Fader Code
@@ -475,28 +494,44 @@ EDUPHIL.capture_gesture = function(event){
     event.preventDefault();
     console.log("-> capture_gesture");
     
-    var MAX_TOLERANCE = 20,
-        REQUIRED_DISTANCE = 50,
-        x = event.originalEvent.changedTouches[0].pageX,
-        y = event.originalEvent.changedTouches[0].pageY,
-        delta_x, delta_y;
-
-    delta_x = Math.abs(x - EDUPHIL.current_gesture.start_x);
-    delta_y = Math.abs(y - EDUPHIL.current_gesture.start_y);
-
-    if (!EDUPHIL.current_gesture.succeeded)
-    {
-        if (delta_x >= REQUIRED_DISTANCE && delta_y < MAX_TOLERANCE)
-        {
-            EDUPHIL.current_gesture.name = 'play_slower';
-            EDUPHIL.current_gesture.succeeded = true;
-        }
-        else if (delta_y >= REQUIRED_DISTANCE && delta_x < MAX_TOLERANCE)
-        {
-            EDUPHIL.current_gesture.name = 'start_playing';
-            EDUPHIL.current_gesture.succeeded = true;
-        }
+    var touches = event.originalEvent.changedTouches;
+    for (var i = 0; i < touches.length; i++) {
+        var touch = touches[i];
+        var previousTouch = EDUPHIL.ongoingTouches[touch.identifier];
+        EDUPHIL.ctx.strokeStyle = EDUPHIL.current_gesture.color;
+        EDUPHIL.ctx.lineWidth = 20;
+        EDUPHIL.ctx.beginPath();
+        EDUPHIL.ctx.moveTo(previousTouch.x, previousTouch.y);
+        EDUPHIL.ctx.lineTo(touch.pageX, touch.pageY);
+        EDUPHIL.ctx.stroke();
+        EDUPHIL.ongoingTouches[touch.identifier].x = touch.pageX;
+        EDUPHIL.ongoingTouches[touch.identifier].y = touch.pageY;
     }
+
+    
+//    var MAX_TOLERANCE = 20,
+//        REQUIRED_DISTANCE = 50,
+//        x = event.originalEvent.changedTouches[0].pageX,
+//        y = event.originalEvent.changedTouches[0].pageY,
+//        delta_x, delta_y;
+//
+//    delta_x = Math.abs(x - EDUPHIL.current_gesture.start_x);
+//    delta_y = Math.abs(y - EDUPHIL.current_gesture.start_y);
+//
+//    if (!EDUPHIL.current_gesture.succeeded)
+//    {
+//        if (delta_x >= REQUIRED_DISTANCE && delta_y < MAX_TOLERANCE)
+//        {
+//            EDUPHIL.current_gesture.name = 'play_slower';
+//            EDUPHIL.current_gesture.succeeded = true;
+//        }
+//        else if (delta_y >= REQUIRED_DISTANCE && delta_x < MAX_TOLERANCE)
+//        {
+//            EDUPHIL.current_gesture.name = 'start_playing';
+//            EDUPHIL.current_gesture.succeeded = true;
+//        }
+//    }
+
     /*
      * Trail Faider Code
      * 
@@ -516,10 +551,14 @@ EDUPHIL.gesture_finished = function(event){
     event.preventDefault();
     console.log("-> gesture_finished");
     
-    if (EDUPHIL.current_gesture.succeeded)
-    {
-        switch (EDUPHIL.current_gesture.name)
-        {
+    var touches = event.originalEvent.changedTouches;
+    for (var i = 0; i < touches.length; i++) {
+        var touch = touches[i];
+        delete EDUPHIL.ongoingTouches[touch.identifier];
+    }
+    
+    if (EDUPHIL.current_gesture.succeeded){
+        switch (EDUPHIL.current_gesture.name){
             case 'play_slower':
                 EDUPHIL.all_play_slower();
                 break;
@@ -530,11 +569,10 @@ EDUPHIL.gesture_finished = function(event){
                 break;
         }
     }
+    
 
     // touch ende -> canvas wieder verstecken
     $('#gestures').addClass('hidden');
-
-
     // Alles abhängen
     $('#gestures').off('touchstart').off('touchmove').off('touchend');
 };
