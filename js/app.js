@@ -411,7 +411,7 @@ EDUPHIL.icon_drag_handler = function(event){
  * Aktiviert das Gesten-Canvas für Gesteningabe
  * @param event
  */
-EDUPHIL.init_gestures = function(){
+EDUPHIL.gestures_init = function(){
     'use strict';
 
     $('#gestures').removeClass('hidden'); // canvas anzeigen
@@ -423,14 +423,13 @@ EDUPHIL.init_gestures = function(){
     EDUPHIL.ctx = EDUPHIL.canvas.getContext('2d');
     console.log("ctx",EDUPHIL.ctx);
     // Touch events
+    // why 3 times ? i don't get it ?!
 //    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
-    // Touch events
 //    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
-    // Touch events
 //    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
 
     $('#gestures').on('touchstart', EDUPHIL.gesture_started);
-    $('#gestures').on('touchmove', EDUPHIL.capture_gesture);
+    $('#gestures').on('touchmove', EDUPHIL.gesture_capture);
     $('#gestures').on('touchend', EDUPHIL.gesture_finished);
 };
 
@@ -477,7 +476,7 @@ EDUPHIL.gesture_started = function(event){
  * Fängt informationen über die Geste beim Bewegen des Fingers ein
  * @param event
  */
-EDUPHIL.capture_gesture = function(event){
+EDUPHIL.gesture_capture = function(event){
     'use strict';
     event.preventDefault();
     console.log("-> capture_gesture");
@@ -641,7 +640,7 @@ EDUPHIL.init_game = function(){
     $('.mood-icon').on('touchstart', EDUPHIL.icon_drag_handler);
 
     // Aktiviere den Gesten Canvas
-    $('#knight5').on('tap', EDUPHIL.init_gestures);
+    $('#knight5').on('tap', EDUPHIL.gestures_init);
 
     // Markierungen entfernen
     $('#marker').remove();
