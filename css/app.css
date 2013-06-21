@@ -336,6 +336,7 @@ body *
     display: inline-block;
     width: 400px;
     vertical-align: top;
+    list-style-position: inside;
 }
 
 #full-podium-left
