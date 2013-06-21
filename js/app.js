@@ -413,20 +413,23 @@ EDUPHIL.icon_drag_handler = function(event){
  */
 EDUPHIL.gestures_init = function(){
     'use strict';
-
+    $('<canvas id="gestures" class="hidden" width="1000" height="750"></canvas>').appendTo('#app-content');
     $('#gestures').removeClass('hidden'); // canvas anzeigen
     console.log("canvas -> gestures shown !");
     console.log("doc",document);
     
+    
+    
     EDUPHIL.canvas = document.getElementById('gestures');
-    console.log("canvas",EDUPHIL.canvas);
     EDUPHIL.ctx = EDUPHIL.canvas.getContext('2d');
-    console.log("ctx",EDUPHIL.ctx);
     // Touch events
-    // why 3 times ? i don't get it ?!
-//    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
-//    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
-//    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+    /*
+     * why 3 times ? i don't get it ?!
+     * 
+    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+    */
 
     $('#gestures').on('touchstart', EDUPHIL.gesture_started);
     $('#gestures').on('touchmove', EDUPHIL.gesture_capture);
@@ -496,28 +499,28 @@ EDUPHIL.gesture_capture = function(event){
     }
 
     
-//    var MAX_TOLERANCE = 20,
-//        REQUIRED_DISTANCE = 50,
-//        x = event.originalEvent.changedTouches[0].pageX,
-//        y = event.originalEvent.changedTouches[0].pageY,
-//        delta_x, delta_y;
-//
-//    delta_x = Math.abs(x - EDUPHIL.current_gesture.start_x);
-//    delta_y = Math.abs(y - EDUPHIL.current_gesture.start_y);
-//
-//    if (!EDUPHIL.current_gesture.succeeded)
-//    {
-//        if (delta_x >= REQUIRED_DISTANCE && delta_y < MAX_TOLERANCE)
-//        {
-//            EDUPHIL.current_gesture.name = 'play_slower';
-//            EDUPHIL.current_gesture.succeeded = true;
-//        }
-//        else if (delta_y >= REQUIRED_DISTANCE && delta_x < MAX_TOLERANCE)
-//        {
-//            EDUPHIL.current_gesture.name = 'start_playing';
-//            EDUPHIL.current_gesture.succeeded = true;
-//        }
-//    }
+    var MAX_TOLERANCE = 20,
+        REQUIRED_DISTANCE = 50,
+        x = event.originalEvent.changedTouches[0].pageX,
+        y = event.originalEvent.changedTouches[0].pageY,
+        delta_x, delta_y;
+
+    delta_x = Math.abs(x - EDUPHIL.current_gesture.start_x);
+    delta_y = Math.abs(y - EDUPHIL.current_gesture.start_y);
+
+    if (!EDUPHIL.current_gesture.succeeded)
+    {
+        if (delta_x >= REQUIRED_DISTANCE && delta_y < MAX_TOLERANCE)
+        {
+            EDUPHIL.current_gesture.name = 'play_slower';
+            EDUPHIL.current_gesture.succeeded = true;
+        }
+        else if (delta_y >= REQUIRED_DISTANCE && delta_x < MAX_TOLERANCE)
+        {
+            EDUPHIL.current_gesture.name = 'start_playing';
+            EDUPHIL.current_gesture.succeeded = true;
+        }
+    }
 
     /*
      * Trail Faider Code
@@ -560,6 +563,7 @@ EDUPHIL.gesture_finished = function(event){
 
     // touch ende -> canvas wieder verstecken
     $('#gestures').addClass('hidden');
+    $('#gestures').remove();
     // Alles abhängen
     $('#gestures').off('touchstart').off('touchmove').off('touchend');
 };
@@ -645,11 +649,6 @@ EDUPHIL.init_game = function(){
     // Markierungen entfernen
     $('#marker').remove();
 
-    //canvas = document.getElementById('world');
-    //context = canvas.getContext('2d');
-
-    //document.addEventListener('touchstart', documentTouchStartHandler, false);
-    //document.addEventListener('touchmove', documentTouchMoveHandler, false);
 
     //EDUPHIL.createParticle();
     //setInterval(EDUPHIL.loop, 1000 / 60);
