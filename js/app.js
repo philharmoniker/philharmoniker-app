@@ -44,9 +44,7 @@ EDUPHIL.current_gesture = {
     start_y:0,
     color:'rgb(255,215,0)'
 };
-
 EDUPHIL.ongoingTouches = {};
-
 
 // Trail Faider Code
 //EDUPHIL.QUANTITY = 1;
@@ -62,8 +60,7 @@ EDUPHIL.ongoingTouches = {};
  * @param {string} soundfile hauptteil der verschiedenen sound-datei-namen. Es werden die drei Varianten daraus generiert
  * @constructor
  */
-EDUPHIL.Musician = function( element_id, soundfile )
-{
+EDUPHIL.Musician = function(element_id, soundfile){
     'use strict';
 
     var num_frames = 24,
@@ -196,8 +193,7 @@ EDUPHIL.Musician = function( element_id, soundfile )
 /**
  * Alle Musiker beginnen zu spielen
  */
-EDUPHIL.all_toggle_playing = function()
-{
+EDUPHIL.all_toggle_playing = function(){
     'use strict';
 
     EDUPHIL.floetistin.toggle_playing();
@@ -209,8 +205,7 @@ EDUPHIL.all_toggle_playing = function()
 /**
  * Alle Musiker spielen langsamer
  */
-EDUPHIL.all_play_slower = function()
-{
+EDUPHIL.all_play_slower = function(){
     'use strict';
 
     EDUPHIL.geigerin.play_slower();
@@ -223,8 +218,7 @@ EDUPHIL.all_play_slower = function()
 /**
  * Intro-Animation des Apps (Silhouette)
  */
-EDUPHIL.play_intro = function()
-{
+EDUPHIL.play_intro = function(){
     'use strict';
 
     EDUPHIL.tuning_sound.play();
@@ -250,8 +244,7 @@ EDUPHIL.play_intro = function()
  * Tap-Handler für Nachrichten-Box
  * @param event
  */
-EDUPHIL.messagebox_tap_handler = function( event )
-{
+EDUPHIL.messagebox_tap_handler = function(event){
     'use strict';
     event.stopPropagation(); // event bubbling stoppen
 
@@ -287,8 +280,7 @@ EDUPHIL.remove_marker = function(){
  * Tap-Handler für Musiker-Objekte (Einsatz)
  * @param event
  */
-EDUPHIL.musician_tap_handler = function( event )
-{
+EDUPHIL.musician_tap_handler = function(event){
     'use strict';
 
     event.stopPropagation(); // event bubbling stoppen
@@ -316,8 +308,7 @@ EDUPHIL.musician_tap_handler = function( event )
  * Taphold-Handler für Musiker
  * @param event
  */
-EDUPHIL.musician_taphold_handler = function( event )
-{
+EDUPHIL.musician_taphold_handler = function(event){
     'use strict';
 
     // info text anpassen
@@ -335,8 +326,7 @@ EDUPHIL.musician_taphold_handler = function( event )
  * Taphold-Handler für Musiker
  * @param event
  */
-EDUPHIL.mood_taphold_handler = function( event )
-{
+EDUPHIL.mood_taphold_handler = function(event){
     'use strict';
 
     // info text anpassen
@@ -353,8 +343,7 @@ EDUPHIL.mood_taphold_handler = function( event )
  * Drag-Handler für die Stimmungs-Icons
  * @param event
  */
-EDUPHIL.icon_drag_handler = function( event )
-{
+EDUPHIL.icon_drag_handler = function(event){
     'use strict';
 
     var x = event.originalEvent.changedTouches[0].pageX,
@@ -422,8 +411,7 @@ EDUPHIL.icon_drag_handler = function( event )
  * Aktiviert das Gesten-Canvas für Gesteningabe
  * @param event
  */
-EDUPHIL.init_gestures = function()
-{
+EDUPHIL.init_gestures = function(){
     'use strict';
 
     $('#gestures').removeClass('hidden'); // canvas anzeigen
@@ -577,6 +565,10 @@ EDUPHIL.gesture_finished = function(event){
     $('#gestures').off('touchstart').off('touchmove').off('touchend');
 };
 
+/**
+ * Trail Faider Code
+ * @returns {undefined}
+ */
 EDUPHIL.createParticle = function(){
     'use strict';
 
@@ -596,6 +588,10 @@ EDUPHIL.createParticle = function(){
     }
 };
 
+/**
+ * Trail Faider Code
+ * @returns {undefined}
+ */
 EDUPHIL.loop = function(){
     'use strict';
 
@@ -630,8 +626,7 @@ EDUPHIL.loop = function(){
 /**
  * Init Funktion für eine Spielrunde, setzt Listener und Variablen
  */
-EDUPHIL.init_game = function()
-{
+EDUPHIL.init_game = function(){
     'use strict';
 
     EDUPHIL.game_is_running = true;
@@ -664,8 +659,7 @@ EDUPHIL.init_game = function()
 /**
  * Stop Funktion für eine Spielrunde, entfernt Listener und resettet
  */
-EDUPHIL.stop_game = function()
-{
+EDUPHIL.stop_game = function(){
     'use strict';
 
     EDUPHIL.game_is_running = false;
@@ -686,8 +680,7 @@ EDUPHIL.stop_game = function()
 /**
  * Code hier wird nur beim laden der ersten Page (preload) ausgeführt!
  * */
-$(document).ready(function()
-{
+$(document).ready(function(){
     'use strict'; 
 });
 
@@ -696,8 +689,7 @@ $(document).ready(function()
  * Muss über document geladen werden, da die referenzierten HTML Elemente
  * in einer anderen Datei stehen.
  */
-$(document).on('pageshow', '#app-page', function()
-{
+$(document).on('pageshow', '#app-page', function(){
     'use strict';
 
     /**
