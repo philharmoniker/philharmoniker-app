@@ -36,6 +36,16 @@ EDUPHIL.info_texts = [];
 EDUPHIL.game_is_running = false;
 EDUPHIL.sound_buffer = false;
 EDUPHIL.window_width = 1024;
+
+//erstellt ein neues Gesten-Objekt
+EDUPHIL.current_gesture = {
+    name:'',
+    start_x:0,
+    start_y:0,
+    color:'rgb(255,215,0)'
+}; 
+//EDUPHIL.current_gesture.color = 'rgb(255,215,0)';
+// Trail Faider Code
 EDUPHIL.QUANTITY = 1;
 EDUPHIL.canvas;
 EDUPHIL.context;
@@ -250,8 +260,7 @@ EDUPHIL.messagebox_tap_handler = function( event )
  * @param x x Koordiante des Markers
  * @param y y Koordinate des Markers
  */
-EDUPHIL.show_marker = function( element )
-{
+EDUPHIL.show_marker = function( element ){
     'use strict';
     console.log("show marker");
     var marker = $('<div id="marker"></div>');
@@ -265,8 +274,7 @@ EDUPHIL.show_marker = function( element )
     marker.appendTo(element);
 };
 
-EDUPHIL.remove_marker = function()
-{
+EDUPHIL.remove_marker = function(){
     'use strict';
 
     $('#marker').remove();
@@ -416,50 +424,57 @@ EDUPHIL.init_gestures = function()
     'use strict';
 
     $('#gestures').removeClass('hidden'); // canvas anzeigen
-    console.log("canvas -> gestures shown !")
+    console.log("canvas -> gestures shown !");
     
     // Touch events
-    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+//    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
     // Touch events
-    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+//    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
     // Touch events
-    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+//    $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
+
+    $('#gestures').on('touchstart', EDUPHIL.gesture_started);
+    $('#gestures').on('touchmove', EDUPHIL.capture_gesture);
+    $('#gestures').on('touchend', EDUPHIL.gesture_finished);
 };
 
 /**
  * Beginn einer neuen Geste
  * @param event
  */
-EDUPHIL.gesture_started = function( event )
-{
+EDUPHIL.gesture_started = function(event){
     'use strict';
-
-    //erstellt ein neues Gesten-Objekt
-    EDUPHIL.current_gesture = {};
+    event.preventDefault();
+    console.log("-> gestures_started");
+    
     // setzt die Startwerte
     EDUPHIL.current_gesture.start_x = event.originalEvent.changedTouches[0].pageX;
     EDUPHIL.current_gesture.start_y = event.originalEvent.changedTouches[0].pageY;
     EDUPHIL.current_gesture.name = '';
     EDUPHIL.current_gesture.succeeded = false;
-
+    console.log("current_gesture",EDUPHIL.current_gesture);
+     
+    /* 
+     * Trail Fader Code
+     * 
     if (event.originalEvent.touches.length === 1) {
         event.originalEvent.preventDefault();
         EDUPHIL.mouseX = event.originalEvent.touches[0].pageX;
         EDUPHIL.mouseY = event.originalEvent.touches[0].pageY;
         console.log("_mouseX:",EDUPHIL.mouseX);
         console.log("_mouseY:",EDUPHIL.mouseY);
-    }
+    }*/
 };
 
 /**
  * Fängt informationen über die Geste beim Bewegen des Fingers ein
  * @param event
  */
-EDUPHIL.capture_gesture = function( event )
-{
+EDUPHIL.capture_gesture = function(event){
     'use strict';
     event.preventDefault();
-
+    console.log("-> capture_gesture");
+    
     var MAX_TOLERANCE = 20,
         REQUIRED_DISTANCE = 50,
         x = event.originalEvent.changedTouches[0].pageX,
@@ -482,22 +497,25 @@ EDUPHIL.capture_gesture = function( event )
             EDUPHIL.current_gesture.succeeded = true;
         }
     }
-
+    /*
+     * Trail Faider Code
+     * 
     if (event.originalEvent.touches.length === 1) {
         event.originalEvent.preventDefault();
         EDUPHIL.mouseX = event.originalEvent.touches[0].pageX;
         EDUPHIL.mouseY = event.originalEvent.touches[0].pageY;
-    }
+    }*/
 };
 
 /**
  * Wird am Ende einer Geste ausgeführt, startet die Gesten-auswertung
  * @param event
  */
-EDUPHIL.gesture_finished = function( event )
-{
+EDUPHIL.gesture_finished = function(event){
     'use strict';
-
+    event.preventDefault();
+    console.log("-> gesture_finished");
+    
     if (EDUPHIL.current_gesture.succeeded)
     {
         switch (EDUPHIL.current_gesture.name)
@@ -521,8 +539,7 @@ EDUPHIL.gesture_finished = function( event )
     $('#gestures').off('touchstart').off('touchmove').off('touchend');
 };
 
-EDUPHIL.createParticle = function()
-{
+EDUPHIL.createParticle = function(){
     'use strict';
 
     particles = [];
@@ -541,8 +558,7 @@ EDUPHIL.createParticle = function()
     }
 };
 
-EDUPHIL.loop = function()
-{
+EDUPHIL.loop = function(){
     'use strict';
 
     context.fillStyle = 'rgba(0,0,0,0.05)';
