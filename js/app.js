@@ -198,7 +198,7 @@ EDUPHIL.all_toggle_playing = function(){
 
     EDUPHIL.floetistin.toggle_playing();
     EDUPHIL.cellist.toggle_playing();
-    EDUPHIL.harfenspieler.toggle_playing();
+    //EDUPHIL.harfenspieler.toggle_playing();
     EDUPHIL.geigerin.toggle_playing();
 };
 
@@ -209,7 +209,7 @@ EDUPHIL.all_play_slower = function(){
     'use strict';
 
     EDUPHIL.geigerin.play_slower();
-    EDUPHIL.harfenspieler.play_slower();
+//    EDUPHIL.harfenspieler.play_slower();
     EDUPHIL.floetistin.play_slower();
     EDUPHIL.cellist.play_slower();
 
@@ -292,9 +292,6 @@ EDUPHIL.musician_tap_handler = function(event){
             break;
         case 'floetistin':
             EDUPHIL.floetistin.toggle_playing();
-            break;
-        case 'harfenspieler':
-            EDUPHIL.harfenspieler.toggle_playing();
             break;
         case 'cellist':
             EDUPHIL.cellist.toggle_playing();
@@ -390,9 +387,6 @@ EDUPHIL.icon_drag_handler = function(event){
                 break;
             case $('#floetistin').children('.hitbox').get(0):
                 EDUPHIL.floetistin.play_faster();
-                break;
-            case $('#harfenspieler').find('.hitbox').get(0):
-                EDUPHIL.harfenspieler.play_faster();
                 break;
             case $('#cellist').find('.hitbox').get(0):
                 EDUPHIL.cellist.play_faster();
@@ -644,7 +638,7 @@ EDUPHIL.init_game = function(){
     $('.mood-icon').on('touchstart', EDUPHIL.icon_drag_handler);
 
     // Aktiviere den Gesten Canvas
-    $('#knight5').on('tap', EDUPHIL.gestures_init);
+    $('#fagott').on('tap', EDUPHIL.gestures_init);
 
     // Markierungen entfernen
     $('#marker').remove();
@@ -672,7 +666,7 @@ EDUPHIL.stop_game = function(){
     $('.mood-icon').off('touchstart');
 
     // Aktiviere den Gesten Canvas
-    $('#knight5').off('tap');
+    $('#fagott').off('tap');
 };
 
 /**
@@ -721,7 +715,7 @@ $(document).on('pageshow', '#app-page', function(){
 
     // Musiker-Objekte
     EDUPHIL.geigerin = new EDUPHIL.Musician('#geigerin', 'geige');
-    EDUPHIL.harfenspieler = new EDUPHIL.Musician('#harfenspieler', 'harfe');
+//    EDUPHIL.harfenspieler = new EDUPHIL.Musician('#harfenspieler', 'harfe');
     EDUPHIL.floetistin = new EDUPHIL.Musician('#floetistin', 'floete');
     EDUPHIL.cellist = new EDUPHIL.Musician('#cellist', 'harfe');
 

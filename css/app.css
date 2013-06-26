@@ -148,9 +148,9 @@ body *
     margin: 0 0 0 25px;
 }
 
-#harfenspieler
+#bratsche
 {
-    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
+    background: transparent url(../img/sprites/bratsche_spielt.png) 0 0 no-repeat;
     width: 270px;
     height: 445px;
     left: 200px;
@@ -158,7 +158,7 @@ body *
     z-index: 1;
 }
 
-#harfenspieler .hitbox
+#bratsche .hitbox
 {
     height: 300px;
     margin: 0 0 0 25px;
@@ -196,16 +196,16 @@ body *
     margin: 0 0 0 100px;
 }
 
-#knight5
+#fagott
 {
-    background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
-    width: 270px;
-    height: 445px;
+    background: transparent url(../img/sprites/fagott_spielt.png) 0 0 no-repeat;
+    width: 191px;
+    height: 472px;
     left: 800px;
     bottom: 0px;
 }
 
-#knight5 .hitbox
+#fagott .hitbox
 {
     height: 445px;
     margin: 0 0 0 15px;
