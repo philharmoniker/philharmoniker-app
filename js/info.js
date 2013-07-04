@@ -25,60 +25,44 @@
  =============================================================================*/
 
 /**
- * @fileoverview Tutorial und Gamemode-Funktionen.
+ * @fileoverview Info-Modus-Modul
  */
 
-define(function() {
+define([], function() {
   'use strict';
 
   return {
     /**
-     * Init Funktion für eine Spielrunde, setzt Listener und Variablen
+     * Taphold-Handler für Musiker
+     * @param event
      */
-    init_game: function() {
+    musician_taphold_handler: function(event){
       'use strict';
 
-      EDUPHIL.game_is_running = true;
-
-      // Intro-loop sound aus!
-      EDUPHIL.tuning_sound.fadeOut(0, 2000);
-
-      // Musiker Steuerung anhängen, Info abhängen
-      $('.hitbox').off('taphold').on('tap', EDUPHIL.musician_tap_handler);
-
-      // Mood Icons Events anhängen
-      $('.mood-icon').on('touchstart', EDUPHIL.icon_drag_handler);
-
-      // Aktiviere den Gesten Canvas
-      $('#fagott').on('tap', EDUPHIL.gestures_init);
-
-      // Markierungen entfernen
-      $('#marker').remove();
-
-
-      //EDUPHIL.createParticle();
-      //setInterval(EDUPHIL.loop, 1000 / 60);
+      // info text anpassen
+      switch ( $(this).parent().attr('id') )
+      {
+        case 'geigerin':
+          $('#full-podium').popup('open', {transition: 'fade', positionTo: 'window'});
+          break;
+        default:
+          break;
+      }
     },
 
     /**
-     * Stop Funktion für eine Spielrunde, entfernt Listener und resettet
+     * Taphold-Handler für Musiker
+     * @param event
      */
-    stop_game: function(){
-      'use strict';
-
-      EDUPHIL.game_is_running = false;
-
-      // Intro-loop sound aus!
-      EDUPHIL.tuning_sound.fadeIn(0, 2000);
-
-      // Musiker Steuerung anhängen, Info abhängen
-      $('.hitbox').off('tap').on('taphold', EDUPHIL.musician_taphold_handler);
-
-      // Mood Icons Events anhängen
-      $('.mood-icon').off('touchstart');
-
-      // Aktiviere den Gesten Canvas
-      $('#fagott').off('tap');
+    mood_taphold_handler: function(event){
+      // info text anpassen
+      switch ( $(this).attr('id') )
+      {
+        case 'mood-one':
+          break;
+        default:
+          break;
+      }
     }
-  };
+  }
 });

@@ -7,15 +7,16 @@ CACHE:
 # We don't need to cache iOS icons or launch image as the
 # platform will cache it by itself
 
-# ACHTUNG: in main.js die variable "num_files_total" anpassen
+# ACHTUNG: in preload.js die variable "num_files_total" anpassen
 
 # libs
-js/libs/jquery-1.10.1.min.js
+js/libs/jquery-1.10.2.min.js
 js/libs/jquery.mobile-1.3.1.min.js
-js/libs/jquery.spritely.min.js
+js/libs/jquery.spritely.js
 js/libs/tolito-1.0.3.min.js
 js/libs/howler.min.js
 js/libs/add2home.js
+js/libs/require.js
 
 css/libs/jquery.mobile.structure-1.3.1.min.css
 css/libs/jquery.mobile.theme-1.3.1.min.css
@@ -39,15 +40,14 @@ img/touch/apple-touch-icon-precomposed.png
 # HTML documents
 # index.html is always cached implicitly
 update.html
-error-cache.html
-error-dl.html
 app.html
 
 # Custom script and CSS
-js/plugins.min.js
-js/helper.min.js
 js/main.js
+js/gui.js
 js/app.js
+js/preload.js
+js/config.js
 
 css/main.css
 css/app.css

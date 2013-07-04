@@ -11,11 +11,13 @@
     <!-- TODO: Titel -->
     <meta name="apple-mobile-web-app-title" content="DirigentenApp">
 
-    <link rel="stylesheet" href="css/libs/jquery.mobile.structure-1.3.1.min.css"><!-- Framework -->
-    <link rel="stylesheet" href="css/libs/jquery.mobile.theme-1.3.1.min.css"><!--- Default Theme -->
+    <link rel="stylesheet" href="css/libs/jquery.mobile.structure-1.3.1.min.css"><!-- jqm structure -->
+    <link rel="stylesheet" href="css/libs/jquery.mobile.theme-1.3.1.min.css"><!--- jqm Default Theme -->
     <link rel="stylesheet" href="css/libs/normalize.min.css"><!-- CSS Reset -->
     <link rel="stylesheet" href="css/app.css"><!-- Style overrides, Media Queries -->
-    <script src="js/helper.min.js"></script><!-- Diverse Hilfsfunktionen für Browsereigenschaften (Splash Screen, Bugfixes, etc) -->
+
+    <!-- data-main attribute tells require.js to load js/main.js after require.js loads. -->
+    <script data-main="js/main" src="js/libs/require.js"></script>
 </head>
 <body>
     <!-- App -->
@@ -83,18 +85,11 @@
             <!--<canvas id="gestures" class="hidden" width="1000" height="750"></canvas>-->   
         </div>
     </div>
-    <!-- Overlay Elemente -->
+    <!-- GUI Elemente -->
     <div id="silhouette"></div>
     <div id="message-box">
         <h3 id="message-title">Willkommen beim Dirigenten App!</h3>
         <p id="message-text">Heute sind SIE einmal der Dirigent!</p>
     </div>
-
-    <script src="js/libs/jquery-1.10.1.min.js"></script>
-    <script src="js/libs/jquery.mobile-1.3.1.min.js"></script>
-    <script src="js/libs/jquery.spritely.min.js"></script>
-    <script src="js/libs/howler.min.js"></script><!-- Sound -->
-    <script src="js/plugins.min.js"></script>
-    <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /*==============================================================================
- Author:         Georgios Panayiotou, Daniel Tinney
- Created:        2013-04-10
+ Author:         Georgios Panayiotou
+ Created:        2013-06-10
  URL:            https://github.com/gpanayiotou
  URL:            https://github.com/philharmoniker/philharmoniker-app
  Institution:    HAW Hamburg
@@ -25,112 +25,110 @@
  =============================================================================*/
 
 /**
- * @author Georgios Panayiotou
- * @fileoverview Haupt-JavaScript Datei des Apps
+ * @fileOverview RequireJS Konfiguration und Startmodul (=mainfunction)
+ * TODO: Es wurde kein JQuery-shim verwendet.
  */
 
-/* namespace */
-var EDUPHIL = {};
+require.config({
+  baseUrl: 'js',
+  paths: {
+    jquery: 'libs/jquery-1.10.2',
+    jqm: 'libs/jquery.mobile-1.3.1',
+    spritely: 'libs/jquery.spritely',
+    Howler: 'libs/howler',
+    config: 'config',
+    gestures: 'gestures',
+    helper: 'helper',
+    intro: 'intro',
+    musician: 'musician',
+    oc: 'orchestra_control',
+    plugins: 'plugins',
+    app: 'app',
+    info: 'info',
+    gui: 'gui'
+  },
+  shim: {
+    plugins: ['jquery'],
+    jqm: ['jquery'],
+    musician: ['Howler'],
+    intro: ['Howler']
+  }
+});
 
-/**
- * Anzahl aller Dateien im Appcache
- * @type {number}
- */
-EDUPHIL.num_files_total = 57;
+require(['intro', 'jquery', 'jqm', 'plugins',
+    'config', 'orchestra', 'gui', 'app', 'info'],
+function(intro, $, jqm, plugins, config, orchestra, gui, app, info) {
+  'use strict';
 
-/**
- * Preloader Code
- * */
-$(document).ready(function()
-{
-    'use strict';
+  /**
+   * Code wird beim anzeigen der #app-page ausgeführt
+   * (letztes Event in der chain)
+   */
+  $(document).on('pageshow', '#app-page', function() {
+    /**
+     * Im Portrait Format Fehler anzeigen
+     *
+     * 0 = Portrait orientation. This is the default value
+     * -90 = Landscape orientation with the screen turned clockwise
+     * 90 = Landscape orientation with the screen turned counterclockwise
+     * 180 = Portrait orientation with the screen turned upside down
+     */
+      //    $(document).on('orientationchange', function()
+      //    {
+      //        switch(window.orientation)
+      //        {
+      //            case 0:
+      //                $('orientation-message').removeClass('hidden');
+      //                break;
+      //            case 180:
+      //                $('orientation-message').removeClass('hidden');
+      //                break;
+      //            case -90:
+      //                $('orientation-message').addClass('hidden');
+      //                break;
+      //            case 90:
+      //                $('orientation-message').addClass('hidden');
+      //                break;
+      //            default:
+      //                break;
+      //        }
+      //    });
 
-    // Fix für iOS "no AJAX in app-mode"-bug
-    // funzzt nicht :(
-//    if (window.navigator.standalone)
-//    {
-//        jQuery.ajaxSetup( {isLocal: true} );
-//    }
+    // Podium Doppel-Tap für Spielstart
+    $('#podium-right').doubleTap(function()
+    {
+      if (config.gameIsRunning)
+      {
+        app.stop_game();
+      } else
+      {
+        app.init_game();
+      }
+    });
+
+    // Infosystem an Musiker anhängen
+    $('.hitbox').on('taphold', info.musician_taphold_handler);
+    // Infosystem an Stimmung anhängen
+    //$('#mood-one').on('taphold', info.mood_taphold_handler);
+
+    //nachrichten-box handler anhängen
+    $('#message-box').on('tap', gui.messagebox_tap_handler);
 
     /**
-     * Anzahl Datein die bereits geladen wurden
-     * @type {number}
+     *  Pult-Menü Größe anpassen (geht nicht in CSS wg. position: absolute)
      */
-    var num_files_cached = 0;
+    $('#full-podium').on({
+      popupbeforeposition: function() {
+        var h = $(window).height();
+        $('#full-podium').css('height', h );
+      }
+    });
 
-    // Progress-Balken
-    var $progress_bar = TolitoProgressBar('progressbar')
-        .setOuterTheme('e')
-        .setInnerTheme('e')
-        .isMini(true)
-        .setMax(EDUPHIL.num_files_total)
-        .setStartFrom(num_files_cached)
-        .showCounter(true)
-        .build();
-
-    // Ist application cache API verfügbar?
-    if ( window.applicationCache !== undefined )
+    $(window).on('resize', function()
     {
-        var cache = window.applicationCache;
+      config.windowWidth = $(window).width();
+    });
 
-        // Überprüfe auf neue Version auf dem Server:               CHECKING
-        cache.addEventListener('checking', function(event)
-        {
-            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#').text('Überprüfe...');
-        });
-
-        // Version ist aktuell:                                     NOUPDATE
-        cache.addEventListener('noupdate', function ( event )
-        {
-            $progress_bar.setValue(EDUPHIL.num_files_total);
-            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
-        });
-
-        // App das erste mal gecached:                              CACHED
-        cache.addEventListener('cached', function ( event )
-        {
-            $progress_bar.setValue(EDUPHIL.num_files_total);
-            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
-        });
-
-        // Download startet:                                        DOWNLOADING
-        cache.addEventListener('downloading', function ( event )
-        {
-            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#').text('Lade App...');
-        });
-
-        // listener für progress bar, 1x fire -> +1, dann den balken updaten: PROGRESS
-        cache.addEventListener('progress', function ( event )
-        {
-            num_files_cached++;
-            $progress_bar.setValue(num_files_cached);
-        });
-
-        // update wurde heruntergeladen, verwenden?: UPDATEREADY
-        // TODO: Evtl. nur ein silent update durchführen, ohne popup. Führt aber dazu, dass das App "immer komisch neu lädt"
-        cache.addEventListener('updateready', function(event)
-        {
-            cache.swapCache(); // neuen cache benutzen
-            $.mobile.changePage('update.html', { transition: 'slidedown' });
-        });
-
-        // Fehler: ERROR
-        cache.addEventListener('error', function(event)
-        {
-//            $.mobile.changePage('error-dl.html', { transition: 'slidedown' });
-//            $progress_bar.setValue(EDUPHIL.num_files_total);
-//            $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
-//            EDUPHIL.remind_to_bookmark();
-            console.log('appcache fehler (datei gelöscht?)');
-        });
-    }
-    else
-    {
-//        // Kein Appcache möglich
-//        $.mobile.changePage('error-cache.html', { transition: 'slidedown' });
-//        $progress_bar.setValue(EDUPHIL.num_files_total);
-//        $('#progressbar-btn').parent().find('.ui-btn-inner .ui-btn-text').attr('href', '#app-page').text('Starte App');
-//        EDUPHIL.remind_to_bookmark();
-        console.log('appcache geht nich');
-    }
+    intro.playIntro();
+  });
 });
