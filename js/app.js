@@ -28,7 +28,8 @@
  * @fileoverview Tutorial und Gamemode-Funktionen.
  */
 
-define(function() {
+define('app', ['jquery', 'config','intro', 'orchestra', 'gui', 'gestures'],
+function($, config, intro, orch, gui, gest) {
   'use strict';
 
   return {
@@ -36,43 +37,35 @@ define(function() {
      * Init Funktion für eine Spielrunde, setzt Listener und Variablen
      */
     init_game: function() {
-      'use strict';
-
-      EDUPHIL.game_is_running = true;
+      config.game_is_running = true;
 
       // Intro-loop sound aus!
-      EDUPHIL.tuning_sound.fadeOut(0, 2000);
+      intro.tuningSound.fadeOut(0, 2000);
 
       // Musiker Steuerung anhängen, Info abhängen
-      $('.hitbox').off('taphold').on('tap', EDUPHIL.musician_tap_handler);
+      $('.hitbox').off('taphold').on('tap', orch.musician_tap_handler);
 
       // Mood Icons Events anhängen
-      $('.mood-icon').on('touchstart', EDUPHIL.icon_drag_handler);
+      $('.mood-icon').on('touchstart', gui.icon_drag_handler);
 
       // Aktiviere den Gesten Canvas
-      $('#fagott').on('tap', EDUPHIL.gestures_init);
+      $('#fagott').on('tap', gest.gestures_init);
 
       // Markierungen entfernen
       $('#marker').remove();
-
-
-      //EDUPHIL.createParticle();
-      //setInterval(EDUPHIL.loop, 1000 / 60);
     },
 
     /**
      * Stop Funktion für eine Spielrunde, entfernt Listener und resettet
      */
-    stop_game: function(){
-      'use strict';
-
-      EDUPHIL.game_is_running = false;
+    stop_game: function() {
+      config.game_is_running = false;
 
       // Intro-loop sound aus!
-      EDUPHIL.tuning_sound.fadeIn(0, 2000);
+      intro.tuningSound.fadeIn(0, 2000);
 
       // Musiker Steuerung anhängen, Info abhängen
-      $('.hitbox').off('tap').on('taphold', EDUPHIL.musician_taphold_handler);
+      $('.hitbox').off('tap').on('taphold', orch.musician_taphold_handler);
 
       // Mood Icons Events anhängen
       $('.mood-icon').off('touchstart');

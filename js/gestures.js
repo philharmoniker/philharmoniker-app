@@ -24,179 +24,145 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  =============================================================================*/
 
-/**
- * Namespace
- * @type {*|{}}
- */
-var EDUPHIL = EDUPHIL || {};
-
-//erstellt ein neues Gesten-Objekt
-EDUPHIL.current_gesture = {
-  name:'',
-  start_x:0,
-  start_y:0,
-  color:'rgb(255,215,0)'
-};
-
-EDUPHIL.ongoingTouches = {};
-
-/**
- * Aktiviert das Gesten-Canvas für Gesteningabe
- * @param event
- */
-EDUPHIL.gestures_init = function(){
+define('gestures', ['jquery', 'orchestra'], function($, orch) {
   'use strict';
-  $('<canvas id="gestures" class="hidden" width="1000" height="750"></canvas>').appendTo('#app-content');
-  $('#gestures').removeClass('hidden'); // canvas anzeigen
-  console.log("canvas -> gestures shown !");
-  console.log("doc",document);
+
+  return {
+    //erstellt ein neues Gesten-Objekt
+    current_gesture: {
+      name: '',
+      start_x: 0,
+      start_y: 0,
+      color: 'rgb(255,215,0)'
+    },
+
+    ongoingTouches: {},
+    canvas: {},
+    ctx: {},
+    /**
+     * Aktiviert das Gesten-Canvas für Gesteningabe
+     * @param event
+     */
+    gestures_init: function() {
+      $('<canvas id="gestures" class="hidden" width="1000" height="750"></canvas>').
+        appendTo('#app-content');
+      $('#gestures').removeClass('hidden'); // canvas anzeigen
+      console.log('canvas -> gestures shown !');
+      console.log('doc', document);
+
+      this.canvas = document.getElementById('gestures');
+      this.ctx = this.canvas.getContext('2d');
+
+      $('#gestures').on('touchstart', this.gesture_started).
+        on('touchmove', this.gesture_capture).
+        on('touchend', this.gesture_finished);
+    },
+
+    /**
+     * Beginn einer neuen Geste
+     * @param event
+     */
+    gesture_started: function(event) {
+      event.preventDefault();
+      console.log('-> gestures_started');
+
+      // setzt die Startwerte
+      this.current_gesture.start_x = event.originalEvent.changedTouches[0].pageX;
+      this.current_gesture.start_y = event.originalEvent.changedTouches[0].pageY;
+      this.current_gesture.name = '';
+      this.current_gesture.succeeded = false;
+      console.log('current_gesture', this.current_gesture);
+
+      var touches = event.originalEvent.changedTouches;
+      for (var i = 0; i < touches.length; i++) {
+        var touch = touches[i];
+        var x = touch.pageX;
+        var y = touch.pageY;
+        this.ongoingTouches[touch.identifier] = {x: x, y: y};
+        this.ctx.fillStyle = this.current_gesture.color;
+        this.ctx.fillRect(x, y, 10, 10);
+      }
+    },
+
+    /**
+     * Fängt informationen über die Geste beim Bewegen des Fingers ein
+     * @param event
+     */
+    gesture_capture: function(event) {
+      event.preventDefault();
+      console.log('-> capture_gesture');
+
+      var touches = event.originalEvent.changedTouches;
+      for (var i = 0; i < touches.length; i++) {
+        var touch = touches[i];
+        var previousTouch = this.ongoingTouches[touch.identifier];
+        this.ctx.strokeStyle = this.current_gesture.color;
+        this.ctx.lineWidth = 20;
+        this.ctx.beginPath();
+        this.ctx.moveTo(previousTouch.x, previousTouch.y);
+        this.ctx.lineTo(touch.pageX, touch.pageY);
+        this.ctx.stroke();
+        this.ongoingTouches[touch.identifier].x = touch.pageX;
+        this.ongoingTouches[touch.identifier].y = touch.pageY;
+      }
 
 
+      var MAX_TOLERANCE = 20,
+          REQUIRED_DISTANCE = 50,
+          x = event.originalEvent.changedTouches[0].pageX,
+          y = event.originalEvent.changedTouches[0].pageY,
+          delta_x, delta_y;
 
-  EDUPHIL.canvas = document.getElementById('gestures');
-  EDUPHIL.ctx = EDUPHIL.canvas.getContext('2d');
-  // Touch events
-  /*
-   * why 3 times ? i don't get it ?!
-   *
-   $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
-   $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
-   $('#gestures').on('touchstart', EDUPHIL.gesture_started).on('touchmove', EDUPHIL.capture_gesture).on('touchend', EDUPHIL.gesture_finished);
-   */
+      delta_x = Math.abs(x - this.current_gesture.start_x);
+      delta_y = Math.abs(y - this.current_gesture.start_y);
 
-  $('#gestures').on('touchstart', EDUPHIL.gesture_started);
-  $('#gestures').on('touchmove', EDUPHIL.gesture_capture);
-  $('#gestures').on('touchend', EDUPHIL.gesture_finished);
-};
+      if (!this.current_gesture.succeeded)
+      {
+        if (delta_x >= REQUIRED_DISTANCE && delta_y < MAX_TOLERANCE)
+        {
+          this.current_gesture.name = 'play_slower';
+          this.current_gesture.succeeded = true;
+        }
+        else if (delta_y >= REQUIRED_DISTANCE && delta_x < MAX_TOLERANCE)
+        {
+          this.current_gesture.name = 'start_playing';
+          this.current_gesture.succeeded = true;
+        }
+      }
+    },
 
-/**
- * Beginn einer neuen Geste
- * @param event
- */
-EDUPHIL.gesture_started = function(event){
-  'use strict';
-  event.preventDefault();
-  console.log("-> gestures_started");
+    /**
+     * Wird am Ende einer Geste ausgeführt, startet die Gesten-auswertung
+     * @param event
+     */
+    gesture_finished: function(event) {
+      event.preventDefault();
+      console.log('-> gesture_finished');
 
+      var touches = event.originalEvent.changedTouches;
+      for (var i = 0; i < touches.length; i++) {
+        var touch = touches[i];
+        delete this.ongoingTouches[touch.identifier];
+      }
 
-  // setzt die Startwerte
-  EDUPHIL.current_gesture.start_x = event.originalEvent.changedTouches[0].pageX;
-  EDUPHIL.current_gesture.start_y = event.originalEvent.changedTouches[0].pageY;
-  EDUPHIL.current_gesture.name = '';
-  EDUPHIL.current_gesture.succeeded = false;
-  console.log("current_gesture",EDUPHIL.current_gesture);
+      if (this.current_gesture.succeeded) {
+        switch (this.current_gesture.name) {
+          case 'play_slower':
+            orch.all_play_slower();
+            break;
+          case 'start_playing':
+            orch.all_toggle_playing();
+            break;
+          default:
+            break;
+        }
+      }
 
-  var touches = event.originalEvent.changedTouches;
-  for (var i = 0; i < touches.length; i++) {
-    var touch = touches[i];
-    var x = touch.pageX;
-    var y = touch.pageY;
-    EDUPHIL.ongoingTouches[touch.identifier] = {x: x, y: y};
-    EDUPHIL.ctx.fillStyle = EDUPHIL.current_gesture.color;
-    EDUPHIL.ctx.fillRect(x, y, 10, 10);
-  }
-
-  /*
-   * Trail Fader Code
-   *
-   if (event.originalEvent.touches.length === 1) {
-   event.originalEvent.preventDefault();
-   EDUPHIL.mouseX = event.originalEvent.touches[0].pageX;
-   EDUPHIL.mouseY = event.originalEvent.touches[0].pageY;
-   console.log("_mouseX:",EDUPHIL.mouseX);
-   console.log("_mouseY:",EDUPHIL.mouseY);
-   }*/
-};
-
-/**
- * Fängt informationen über die Geste beim Bewegen des Fingers ein
- * @param event
- */
-EDUPHIL.gesture_capture = function(event){
-  'use strict';
-  event.preventDefault();
-  console.log("-> capture_gesture");
-
-  var touches = event.originalEvent.changedTouches;
-  for (var i = 0; i < touches.length; i++) {
-    var touch = touches[i];
-    var previousTouch = EDUPHIL.ongoingTouches[touch.identifier];
-    EDUPHIL.ctx.strokeStyle = EDUPHIL.current_gesture.color;
-    EDUPHIL.ctx.lineWidth = 20;
-    EDUPHIL.ctx.beginPath();
-    EDUPHIL.ctx.moveTo(previousTouch.x, previousTouch.y);
-    EDUPHIL.ctx.lineTo(touch.pageX, touch.pageY);
-    EDUPHIL.ctx.stroke();
-    EDUPHIL.ongoingTouches[touch.identifier].x = touch.pageX;
-    EDUPHIL.ongoingTouches[touch.identifier].y = touch.pageY;
-  }
-
-
-  var MAX_TOLERANCE = 20,
-    REQUIRED_DISTANCE = 50,
-    x = event.originalEvent.changedTouches[0].pageX,
-    y = event.originalEvent.changedTouches[0].pageY,
-    delta_x, delta_y;
-
-  delta_x = Math.abs(x - EDUPHIL.current_gesture.start_x);
-  delta_y = Math.abs(y - EDUPHIL.current_gesture.start_y);
-
-  if (!EDUPHIL.current_gesture.succeeded)
-  {
-    if (delta_x >= REQUIRED_DISTANCE && delta_y < MAX_TOLERANCE)
-    {
-      EDUPHIL.current_gesture.name = 'play_slower';
-      EDUPHIL.current_gesture.succeeded = true;
+      // touch ende -> canvas wieder verstecken
+      $('#gestures').addClass('hidden');
+      $('#gestures').remove();
+      // Alles abhängen
+      $('#gestures').off('touchstart').off('touchmove').off('touchend');
     }
-    else if (delta_y >= REQUIRED_DISTANCE && delta_x < MAX_TOLERANCE)
-    {
-      EDUPHIL.current_gesture.name = 'start_playing';
-      EDUPHIL.current_gesture.succeeded = true;
-    }
-  }
-
-  /*
-   * Trail Faider Code
-   *
-   if (event.originalEvent.touches.length === 1) {
-   event.originalEvent.preventDefault();
-   EDUPHIL.mouseX = event.originalEvent.touches[0].pageX;
-   EDUPHIL.mouseY = event.originalEvent.touches[0].pageY;
-   }*/
-};
-
-/**
- * Wird am Ende einer Geste ausgeführt, startet die Gesten-auswertung
- * @param event
- */
-EDUPHIL.gesture_finished = function(event){
-  'use strict';
-  event.preventDefault();
-  console.log("-> gesture_finished");
-
-  var touches = event.originalEvent.changedTouches;
-  for (var i = 0; i < touches.length; i++) {
-    var touch = touches[i];
-    delete EDUPHIL.ongoingTouches[touch.identifier];
-  }
-
-  if (EDUPHIL.current_gesture.succeeded){
-    switch (EDUPHIL.current_gesture.name){
-      case 'play_slower':
-        EDUPHIL.all_play_slower();
-        break;
-      case 'start_playing':
-        EDUPHIL.all_toggle_playing();
-        break;
-      default:
-        break;
-    }
-  }
-
-
-  // touch ende -> canvas wieder verstecken
-  $('#gestures').addClass('hidden');
-  $('#gestures').remove();
-  // Alles abhängen
-  $('#gestures').off('touchstart').off('touchmove').off('touchend');
-};
+  };
+});

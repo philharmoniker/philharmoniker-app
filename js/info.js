@@ -25,10 +25,10 @@
  =============================================================================*/
 
 /**
- * @fileoverview Info-Modus-Modul
+ * @fileoverview Info-Modus-Modul, lädt/tauscht Info Texte/Container
  */
 
-define([], function() {
+define('info', ['config', 'app', 'gui', 'jquery', 'jquerymobile'], function(config, app, gui, $, jqm) {
   'use strict';
 
   return {
@@ -36,12 +36,9 @@ define([], function() {
      * Taphold-Handler für Musiker
      * @param event
      */
-    musician_taphold_handler: function(event){
-      'use strict';
-
+    musician_taphold_handler: function(event) {
       // info text anpassen
-      switch ( $(this).parent().attr('id') )
-      {
+      switch ( $(this).parent().attr('id') ) {
         case 'geigerin':
           $('#full-podium').popup('open', {transition: 'fade', positionTo: 'window'});
           break;
@@ -54,7 +51,7 @@ define([], function() {
      * Taphold-Handler für Musiker
      * @param event
      */
-    mood_taphold_handler: function(event){
+    mood_taphold_handler: function(event) {
       // info text anpassen
       switch ( $(this).attr('id') )
       {
@@ -63,6 +60,37 @@ define([], function() {
         default:
           break;
       }
+    },
+
+    /**
+     * Initialisiert die Info-Phase des Apps
+     * Optionale Verzögerungszeit (ms)
+     */
+    initInfo: function() {
+      var delay = 0;
+
+      if (arguments[0]!==null && typeof arguments[0]==='number') {
+        delay = arguments[0];
+      }
+
+      var parent = this;
+
+      window.setTimeout(function() {
+        // Podium Doppel-Tap für Spielstart
+        $('#podium-right').doubleTap(function() {
+          if (config.gameIsRunning) { app.stop_game(); }
+          else { app.init_game(); }
+        });
+
+        // Infosystem an Musiker anhängen
+        $('.hitbox').on('taphold', parent.musician_taphold_handler);
+
+        //nachrichten-box handler anhängen
+        $('#message-box').on('tap', gui.messagebox_tap_handler);
+
+        // Gelbe Markierungen anhängen
+        gui.showMarker( $('#geigerin') );
+      }, delay);
     }
-  }
+  };
 });

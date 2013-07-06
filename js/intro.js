@@ -24,11 +24,14 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  =============================================================================*/
 
-define(['config', 'gui', 'Howler', 'jquery'],
+define(                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ['config', 'gui', 'Howler', 'jquery'],
 function(config, gui, howler, $) {
   'use strict';
 
   return {
+    /**
+     * Anfangssound-Objekt
+     */
     tuningSound: new howler.Howl({
       urls: ['sound/tuning.mp3'],
       autoplay: false,
@@ -36,9 +39,14 @@ function(config, gui, howler, $) {
       loop: true,
       volume: 0.1
     }),
+    /**
+     * Verzögerungszeit
+     * {number}
+     */
+    delay: 5000,
 
     /**
-     * Intro-Animation des Apps (Silhouette)
+     * Intro-Animation des Apps (Dirigenten-Silhouette fade) + Sound abspielen
      */
     playIntro: function() {
       this.tuningSound.play();
@@ -49,17 +57,16 @@ function(config, gui, howler, $) {
        * skalieren
        * Hintergrund einblenden
        */
-      window.setTimeout(function()
-      {
+      window.setTimeout(function() {
+        // Animations-CSS anhängen, nach kurzer Zeit fade+Node löschen
         $('#silhouette').addClass('js-ani-pullout').fadeOut(2000,
           function() { $('#silhouette').remove(); });
-      }, 4000);
+      }, this.delay);
 
-      window.setTimeout(function()
-      {
+      // Blur-Effekt des Hintergrundes entfernen
+      window.setTimeout(function() {
         $('#app-page').removeClass('js-blur').addClass('js-ani-play-blur-rev');
-        gui.showMarker( $('#geigerin') );
-      }, 5000);
+      }, this.delay);
     }
   };
 });

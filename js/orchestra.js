@@ -29,7 +29,7 @@
  * about its dependencies.
  */
 
-define(['musician', 'jquery'], function(musician, $) {
+define('orchestra', ['musician', 'jquery'], function(musician, $) {
   'use strict';
 
   return {
@@ -41,43 +41,38 @@ define(['musician', 'jquery'], function(musician, $) {
     /**
      * Alle Musiker beginnen zu spielen
      */
-    all_toggle_playing: function(){
-    'use strict';
-
-    EDUPHIL.floetistin.toggle_playing();
-    EDUPHIL.cellist.toggle_playing();
-    //EDUPHIL.harfenspieler.toggle_playing();
-    EDUPHIL.geigerin.toggle_playing();
-  },
+    all_toggle_playing: function() {
+      this.floetistin.toggle_playing();
+      this.cellist.toggle_playing();
+      this.geigerin.toggle_playing();
+    },
 
     /**
      * Alle Musiker spielen langsamer
      */
-    all_play_slower: function(){
+    all_play_slower: function() {
       this.geigerin.play_slower();
-  //    EDUPHIL.harfenspieler.play_slower();
       this.floetistin.play_slower();
       this.cellist.play_slower();
-
     },
 
     /**
      * Tap-Handler für Musiker-Objekte (Einsatz)
      * @param event
      */
-    musician_tap_handler: function(event){
+    musician_tap_handler: function(event) {
       event.stopPropagation(); // event bubbling stoppen
 
       switch ($(this).parent()[0].id) // id des angeklickten divs
       {
         case 'geigerin':
-          EDUPHIL.geigerin.toggle_playing();
+          this.geigerin.toggle_playing();
           break;
         case 'floetistin':
-          EDUPHIL.floetistin.toggle_playing();
+          this.floetistin.toggle_playing();
           break;
         case 'cellist':
-          EDUPHIL.cellist.toggle_playing();
+          this.cellist.toggle_playing();
           break;
         default:
           break;
@@ -88,9 +83,7 @@ define(['musician', 'jquery'], function(musician, $) {
      * Drag-Handler für die Stimmungs-Icons
      * @param event
      */
-    icon_drag_handler: function(event){
-      'use strict';
-
+    icon_drag_handler: function(event) {
       var x = event.originalEvent.changedTouches[0].pageX,
         y = event.originalEvent.changedTouches[0].pageY,
         offset_x = x - $(this).offset().left,
@@ -103,11 +96,12 @@ define(['musician', 'jquery'], function(musician, $) {
       $(this).css('top', y - offset_y);
 
       // Handler für den Bewegungsteil des Drags
-      function drag_move_handler( event )
-      {
+      function drag_move_handler( event ) {
         event.preventDefault();
+
         var x = event.originalEvent.changedTouches[0].pageX;
         var y = event.originalEvent.changedTouches[0].pageY;
+
         $(this).css('left', x - offset_x);
         $(this).css('top', y - offset_y);
       }
@@ -118,8 +112,7 @@ define(['musician', 'jquery'], function(musician, $) {
        * Drop-Handler für die Stimmungs-Icons
        * @param event
        */
-      function drag_end_Handler( event )
-      {
+      function drag_end_Handler( event ) {
         $(this).removeAttr('style');
         $(this).detach();
         $(this).appendTo($('#mood-container'));
@@ -127,17 +120,17 @@ define(['musician', 'jquery'], function(musician, $) {
         var x = event.originalEvent.changedTouches[0].pageX;
         var y = event.originalEvent.changedTouches[0].pageY;
         var element = document.elementFromPoint(x, y);
-
+        /* TODO: closure für this->parent */
         switch (element)
         {
           case $('#geigerin').children('.hitbox').get(0):
-            EDUPHIL.geigerin.play_faster();
+            this.geigerin.play_faster();
             break;
           case $('#floetistin').children('.hitbox').get(0):
-            EDUPHIL.floetistin.play_faster();
+            this.floetistin.play_faster();
             break;
           case $('#cellist').find('.hitbox').get(0):
-            EDUPHIL.cellist.play_faster();
+            this.cellist.play_faster();
             break;
           default:
             break;

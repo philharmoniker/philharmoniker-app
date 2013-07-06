@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateien, immer folgende Zeilen mitändern (v++)
-# web app updated 2013-06-17
-# v43ddd
+# web app updated 2013-07-06
+# v43dd
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the
@@ -10,11 +10,11 @@ CACHE:
 # ACHTUNG: in preload.js die variable "num_files_total" anpassen
 
 # libs
-js/libs/jquery-1.10.2.min.js
-js/libs/jquery.mobile-1.3.1.min.js
+js/libs/jquery-1.10.2.js
+js/libs/jquery.mobile-1.3.1.js
 js/libs/jquery.spritely.js
 js/libs/tolito-1.0.3.min.js
-js/libs/howler.min.js
+js/libs/howler.js
 js/libs/add2home.js
 js/libs/require.js
 
@@ -48,6 +48,14 @@ js/gui.js
 js/app.js
 js/preload.js
 js/config.js
+js/gestures.js
+js/helper.js
+js/info.js
+js/intro.js
+js/musician.js
+js/orchestra.js
+js/plugins.js
+js/preload.js
 
 css/main.css
 css/app.css
@@ -62,6 +70,8 @@ img/tablet/large_pult.jpg
 img/sprites/geige_spielt.png
 img/sprites/floete_spielt.png
 img/sprites/cello_spielt.png
+img/sprites/bratsche_spielt.png
+img/sprites/fagott_spielt.png
 
 img/home_icon.png
 img/nav_bg.png

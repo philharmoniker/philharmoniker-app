@@ -44,27 +44,24 @@ define(['Howler', 'config'], function(howler, config) {
           soundfile_normal = 'sound/' + soundfile + '_normal.mp3',
           soundfile_slow = 'sound/' + soundfile + '_langsam.mp3',
           soundfile_fast = 'sound/' + soundfile + '_schnell.mp3',
-          sound_normal = new howler.Howl(
-            {
+          sound_normal = new howler.Howl({
               urls: [soundfile_normal],
               loop: true,
               buffer: config.soundBuffer,
               volume: DEFAULT_VOLUME
-            }),
-          sound_slow = new howler.Howl(
-            {
+          }),
+          sound_slow = new howler.Howl({
               urls: [soundfile_slow],
               loop: true,
               buffer: config.soundBuffer,
               volume: DEFAULT_VOLUME
-            }),
-          sound_fast = new howler.Howl(
-            {
+          }),
+          sound_fast = new howler.Howl({
               urls: [soundfile_fast],
               loop: true,
               buffer: config.soundBuffer,
               volume: DEFAULT_VOLUME
-            }),
+          }),
           graphics = element_id;
 
       // public
@@ -74,8 +71,7 @@ define(['Howler', 'config'], function(howler, config) {
        * Starte Sound und Animation
        * @private
        */
-      function start_playing()
-      {
+      function start_playing() {
         $(graphics).sprite({ fps: normal_speed, no_of_frames: num_frames });
         sound_normal.play();
         is_playing = true;
@@ -85,8 +81,7 @@ define(['Howler', 'config'], function(howler, config) {
        * Breche Abspielen ab und setze alles auf 0
        * @private
        */
-      function stop_playing()
-      {
+      function stop_playing() {
         $(graphics).destroy();
         sound_slow.stop();
         sound_normal.stop();
@@ -98,8 +93,7 @@ define(['Howler', 'config'], function(howler, config) {
        * Pausiert Abspielen
        * @private
        */
-      function pause_playing()
-      {
+      function pause_playing() {
         $(graphics).destroy();
         sound_slow.pause();
         sound_normal.pause();
@@ -110,9 +104,8 @@ define(['Howler', 'config'], function(howler, config) {
       /**
        * Toggle abspielen von animation/sound
        */
-      this.toggle_playing = function()
-      {
-        if ( is_playing ) { stop_playing(); }
+      this.toggle_playing = function() {
+        if (is_playing) { stop_playing(); }
         else { start_playing(); }
       };
 
@@ -121,42 +114,32 @@ define(['Howler', 'config'], function(howler, config) {
        * @param {number} new_speed Die neuen FPS der Animation
        * @private
        */
-      function change_anim_speed( new_speed )
-      {
+      function change_anim_speed(new_speed) {
         $(graphics).fps(new_speed);
       }
 
       /**
        * Wechsle zu langsamer Tonspur und Animation
        */
-      this.play_slower = function ()
-      {
+      this.play_slower = function() {
         change_anim_speed(low_speed);
 
-        // aktuelle Position holen TODO: position sollte global verarbeitet werden für ALLE tonspuren
-        var position = 5000;
         sound_normal.stop();
         sound_fast.stop();
 
-        // alte position in neuer tonspur setzen
         sound_slow.play();
-        //sound_slow.pos(position);
       };
 
       /**
        * Wechsle zu schneller Tonspur und Animation
        */
-      this.play_faster = function ()
-      {
+      this.play_faster = function() {
         change_anim_speed(high_speed);
 
-        // aktuelle Position holen TODO: position sollte global verarbeitet werden für ALLE tonspuren
-        var position = 5000;
         sound_normal.stop();
         sound_slow.stop();
 
         sound_fast.play();
-        //sound_fast.pos(position);
       };
     }
   };

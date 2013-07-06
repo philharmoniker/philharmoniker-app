@@ -29,14 +29,18 @@
  * verursachen.
  */
 
-define(function() {
+define('config', function() {
   'use strict';
 
   return {
     infoTexts: [],
     gameIsRunning: false,
     soundBuffer: false,
-    windowWidth: 1024
+    windowWidth: 1024,
+    /**
+     * Anzahl der App-Dateien, die zu cachen sind
+     */
+    preloadFiles: 66
   };
 });
 
