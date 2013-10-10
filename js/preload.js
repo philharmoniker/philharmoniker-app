@@ -24,6 +24,14 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  =============================================================================*/
 
+//define([], function() {
+//  'use strict';
+//
+//  return {
+//
+//  }
+//});
+
 /* namespace */
 var EDUPHIL = EDUPHIL || {};
 

@@ -1,7 +1,7 @@
 CACHE MANIFEST
 # Bei Änderungen an Dateien, immer folgende Zeilen mitändern (v++)
 # web app updated 2013-07-06
-# v43dd
+# v43
 
 CACHE:
 # We don't need to cache iOS icons or launch image as the

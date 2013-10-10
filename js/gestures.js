@@ -24,7 +24,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  =============================================================================*/
 
-define('gestures', ['jquery', 'orchestra'], function($, orch) {
+define(['jquery', 'orchestra'], function($, orch) {
   'use strict';
 
   return {

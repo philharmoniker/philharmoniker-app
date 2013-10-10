@@ -29,7 +29,7 @@
  * about its dependencies.
  */
 
-define('orchestra', ['musician', 'jquery'], function(musician, $) {
+define(['musician', 'jquery'], function(musician, $) {
   'use strict';
 
   return {

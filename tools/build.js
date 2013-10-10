@@ -24,52 +24,15 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  =============================================================================*/
 
-define(['config', 'gui', 'Howler', 'jquery'],
-function(config, gui, howler, $) {
-  'use strict';
+/**
+ * @fileoverview RequireJS build config. Mit r.js verwenden
+ */
 
-  return {
-    /**
-     * Anfangssound-Objekt
-     */
-    tuningSound: new howler.Howl({
-      urls: ['sound/tuning.mp3'],
-      autoplay: false,
-      buffer: config.soundBuffer,
-      loop: true,
-      volume: 0.1
-    }),
-    /**
-     * Verzögerungszeit
-     * {number}
-     */
-    delay: 5000,
-
-    /**
-     * Intro-Animation des Apps (Dirigenten-Silhouette fade) + Sound abspielen
-     */
-    playIntro: function() {
-      this.tuningSound.play();
-
-      /**
-       * nach kurzer Zeit:
-       * Silhouette ausblenden
-       * skalieren
-       * Hintergrund einblenden
-       */
-      window.setTimeout(function() {
-        // Animations-CSS anhängen, nach kurzer Zeit fade+Node löschen
-        $('#silhouette').addClass('js-ani-pullout').fadeOut(2000,
-          function() { $('#silhouette').remove(); });
-      }, this.delay-1000);
-
-      // Blur-Effekt des Hintergrundes entfernen
-      window.setTimeout(function() {
-        $('#app-page').removeClass('js-blur').addClass('js-ani-play-blur-rev');
-      }, this.delay);
-    }
-  };
-});
-
-
-
+({
+  baseUrl: "js",
+  paths: {
+    jquery: "libs/jquery-1.10.2"
+  },
+  name: "main",
+  out: "main-built.js"
+})

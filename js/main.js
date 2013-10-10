@@ -29,6 +29,14 @@
  * TODO: Es wurde kein JQuery-shim verwendet.
  */
 
+/*
+ * requirejs tipps:
+ * <ul>
+ *   <li>Dateiname = Modulname, für einfacheres refactoring:
+ *     anonyme Version verwenden</li>
+ * </ul>
+ */
+
 require.config({
   baseUrl: 'js',
   paths: {
@@ -53,16 +61,17 @@ require.config({
     orchestra: 'orchestra'
   },
   shim: {
-    jquerymobile: ['jquery'],
-    musician: ['Howler'],
-    intro: ['Howler'],
+    jquerymobile: {
+      exports: '$.mobile',
+      deps: ['jquery']
+    },
     plugins: ['jquery', 'helper']
   }
 });
 
 require(['intro', 'jquerymobile', 'plugins',
-    'config', 'orchestra', 'gui', 'app', 'info', 'jquery'],
-function(intro, jqm, plugins, config, orchestra, gui, app, info, $) {
+    'config', 'info', 'jquery'],
+function(intro, jqm, plugins, config, info, $) {
   'use strict';
 
   // TODO: in GUI einfügen als init
@@ -74,9 +83,7 @@ function(intro, jqm, plugins, config, orchestra, gui, app, info, $) {
     }
   });
 
-  // TODO: in GUI verschieben, oder evtl CONFIG
-  $(window).on('resize', function()
-  {
+  $(window).on('resize', function() {
     config.windowWidth = $(window).width();
   });
 
@@ -84,5 +91,5 @@ function(intro, jqm, plugins, config, orchestra, gui, app, info, $) {
   intro.playIntro();
 
   //Info-Phase einleiten zum Start
-  info.initInfo(intro.delay);
+  info.initInfo(intro.delay+1000);
 });

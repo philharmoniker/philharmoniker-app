@@ -29,7 +29,7 @@
  * verursachen.
  */
 
-define('config', function() {
+define(function() {
   'use strict';
 
   return {

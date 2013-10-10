@@ -28,7 +28,7 @@
  * @fileoverview Info-Modus-Modul, lädt/tauscht Info Texte/Container
  */
 
-define('info', ['config', 'app', 'gui', 'jquery', 'jquerymobile'], function(config, app, gui, $, jqm) {
+define(['config', 'app', 'gui', 'jquery', 'jquerymobile'], function(config, app, gui, $, jqm) {
   'use strict';
 
   return {
