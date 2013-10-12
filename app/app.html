@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DirigentenApp</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+
+  <!-- "Chromeless"-Web app, als Icon installieren, keine Browserbalken -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="DirigentenApp">
+
+  <link rel="stylesheet" href="styles/vendor/jquery.mobile.structure.css"><!-- jqm structure -->
+  <link rel="stylesheet" href="styles/vendor/jquery.mobile.theme.css"><!--- jqm Default Theme -->
+  <link rel="stylesheet" href="styles/vendor/normalize.css"><!-- CSS Reset -->
+  <link rel="stylesheet" href="styles/app.css"><!-- Style overrides, Media Queries -->
+
+  <!-- data-main attribute tells require.scripts to load scripts/main.scripts after require.scripts loads. -->
+  <script data-main="scripts/main" src="scripts/vendor/require.js"></script>
+</head>
+<body>
+  <!-- App -->
+  <div data-role="page" id="app-page" class="js-blur" data-theme="c">
+    <div data-role="content" id="app-content">
+      <div id="sprite-container">
+        <div id="geigerin" class="sprite">
+            <div class="hitbox"></div>
+        </div>
+        <div id="bratsche" class="sprite">
+            <div class="hitbox"></div>
+        </div>
+        <div id="floetistin" class="sprite">
+            <div class="hitbox"></div>
+        </div>
+        <div id="cellist" class="sprite">
+            <div class="hitbox"></div>
+        </div>
+        <div id="fagott" class="sprite">
+        </div>
+      </div>
+      <!-- Podium/Menü -->
+      <div id="podium">
+        <div id="podium-left" class="podium-halfs">
+          <div id="mood-container">
+            <img class="mood-icon" id="mood-one" src="img/mood_1.png" />
+            <img class="mood-icon" id="mood-two" src="img/mood_2.png" />
+          </div>
+        </div>
+        <div id="podium-right" class="podium-halfs">
+          <div id="instructions">
+            <p>Tappen-und-Halten Sie die markierten Stellen. um nähere
+              Information zu erhalten. Doppel-Tappen Sie diesen Text,
+              um zu beginnen.</p>
+          </div>
+        </div>
+      </div>
+      <div data-role="popup" id="full-podium" data-corners="false" data-theme="none" data-shadow="false" data-tolerance="0,0,0,0">
+        <div id="full-podium-content">
+          <div id="full-podium-left" class="full-podium-halfs">
+            <h3>Allgemeine Informationen zur Violine</h3>
+            <ul>
+              <li>Kurzer Einführungstext</li>
+              <li>Aufgaben im Orchester/in Stücken</li>
+              <li>Besonderheiten des Instruments</li>
+              <li>Links zu internen Seiten der BerPhil</li>
+              <li>Einbindung von BerPhil-News möglich, z.B. Verweis auf die nächste Geigenbau-Veranstaltung</li>
+            </ul>
+            &nbsp;
+            &nbsp;
+            &nbsp;
+            <a href="app.html" data-role="button">Schliessen</a>
+          </div>
+          <div id="full-podium-right" class="full-podium-halfs">
+            <h3>Im Orchester: Maja Avramović</h3>
+            <p><img src="img/maja.jpg" style="float: left" />Sie musizierte mit diversen Orchestern, ehe sie 1994 zu den Berliner Philharmonikern kam.</p>
+            <ul style="clear: left">
+              <li>Kurzer Einführungstext</li>
+              <li>Verweis auf eine reale Person im Orchester (Zufällig!)</li>
+              <li>...oder Auflistung aller Personen</li>
+              <li>Video möglich</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Gesten-Canvas TODO: magic numbers vorerst: ACHTUNG: in JS setzen NICHT CSS! -->
+      <!--<canvas id="gestures" class="hidden" width="1000" height="750"></canvas>-->
+    </div>
+  </div>
+  <!-- GUI Elemente -->
+  <div id="silhouette"></div>
+  <div id="message-box">
+      <h3 id="message-title">Willkommen beim Dirigenten App!</h3>
+      <p id="message-text">Heute sind SIE einmal der Dirigent!</p>
+  </div>
+</body>
+</html>

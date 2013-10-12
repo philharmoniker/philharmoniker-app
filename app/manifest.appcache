@@ -1,0 +1,99 @@
+CACHE MANIFEST
+# v43
+
+CACHE:
+# We don't need to cache iOS icons or launch image as the
+# platform will cache it by itself
+
+# ACHTUNG: in preload.js die variable "num_files_total" anpassen für den
+#   Progress-Balken
+
+# Vendor libs
+scripts/vendor/jquery.js
+scripts/vendor/jquery.mobile.js
+scripts/vendor/jquery.spritely.js
+scripts/vendor/tolito.js
+scripts/vendor/howler.js
+scripts/vendor/add2home.js
+scripts/vendor/require.js
+
+styles/vendor/jquery.mobile.structure.css
+styles/vendor/jquery.mobile.theme.css
+styles/vendor/tolito.css
+styles/vendor/normalize.css
+styles/vendor/add2home.css
+
+styles/vendor/images/ajax-loader.gif
+styles/vendor/images/icons-18-black.png
+styles/vendor/images/icons-18-white.png
+styles/vendor/images/icons-36-black.png
+styles/vendor/images/icons-36-white.png
+
+img/touch/apple-touch-icon.png
+img/touch/apple-touch-icon-57x57-precomposed.png
+img/touch/apple-touch-icon-72x72-precomposed.png
+img/touch/apple-touch-icon-114x114-precomposed.png
+img/touch/apple-touch-icon-144x144-precomposed.png
+img/touch/apple-touch-icon-precomposed.png
+
+# HTML documents
+#   index.html is always cached implicitly
+update.html
+app.html
+
+# Custom script and CSS
+scripts/main.js
+scripts/gui.js
+scripts/app.js
+scripts/preload.js
+scripts/config.js
+scripts/gestures.js
+scripts/helper.js
+scripts/info.js
+scripts/intro.js
+scripts/musician.js
+scripts/orchestra.js
+scripts/plugins.js
+scripts/preload.js
+
+styles/main.css
+styles/app.css
+
+# Custom images
+img/tablet/bg.jpg
+img/tablet/berphil_logo.png
+img/tablet/pult.png
+img/tablet/silhouette.png
+img/tablet/large_pult.jpg
+
+img/sprites/geige_spielt.png
+img/sprites/floete_spielt.png
+img/sprites/cello_spielt.png
+img/sprites/bratsche_spielt.png
+img/sprites/fagott_spielt.png
+
+img/home_icon.png
+img/nav_bg.png
+img/message.jpg
+img/mood_1.png
+img/mood_2.png
+img/maja.jpg
+img/marker.png
+
+# Sound
+sound/floete_langsam.mp3
+sound/floete_normal.mp3
+sound/floete_schnell.mp3
+sound/geige_langsam.mp3
+sound/geige_normal.mp3
+sound/geige_schnell.mp3
+sound/harfe_langsam.mp3
+sound/harfe_normal.mp3
+sound/harfe_schnell.mp3
+sound/tuning.mp3
+
+NETWORK:
+# use * for all websites
+# Dinge die NICHT gecached werden sollen
+# http://mobilexweb.com/jqmbook/sessions.json
+# http://mobilexweb.com/jqmbook/feedback.php

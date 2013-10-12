@@ -1,6 +1,9 @@
-/.idea/*
-*.iml
-/assets/*
+assets/*
+bower.json
+bower_components/*
+node_modules/*
 
-#Netbeans specific
+#IDE specific
 nbproject/
+.idea/*
+*.iml

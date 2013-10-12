@@ -1,0 +1,32 @@
+{
+  "name": "eduphil",
+  "version": "1.0.0",
+  "description": "Conductor webapp",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/philharmoniker/philharmoniker-app.git"
+  },
+  "keywords": [
+    "conductor"
+  ],
+  "author": "Georgios Panayiotou, Daniel Tinney",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/philharmoniker/philharmoniker-app/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-concurrent": "~0.4.0"
+  }
+}
