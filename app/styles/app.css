@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /*===========================================================================
-  Base styles: opinionated defaults
+  Opinionated defaults
   =========================================================================== */
 
 html, button, input, select, textarea {
@@ -20,16 +20,10 @@ img {
     vertical-align: middle;
 }
 
-
-/* ==========================================================================
-   Eigene Styles
-   ========================================================================== */
-
 /*
  * Standart-Funktionen auf iOS-Geräten unterbinden
  */
 img, div, a {
-  -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -webkit-user-drag: none;
@@ -44,63 +38,64 @@ img, div, a {
 }
 
 /* ==========================================================================
-   JQM overrides
+   App
    ========================================================================== */
 
-
-
-/* ==========================================================================
-   App styles
-   ========================================================================== */
-
+/* Hintergrundbild streckt sich in w&h
+     NOTE: auf Verzerrungen achten und entsprechend breakpoints setzen */
 #app-page {
   background: #fff url(../img/tablet/bg.jpg) no-repeat top center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
-  -webkit-transform: translate3d(0, 0, 0); /* Hardware Beschleunigung für Animationen aktivieren */
 }
 
 /* Hintergrundbild fix bei Verwendung von Panels */
 .ui-body-c {
-    background-image: url(../img/tablet/bg.jpg);
+  background-image: url(../img/tablet/bg.jpg);
 }
 
 #app-content {
-    height: 738px; /* TODO: magic number: parent: 768px, -15 padding oben unten */
+  height: 738px; /* TODO: magic number: parent: 768px, -15 padding oben/unten */
 }
 
 /* ==========================================================================
    Musiker
    ========================================================================== */
 
-#sprite-container
-{
-    position: relative;
-    height: 95%;
+/* Container für die Musiker */
+#sprite-container {
+  position: relative; /* um Musiker absolut innerhalb zu positionieren */
+  height: 95%; /* passt so?! */
+  z-index: 0; /* neuen z-index-Kontext erzeugen um die Musiker korrekt zu stacken */
 }
 
 .sprite {
-  position: absolute;
+  position: absolute; /* jeder Musiker absolut an den Boden des Containers */
 }
 
+/* Hitbox für jeden Musiker, definiert den "antapbaren" Bereich.
+     Meist Torso+Kopf. Aufpassen, dass diese nicht überlappen
+     (eineindeutiges tappen) */
 .hitbox {
-  position: relative;
-  width: 150px;
-  z-index: 2;
+  width: 150px; /* Standartbreite passt für die meisten */
 }
 
+/* Musiker und Hitboxen. Positionierung geschieht wenns geht prozentual,
+     aber meist sind Pixelangaben gefügiger. Komposition stark abhängig vom
+     Illustrator, daher old school pixel zu pixel übertragung */
 #geigerin {
   background: transparent url(../img/sprites/geige_spielt.png) 0 0 no-repeat;
   width: 270px;
   height: 445px;
   left: 0;
   bottom: 0;
+  z-index: 2;
 }
 
 #geigerin .hitbox {
-  height: 445px;
-  margin: 0 0 0 25px;
+  height: 100%;
+  margin-left: 25px;
 }
 
 #bratsche {
@@ -113,21 +108,21 @@ img, div, a {
 }
 
 #bratsche .hitbox {
-  height: 300px;
-  margin: 0 0 0 25px;
+  height: 80%;
+  margin-left: 30px;
 }
 
 #floetistin {
   background: transparent url(../img/sprites/floete_spielt.png) 0 0 no-repeat;
   width: 310px;
   height: 447px;
-  left: 300px;
+  left: 310px;
   bottom: 60px;
 }
 
 #floetistin .hitbox {
-  height: 330px;
-  width: 175px;
+  height: 80%;
+  width: 50%;
   margin: 0 0 0 120px;
 }
 
@@ -163,9 +158,9 @@ img, div, a {
    ========================================================================== */
 
 #silhouette {
-  position: absolute;
+  position: absolute; /* mittig über alles drüberlegen */
   width: 600px;
-  height: 768px;
+  height: 100%;
   bottom: -10px;
   left: 200px;
   z-index: 10;
@@ -173,6 +168,13 @@ img, div, a {
   -webkit-transition: -webkit-transform 3s ease;
   -moz-transition: -moz-transform 3s ease;
   transition: transform 3s ease;
+}
+
+/* Silhouetten-Animation */
+.js-ani-pullout {
+  -webkit-transform: scale(1.25, 1.25) translate3d(100px, 50px, 0);
+  -moz-transform: scale(1.25, 1.25) translate3d(100px, 50px, 0);
+  transform: scale(1.25, 1.25) translate3d(100px, 50px, 0);
 }
 
 /* Nutzer-Meldungen
@@ -193,44 +195,58 @@ img, div, a {
   color: #fcc200;
 }
 
-/* Pult-Menü
+/* ==========================================================================
+   Pult
    ========================================================================== */
 
 #podium {
   position: absolute;
-  bottom: 0;
-  left: 165px;
+  bottom: 0; /* immer am unteren Rand */
+  left: 50%; /* Hälfte links zum zentrieren */
+  /* Prozent in transform3d bezieht sich auf das ELEMENT,
+      nicht den parent wie sonst überall */
   height: 175px;
   width: 694px;
-  background: transparent url(../img/tablet/pult.png) fixed bottom center no-repeat;
-  z-index: 3;
+  transform: translate3d(-50%, 0, 0); /* und dann negative Hälfte nach Links rücken */
+  -webkit-transform: translate3d(-50%, 0, 0);
+  -moz-transform: translate3d(-50%, 0, 0);
+  background: transparent url(../img/tablet/pult.png) bottom center no-repeat;
 }
 
+/* Linke und Rechte Pulthälfte */
 .podium-halfs {
   width: 340px;
   height: 175px;
-  vertical-align: bottom;
-  display: inline-block;
+}
+
+#podium-left {
+  float: left; /* nach links mit dir */
+  padding: 20px 10px 10px 120px;
+}
+
+#podium-right {
+  float: right; /* nach Rechts mit dir */
+  padding: 20px 120px 10px 20px;
 }
 
 #mood-container {
-  padding: 20px 10px 10px 120px;
-  text-align: right;
+  float: right; /* Zur Pult Mitte hin */
 }
 
 .mood-icon {
-  vertical-align: top;
+  float: right;
 }
 
 #instructions {
-  padding: 20px 120px 10px 20px;
-  font-family: Arial, sans-serif;
+  float: left; /* Zur Pult Mitte hin */
 }
 
 #instructions > p {
   -webkit-transform: skew(10deg, 0deg);
   -moz-transform: skew(10deg, 0deg);
   transform: skew(10deg, 0deg);
+
+  font-family: Arial, sans-serif; /* TODO: kein Arial... */
 }
 
 .sprite > a {
@@ -280,9 +296,6 @@ img, div, a {
   padding: 0 0 0 50px;
 }
 
-/* marker */
-
-
 /* ==========================================================================
    Gesten Canvas
    ========================================================================== */
@@ -328,12 +341,7 @@ img, div, a {
   -webkit-animation-fill-mode: forwards;
 }
 
-/* Silhouette wächst heraus */
-.js-ani-pullout {
-  transform: scale(1.25, 1.25) translate(100px, 50px);
-  -ms-transform: scale(1.25, 1.25) translate(100px, 50px);
-  -webkit-transform: scale(1.25, 1.25) translate(100px, 50px);
-}
+
 
 @-webkit-keyframes js-ani-blur {
   from { -webkit-filter: blur(0px); }
